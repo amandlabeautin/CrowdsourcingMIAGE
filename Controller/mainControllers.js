@@ -26,5 +26,4 @@ app.controller("contentCtrl", function($scope){
       {"name":"Bel-Air Hotel","adresse":"701 Stone Canyon Rd. Bel Air","telephone":"310-472-1211","type":"Californian"},
       {"name":"Belvedere","adresse":"The 9882 Little Santa Monica Blvd. Beverly Hills","telephone":" 310-788-2306","type":" Pacific New Wave"},
       {"name":"Benita's Frites","adresse":" 1433 Third St. Promenade Santa Monica","telephone":" 310-458-2889","type":" Fast Food"}];
-
 });
