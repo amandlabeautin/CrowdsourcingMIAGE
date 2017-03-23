@@ -1,17 +1,15 @@
 <!doctype html>
-<html ng-app="myModule">
+<html ng-app="app">
 
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="controller/mainControllers.js"></script>
-    <script src="https://code.angularjs.org/1.6.3/angular-animate.js"></script>
-    <script src="https://code.angularjs.org/1.6.3/angular-touch.js"></script>
+
   </head>
 
   <body>
     
-    <section ng-controller="headerCtrl">
+    <section>
       <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
         <ul class="nav nav-tabs">
           <li role="presentation" class="active"><a href="#">Home</a></li>
@@ -29,48 +27,28 @@
       </div>
     </section>
 <br>
-    <div class="row">
-        <div class="col-md-2">
-          <section ng-controller="menuCtrl">
-            <H1>MENU</H1>
-          </section>
-        </div>
-        <div class="col-md-8">
+
+    <div class="col-md-8">
+
           <section ng-controller="contentCtrl">
-            <div class="panel panel-default">
-                <!-- Default panel contents -->
-                
+            <div class="row">
 
-                <!-- Table -->
-                <table class="table">
-                  <thead>
-                    <tr class="active">
-                      <td> Nom Restaurant </td>
-                      <td> adresse Restaurant </td>
-                      <td> Telephone Restaurant </td>
-                      <td> Type Restaurant </td>
-                    </tr>
-                  </thead>
-                
-
-                  <tbody>
-                    <tr ng-repeat="row in data">
-                      <td>{{row.name}}</td>
-                      <td>{{row.adresse}}</td>
-                      <td>{{row.telephone}}</td>
-                      <td>{{row.type}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <div class="col-md-2"></div>
+              <button type="button" class="btn btn-default" ng-click="showModalForm()">Open me!</button>
+            </div>
           </section>
-        </div>
-        <div class="col-md-2"></div>
+      </div>
+      <div class="col-md-2"></div>
     </div>
     
-    <section ng-controller="footerCtrl">
-      <h1>FOOTER</h1>
-    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="./controller/app.module.js"></script>
+    <script src="./controller/vendor/angular-route.js"></script>
+    <script src="./controller/app.controller.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="https://code.angularjs.org/1.6.3/angular-animate.js"></script>
+    <script src="https://code.angularjs.org/1.6.3/angular-touch.js"></script>
+    <script src="./controller/vendor/ui-bootstrap-tpls-2.5.0.js"></script>
   </body>
 
 </html>
