@@ -1,28 +1,3 @@
-angular.module('myModule', ['ui.bootstrap']);
-var app = angular.module("myModule", []);
-
-app.controller("mainController", function($scope){
-//
-});
-
-app.controller("headerCtrl", function($scope){
-//
-});
-
-app.controller("footerCtrl", function($scope){
-//
-});
-
-app.controller("menuCtrl", function($scope){
-//
-});
-
-app.controller("contentCtrl", ["$scope", "userService",
-    function($scope, userService) {
-        $scope.data = userService.getData();
-    }
-]);
-
 app.service("userService", [
     function() {
 
