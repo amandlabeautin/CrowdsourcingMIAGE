@@ -11,6 +11,7 @@ function contentCtrl($scope, $uibModal, $log,$window){
     var modalPopup = function () {
       return $scope.modalInstance = $uibModal.open({
         templateUrl: 'View/formModal.html',
+        size:'lg',
         scope: $scope
       });
     };
