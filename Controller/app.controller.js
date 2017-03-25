@@ -1,10 +1,13 @@
 // someController.js
 angular
     .module('app')
-	.controller('contentCtrl', contentCtrl);
+	.controller('contentCtrl', contentCtrl)
+	.controller('modalController', modalController);
 
-function contentCtrl($scope, $uibModal, $log){
+var variableSimi = [];
 
+function contentCtrl($scope, $uibModal, $log,$window){
+	
     var modalPopup = function () {
       return $scope.modalInstance = $uibModal.open({
         templateUrl: 'View/formModal.html',
@@ -22,6 +25,27 @@ function contentCtrl($scope, $uibModal, $log){
           $scope.handleDismiss(reason);
         });
     };
+
+    // Close the modal if Yes button click
+    $scope.yes = function ($scope) {
+    	$scope.IsPair;
+      	return console.log(variableSimi);
+    };
+
+    // Dismiss the modal if No button click
+    $scope.no = function () {
+      $scope.modalInstance.dismiss('No Button Clicked')
+    };
+
+    // Log Success message
+    $scope.handleSuccess = function (data) {
+      $log.info('Modal closed: ' + data);
+    };
+
+    // Log Dismiss message
+    $scope.handleDismiss = function (reason) {
+      $log.info('Modal dismissed: ' + reason);
+    }
 
     $scope.dataRestaurants = [
 		{name: "Apple Pan",adresse:"The 10801 W. Pico Blvd. West LA",telephone:"310-475-3585",type:"American"},
@@ -41,24 +65,23 @@ function contentCtrl($scope, $uibModal, $log){
       	{name:"Belvedere",adresse:"The 9882 Little Santa Monica Blvd. Beverly Hills",telephone:" 310-788-2306",type:"Wave"},
       	{name:"Benita's Frites",adresse:" 1433 Third St. Promenade Santa Monica",telephone:" 310-458-2889",type:"Benitian"}
     ];
+};
 
-    // Close the modal if Yes button click
-    $scope.yes = function () {
-      $scope.modalInstance.close('Yes Button Clicked')
+function modalController($scope, $window){
+
+	$scope.CheckPair = function (item, value) {
+		var idItem = item.target.id;
+		var idNameWithoutNumber = idItem.substring(0, idItem.length-1);
+        if ($scope.IsPair) {
+        	angular.element(document.getElementById(idNameWithoutNumber+0)).addClass("pairActive");
+			angular.element(document.getElementById(idNameWithoutNumber+1)).addClass("pairActive");
+        	variableSimi.push(value);
+		} else {
+            $window.alert("CheckBox is not checked.");
+        }
     };
 
-    // Dismiss the modal if No button click
-    $scope.no = function () {
-      $scope.modalInstance.dismiss('No Button Clicked')
-    };
-
-    // Log Success message
-    $scope.handleSuccess = function (data) {
-      $log.info('Modal closed: ' + data);
-    };
-
-    // Log Dismiss message
-    $scope.handleDismiss = function (reason) {
-      $log.info('Modal dismissed: ' + reason);
-    }
+    $scope.isActive = function(item) {
+	       return $scope.selected === item;
+	};
 };
