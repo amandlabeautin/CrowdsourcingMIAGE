@@ -1,12 +1,22 @@
 .pairActive {
-  background-color: blue;
-}
-
-.paginationclass {
-	background-color: white;
+  background-color: #889B74;
 }
 
 .follow_container .btn-default {
 	background-color: #1E1E1E;
 	color: #e7e7e7;
+}
+
+#formModal .modal-header {
+	font-family: 'Pacifico', cursive;
+	color: white;
+	background-color: #1E1E1E;
+}
+
+#formModal .modal-body {
+
+}
+
+#formModal .modal-footer {
+background-color: #d2d2d2;
 }

@@ -29,13 +29,16 @@ function contentCtrl($scope, $uibModal, $log,$window){
 
     // Close the modal if Yes button click
     $scope.yes = function ($scope) {
-    	$scope.IsPair;
-      	return console.log(variableSimi);
+    	return $window.alert('donnée à envoyer : ' + variableSimi);
     };
 
     // Dismiss the modal if No button click
     $scope.no = function () {
-      $scope.modalInstance.dismiss('No Button Clicked')
+      	$scope.modalInstance.dismiss('No Button Clicked')
+    };
+
+    $scope.next = function ($scope) {
+    	$window.alert('pas d\'autre valeur');
     };
 
     // Log Success message
