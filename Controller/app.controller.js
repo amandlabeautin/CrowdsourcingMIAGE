@@ -29,7 +29,47 @@ function contentCtrl($scope, $uibModal, $log,$window){
 
     // Close the modal if Yes button click
     $scope.yes = function ($scope) {
+
+      var jsonResult = {}; 
+      var jsonData0  = {};
+      var jsonData1  = {};
+      var trust      = {};
+      var headTds = document.getElementById("table").tHead.getElementsByTagName("td");
+
+      // DONNEES PREMIERE PAIRE
+      var data0   = [
+        document.getElementById("name0").textContent, 
+        document.getElementById("adresse0").textContent, 
+        document.getElementById("telephone0").textContent, 
+        document.getElementById("type0").textContent
+      ];
+      // DONNEES DEUXIEME PAIRE
+      var data1   = [
+        document.getElementById("name1").textContent, 
+        document.getElementById("adresse1").textContent, 
+        document.getElementById("telephone1").textContent, 
+        document.getElementById("type1").textContent
+      ];
+
+      // Récupérer les noms de colonnes
+      for (var i = 0; i < headTds.length; i++)
+      {
+        jsonData0[headTds[i].id]= data0[i];
+        jsonData1[headTds[i].id]= data1[i];
+      }
+
+      trust["trust"] = document.getElementById("exampleInputName2").value;
+
+      // JSON SI CLE NUMERIQUE
+      jsonResult[0] = jsonData0;
+      jsonResult[1] = jsonData1;
+      jsonResult[2] = trust;
+
+      console.log(jsonResult);
+
     	return $window.alert('donnée à envoyer : ' + variableSimi);
+      /*return $window.alert(console.log(jsonResult));*/
+
     };
 
     // Dismiss the modal if No button click
