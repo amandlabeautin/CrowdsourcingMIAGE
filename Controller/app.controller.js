@@ -51,29 +51,32 @@ function contentCtrl($scope, $uibModal, $log,$window){
       var jsonResult = {}; 
       var jsonData0  = {};
       var jsonData1  = {};
+      var jsonSame   = {};
       var trust      = {};
       var headTds = document.getElementById("table").tHead.getElementsByTagName("td");
 
       // DONNEES PREMIERE PAIRE
       var data0   = [
-        document.getElementById("name0").textContent, 
-        document.getElementById("adresse0").textContent, 
-        document.getElementById("telephone0").textContent, 
-        document.getElementById("type0").textContent
+        document.getElementById("name0"), 
+        document.getElementById("adresse0"), 
+        document.getElementById("telephone0"), 
+        document.getElementById("type0")
       ];
       // DONNEES DEUXIEME PAIRE
       var data1   = [
-        document.getElementById("name1").textContent, 
-        document.getElementById("adresse1").textContent, 
-        document.getElementById("telephone1").textContent, 
-        document.getElementById("type1").textContent
+        document.getElementById("name1"), 
+        document.getElementById("adresse1"), 
+        document.getElementById("telephone1"), 
+        document.getElementById("type1")
       ];
 
       // Récupérer les noms de colonnes
       for (var i = 0; i < headTds.length; i++)
       {
-        jsonData0[headTds[i].id]= data0[i];
-        jsonData1[headTds[i].id]= data1[i];
+        jsonData0[headTds[i].id] = data0[i].textContent;
+        jsonData1[headTds[i].id] = data1[i].textContent;
+        jsonSame[headTds[i].id]  = data0[i].classList.contains("pairActive");
+
       }
 
       trust["trust"] = document.getElementById("exampleInputName2").value;
@@ -82,6 +85,7 @@ function contentCtrl($scope, $uibModal, $log,$window){
       jsonResult[0] = jsonData0;
       jsonResult[1] = jsonData1;
       jsonResult[2] = trust;
+      jsonResult[3] = jsonSame;
 
       console.log(jsonResult);
 
