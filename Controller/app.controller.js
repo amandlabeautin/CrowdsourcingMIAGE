@@ -27,6 +27,24 @@ function contentCtrl($scope, $uibModal, $log,$window){
         });
     };
 
+    // Affichage du Tooltip
+    $scope.placement = {
+      options: [
+        'top',
+        'top-left',
+        'top-right',
+        'bottom',
+        'bottom-left',
+        'bottom-right',
+        'left',
+        'left-top',
+        'left-bottom',
+        'right',
+        'right-top',
+        'right-bottom'
+      ],
+      selected: 'top'
+    };
     // Close the modal if Yes button click
     $scope.yes = function ($scope) {
 

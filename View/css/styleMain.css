@@ -1,5 +1,11 @@
 .pairActive {
-  background-color: #889B74;
+  background-color: #E8D76E;
+}
+
+.tooltip.customClass .tooltip-inner {
+  color: white;
+  background-color: #928f8a;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
 .follow_container .btn-default {
@@ -11,10 +17,6 @@
 	font-family: 'Pacifico', cursive;
 	color: white;
 	background-color: #1E1E1E;
-}
-
-#formModal .modal-body {
-
 }
 
 #formModal .modal-footer {
