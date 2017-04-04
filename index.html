@@ -1,61 +1,28 @@
 <!doctype html>
-<html ng-app="app">
+<html lang="fr" ng-app="app">
 
   <head>
     <meta charset="UTF-8">
+    <title>CrownSourcing</title>
     <link rel="stylesheet" href="View/css/styleTemplate.css">
     <link rel="stylesheet" href="View/css/styleMain.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="View/css/style-portfolio.css">
     <link rel="stylesheet" href="View/css/picto-foundry-food.css" />
-  </head>
 
-  <body>
-   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-          <div class="row">
-          <!-- Brand and toggle get grouped for better mobile display -->
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="#">Restaurant</a>
-              </div>
-
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav main-nav  clear navbar-right ">
-                      <li><a class="navactive color_animation" href="#top">WELCOME</a></li>
-                      <li><a class="color_animation" href="#reservation">CONNECTION</a></li>
-                      <li><a class="color_animation" href="#contact">INSCRIPTION</a></li>
-                  </ul>
-              </div><!-- /.navbar-collapse -->
-          </div>
-      </div><!-- /.container-fluid -->
-  </nav>
-<br>
-  <div id="top" class="starter_container bg">
-      <div class="follow_container" ng-controller="contentCtrl">
-          <div class="col-md-6 col-md-offset-3">
-              <h2 class="top-title"> Restaurant</h2>
-              <h2 class="white second-title">" Best in the city "</h2>
-              <hr>
-              <button type="button" class="btn btn-default btn-lg btn-block" ng-click="showModalForm()">Open me!</button>
-          </div>
-      </div>
-  </div>
-    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
     <script src="./controller/app.module.js"></script>
-    <script src="./controller/vendor/angular-route.js"></script>
+    <script src="./controller/app.config.js"></script>
     <script src="./controller/app.controller.js"></script>
+ <script src="./controller/vendor/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
     <script src="https://code.angularjs.org/1.6.3/angular-animate.js"></script>
     <script src="https://code.angularjs.org/1.6.3/angular-touch.js"></script>
     <script src="./controller/vendor/ui-bootstrap-tpls-2.5.0.js"></script>
+  </head>
+
+  <body>
+    <div ng-view style="height:100%"></div>
   </body>
 
 </html>
