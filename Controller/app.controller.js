@@ -56,37 +56,45 @@ angular
         var trust      = {};
         var headTds = document.getElementById("table").tHead.getElementsByTagName("td");
 
-        // DONNEES PREMIERE PAIRE
-        var data0   = [
-          document.getElementById("name0"), 
-          document.getElementById("adresse0"), 
-          document.getElementById("telephone0"), 
-          document.getElementById("type0")
-        ];
-        // DONNEES DEUXIEME PAIRE
-        var data1   = [
-          document.getElementById("name1"), 
-          document.getElementById("adresse1"), 
-          document.getElementById("telephone1"), 
-          document.getElementById("type1")
-        ];
+
+        var names = {};
+        names[0] = document.getElementById("name0").textContent;
+        names[1] = document.getElementById("name1").textContent;
+
+        var adresses = {};
+        adresses[0] = document.getElementById("adresse0").textContent;
+        adresses[1] = document.getElementById("adresse1").textContent;
+
+        var telephones = {};
+        telephones[0] = document.getElementById("telephone0").textContent;
+        telephones[1] = document.getElementById("telephone1").textContent;
+
+        var types = {};
+        types[0] = document.getElementById("type0").textContent;
+        types[1] = document.getElementById("type1").textContent;
 
         // Récupérer les noms de colonnes
         for (var i = 0; i < headTds.length; i++)
         {
-          jsonData0[headTds[i].id] = data0[i].textContent;
-          jsonData1[headTds[i].id] = data1[i].textContent;
-          jsonSame[headTds[i].id]  = data0[i].classList.contains("pairActive");
-
+          switch (i) {
+            case 0:
+              jsonResult[headTds[i].id] = names;
+              break;
+            case 1:
+              jsonResult[headTds[i].id] = adresses;
+              break;
+            case 2:
+              jsonResult[headTds[i].id] = telephones;
+              break;
+            case 3: 
+              jsonResult[headTds[i].id] = types;
+              break;
+          }
         }
 
-        trust["trust"] = document.getElementById("exampleInputName2").value;
-
         // JSON SI CLE NUMERIQUE
-        jsonResult[0] = jsonData0;
-        jsonResult[1] = jsonData1;
-        jsonResult[2] = trust;
-        jsonResult[3] = jsonSame;
+        jsonResult["idPair"] = 132
+        jsonResult["Val"] = document.getElementById("exampleInputName2").value;
 
         console.log(jsonResult);
 
