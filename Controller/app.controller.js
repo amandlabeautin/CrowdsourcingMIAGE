@@ -3,12 +3,14 @@ angular
   	.controller('homeCtrl', homeCtrl)
   	.controller('modalController', modalController)
     .controller('RegisterCtrl', RegisterCtrl)
-;
+    .controller('loginCtrl', loginCtrl);
 
   var variableSimi = [];
 
+  // Controller de la page d'accueil des personnes connectés
   function homeCtrl($scope, $uibModal, $log,$window){
   	
+      // Ouverture de la fenetre modal 
       var modalPopup = function () {
         return $scope.modalInstance = $uibModal.open({
           templateUrl: 'View/formModal.html',
@@ -17,7 +19,7 @@ angular
         });
       };
 
-      // Modal window popup trigger 
+      // Fonction qui controle l'affichage du modal. Affichage dans la console les erreurs si il y a lieu
       $scope.showModalForm = function () {
         modalPopup().result
           .then(function (data) {
@@ -46,7 +48,8 @@ angular
         ],
         selected: 'top'
       };
-      // Close the modal if Yes button click
+
+      // Fonction qui prepare en JSON en fonction des réponses de l'utilisateur
       $scope.yes = function ($scope) {
 
         var jsonResult = {}; 
@@ -103,11 +106,12 @@ angular
 
       };
 
-      // Dismiss the modal if No button click
+      // Fonction qui ...
       $scope.no = function () {
         	$scope.modalInstance.dismiss('No Button Clicked')
       };
-
+    
+      // fonction qui ...
       $scope.next = function ($scope) {
       	$window.alert('pas d\'autre valeur');
       };
@@ -123,50 +127,121 @@ angular
       }
 
       $scope.dataRestaurants = [
-  		{name: "Apple Pan",adresse:"The 10801 W. Pico Blvd. West LA",telephone:"310-475-3585",type:"American"},
-  		{name: "Arnie Morton's of Chicago",adresse:"435 S. La Cienega Blvd. Los Angeles",telephone:"310-246-1501",type:" Steakhouses"},
-        	{name: "Art's Deli",adresse: "12224 Ventura Blvd. Studio City",telephone: "818-762-1221",type :"Delis"},
-        	{name:"Asahi Ramen",adresse:"2027 Sawtelle Blvd. West LA",telephone :"310-479-2231",type:"Noodle Shops"},
-        	{name:"Baja Fresh",adresse:"3345 Kimber Dr. Westlake Village",telephone:"805-498-4049",type:"Mexican"},
-        	{name:"Bel-Air Hotel",adresse:"701 Stone Canyon Rd. Bel Air",telephone:"310-472-1211",type:"Californian"},
-        	{name:"Belvedere",adresse:"The 9882 Little Santa Monica Blvd. Beverly Hills",telephone:" 310-788-2306",type:" Pacific New Wave"},
-        	{name:"Benita's Frites",adresse:" 1433 Third St. Promenade Santa Monica",telephone:" 310-458-2889",type:" Fast Food"},
-        	{name: "Apple Pan",adresse:"The 10801 W. Pico Blvd. West LA",telephone:"310-475/3585",type:"American"},
-  		{name: "ArnieMorton'sofChicago",adresse:"435 S. La Cienega Blvd. Los Angeles",telephone:"310-246-1501",type:" Steakhouses"},
-        	{name: "Art's Deli",adresse: "12224 Ventura Blvd. Studio City",telephone: "818-762-1221",type :"Italien"},
-        	{name:"Asahi Ramen",adresse:"2027 Sawtelle Blvd. West LA",telephone :"310/479/2231",type:"Noodle Shops"},
-        	{name:"Baja Fresh",adresse:"3345 Kimber Dr. Westlake Village",telephone:"805-498-4049",type:"Baja"},
-        	{name:"Bel-Air Hotel",adresse:"701 Stone Canyon Rd. Bel Air",telephone:"310-472-1211",type:"Californian"},
-        	{name:"Belvedere",adresse:"The 9882 Little Santa Monica Blvd. Beverly Hills",telephone:" 310-788-2306",type:"Wave"},
-        	{name:"Benita's Frites",adresse:" 1433 Third St. Promenade Santa Monica",telephone:" 310-458-2889",type:"Benitian"}
+		    {name: "Apple Pan",adresse:"The 10801 W. Pico Blvd. West LA",telephone:"310-475-3585",type:"American"},
+		    {name: "Arnie Morton's of Chicago",adresse:"435 S. La Cienega Blvd. Los Angeles",telephone:"310-246-1501",type:" Steakhouses"},
+      	{name: "Art's Deli",adresse: "12224 Ventura Blvd. Studio City",telephone: "818-762-1221",type :"Delis"},
+      	{name:"Asahi Ramen",adresse:"2027 Sawtelle Blvd. West LA",telephone :"310-479-2231",type:"Noodle Shops"},
+      	{name:"Baja Fresh",adresse:"3345 Kimber Dr. Westlake Village",telephone:"805-498-4049",type:"Mexican"},
+      	{name:"Bel-Air Hotel",adresse:"701 Stone Canyon Rd. Bel Air",telephone:"310-472-1211",type:"Californian"},
+      	{name:"Belvedere",adresse:"The 9882 Little Santa Monica Blvd. Beverly Hills",telephone:" 310-788-2306",type:" Pacific New Wave"},
+      	{name:"Benita's Frites",adresse:" 1433 Third St. Promenade Santa Monica",telephone:" 310-458-2889",type:" Fast Food"},
+      	{name: "Apple Pan",adresse:"The 10801 W. Pico Blvd. West LA",telephone:"310-475/3585",type:"American"},
+		    {name: "ArnieMorton'sofChicago",adresse:"435 S. La Cienega Blvd. Los Angeles",telephone:"310-246-1501",type:" Steakhouses"},
+      	{name: "Art's Deli",adresse: "12224 Ventura Blvd. Studio City",telephone: "818-762-1221",type :"Italien"},
+      	{name:"Asahi Ramen",adresse:"2027 Sawtelle Blvd. West LA",telephone :"310/479/2231",type:"Noodle Shops"},
+      	{name:"Baja Fresh",adresse:"3345 Kimber Dr. Westlake Village",telephone:"805-498-4049",type:"Baja"},
+      	{name:"Bel-Air Hotel",adresse:"701 Stone Canyon Rd. Bel Air",telephone:"310-472-1211",type:"Californian"},
+      	{name:"Belvedere",adresse:"The 9882 Little Santa Monica Blvd. Beverly Hills",telephone:" 310-788-2306",type:"Wave"},
+      	{name:"Benita's Frites",adresse:" 1433 Third St. Promenade Santa Monica",telephone:" 310-458-2889",type:"Benitian"}
       ];
 
+      // fonction qui ...
       $scope.go = function ( path ) {
         $location.path( path );
       };
   };
 
+  // Controller de la fenetre modal
   function modalController($scope, $window){
 
+    // fonction qui : Vérifie que le checkbox est activé, colore les champs selectionnés 
   	$scope.CheckPair = function (item, value) {
   		var idItem = item.target.id;
   		var idNameWithoutNumber = idItem.substring(0, idItem.length-1);
-          if ($scope.IsPair) {
-          	angular.element(document.getElementById(idNameWithoutNumber+0)).addClass("pairActive");
+      if ($scope.IsPair) {
+        angular.element(document.getElementById(idNameWithoutNumber+0)).addClass("pairActive");
   			angular.element(document.getElementById(idNameWithoutNumber+1)).addClass("pairActive");
-          	variableSimi.push(value);
-  		} else {
-              $window.alert("CheckBox is not checked.");
-          }
-      };
+        variableSimi.push(value);
+  		} 
+      else {
+        $window.alert("CheckBox is not checked.");
+      }
+    };
 
-      $scope.isActive = function(item) {
-  	       return $scope.selected === item;
+    // fonction qui ...
+    $scope.isActive = function(item) {
+      return $scope.selected === item;
   	};
+
+    // Si le checkbox est désactivé, les champs selectionnés sont initialisés
+    $scope.isDontPair = function() {
+      if(!$scope.IsPair){
+        angular.element(document.querySelectorAll('#contentTable td')).removeClass("pairActive");
+      }
+    };
+
+    $scope.formRange = {
+        min: 0,
+        max: 1,
+        step: 0.1,
+        precision: 2,
+        orientation: 'horizontal',  // vertical
+        handle: 'round', //'square', 'triangle' or 'custom'
+        tooltip: 'show', //'hide','always'
+        tooltipseparator: ':',
+        tooltipsplit: false,
+        enabled: true,
+        naturalarrowkeys: false,
+        range: false,
+        ngDisabled: false,
+        reversed: false
+    };
   };
 
+  // Controller de la page d'inscription
+  RegisterCtrl.$inject = ['UserService', '$location', '$rootScope', 'FlashService'];
+  function RegisterCtrl(UserService, $location, $rootScope, FlashService) {
+      var vm = this;
 
+      vm.register = register;
 
-  function RegisterCtrl($scope) {
-    $scope.messages = 'This is Show orders screen';
+      function register() {
+          vm.dataLoading = true;
+          UserService.Create(vm.user)
+              .then(function (response) {
+                  if (response.success) {
+                      FlashService.Success('Registration successful', true);
+                      $location.path('/login');
+                  } else {
+                      FlashService.Error(response.message);
+                      vm.dataLoading = false;
+                  }
+              });
+      };
+  };
+
+  // Controller de la page de connexion
+  loginCtrl.$inject = ['$location', 'AuthenticationService', 'FlashService'];
+  function loginCtrl($location, AuthenticationService, FlashService){
+    var vm = this;
+
+    vm.login = login;
+
+    (function initController() {
+            // reset login status
+            AuthenticationService.ClearCredentials();
+    })();
+
+    function login() {
+        vm.dataLoading = true;
+        AuthenticationService.Login(vm.username, vm.password, function (response) {
+            if (response.success) {
+                AuthenticationService.SetCredentials(vm.username, vm.password);
+                $location.path('/');
+            } else {
+                FlashService.Error(response.message);
+                vm.dataLoading = false;
+            }
+        });
+    };
   };
