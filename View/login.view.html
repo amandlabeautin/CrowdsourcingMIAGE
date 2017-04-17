@@ -8,19 +8,27 @@
             <h2 class="white second-title">" Best in the city "</h2>
             <hr>
             <div>
-				<form name="loginform" id="loginForm" ng-submit="vm.login()" role="form" class="form-inline">
-					<div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+				<form name="loginform" id="loginForm" ng-submit="loginform.$valid && user.login()" novalidate role="form" class="form-inline">
+					<div class="form-group" ng-class="{ 'has-error': loginform.$submitted && loginform.username.$invalid}">
 				        <label for="username">Login</label>
 				        <input type="text" name="username" id="username" class="form-control" ng-model="user.username" required />
-				        <span class="error" ng-show=" (loginform.username.$dirty || submitted) && loginform.username.$error.required">Login requis</span>
+				        <div ng-messages="loginform.$submitted && loginform.username.$error" class="help-block">
+			                <div ng-message="required">Username is required</div>
+			            </div>
 				    </div>
 					&nbsp;
-					<div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+					<div class="form-group" ng-class="{ 'has-error': loginform.$submitted && loginform.password.$invalid }">
 			            <label for="password">Mot de passe</label>
-			            <input type="password" name="password" id="password" class="form-control" ng-model="user.password" ng-class="submitted?'ng-dirty':''" required />
-			            <span class="error" ng-show=" (loginform.Password.$dirty || submitted) && loginform.password.$error.required">Mot de passe requis</span>
+			            <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
+			            <div ng-messages="loginform.$submitted && loginform.password.$error" class="help-block">
+			                <div ng-message="required">Mot de passe is required</div>
+			            </div>
 			        </div>
-					<button type="button" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" ng-click="submit()">Connexion</button>
+			        <div class="form-group">
+						<button type="button" ng-disabled="loginform.loading" class="btn btn-primary" ng-click="submit()">
+						Connexion</button>
+					</div>
+					<div ng-if="user.error" class="alert alert-danger">{{user.error}}</div>
 				</form>
 			</div>
         </div>

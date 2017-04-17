@@ -4,65 +4,38 @@ angular
     .factory('FlashService', FlashService)
     .factory('UserService', UserService);
 
-AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService'];
-function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService) {
+function AuthenticationService($http, $localStorage) {
     var service = {};
 
     service.Login = Login;
-    service.SetCredentials = SetCredentials;
-    service.ClearCredentials = ClearCredentials;
+    service.Logout = Logout;
 
     return service;
 
     function Login(username, password, callback) {
+        $http.post('/api/authenticate', { username: username, password: password })
+            .success(function (response) {
+                // login successful if there's a token in the response
+                if (response.token) {
+                    // store username and token in local storage to keep user logged in between page refreshes
+                    $localStorage.currentUser = { username: username, token: response.token };
 
-        /* Dummy authentication for testing, uses $timeout to simulate api call
-         ----------------------------------------------*/
-        $timeout(function () {
-            var response;
-            UserService.GetByUsername(username)
-                .then(function (user) {
-                    if (user !== null && user.password === password) {
-                        response = { success: true };
-                    } else {
-                        response = { success: false, message: 'Username or password is incorrect' };
-                    }
-                    callback(response);
-                });
-        }, 1000);
+                    // add jwt token to auth header for all requests made by the $http service
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
 
-        /* Use this for real authentication
-         ----------------------------------------------*/
-        //$http.post('/api/authenticate', { username: username, password: password })
-        //    .success(function (response) {
-        //        callback(response);
-        //    });
-
+                    // execute callback with true to indicate successful login
+                    callback(true);
+                } else {
+                    // execute callback with false to indicate failed login
+                    callback(false);
+                }
+            });
     }
 
-    function SetCredentials(username, password) {
-        var authdata = Base64.encode(username + ':' + password);
-
-        $rootScope.globals = {
-            currentUser: {
-                username: username,
-                authdata: authdata
-            }
-        };
-
-        // set default auth header for http requests
-        $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-
-        // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
-        var cookieExp = new Date();
-        cookieExp.setDate(cookieExp.getDate() + 7);
-        $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
-    }
-
-    function ClearCredentials() {
-        $rootScope.globals = {};
-        $cookies.remove('globals');
-        $http.defaults.headers.common.Authorization = 'Basic';
+    function Logout() {
+        // remove user from local storage and clear http auth header
+        delete $localStorage.currentUser;
+        $http.defaults.headers.common.Authorization = '';
     }
 }
 
@@ -148,7 +121,6 @@ var Base64 = {
     }
 };
 
-FlashService.$inject = ['$rootScope'];
 function FlashService($rootScope) {
     var service = {};
 
@@ -194,7 +166,6 @@ function FlashService($rootScope) {
     }
 };
 
-UserService.$inject = ['$timeout', '$filter', '$q'];
 function UserService($timeout, $filter, $q) {
 
     var service = {};
