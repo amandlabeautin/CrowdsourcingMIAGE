@@ -5,27 +5,25 @@
 		<div class="modal-header">
 		  <h3 class="modal-title" id="modal-title">Crowsourcing</h3>
 		</div>
+		<form ng-submit="addText(form)">
 		<div class="modal-body" id="modal-body">
 			<table class="table" id="table">
-			  	<form ng-submit="addText(form)">
-				    <thead>
-				      <tr class="active">
-				        <td id="RestaurantName"> Nom Restaurant </td>
-				        <td id="RestaurantAdress"> adresse Restaurant </td>
-				        <td id="RestaurantPhone"> Telephone Restaurant </td>
-				        <td id="RestaurantType"> Type Restaurant </td>
-				      </tr>
-				    </thead>
-
+			  	
+			  		<thead>
+			  			<tr class="active">
+			  				<th>Num Pair</th>
+			  				<th>1ère pair</th>
+			  				<th>2ème pair</th>
+			  			</tr>
+			  		</thead>
 				    <tbody>
-				      <tr ng-repeat="rest in dataRestaurants | orderBy:'name' | limitTo:2" id="contentTable">
-				        <td id="name{{$index}}" class="item ng-class:{ pairActive: isActive(rest.name) }" data-ng-click="CheckPair($event, rest.name)">{{rest.name}}</td>
-				        <td id="adresse{{$index}}" class="item ng-class:{ pairActive: isActive(rest.adresse) }" ng-click="CheckPair($event, rest.adresse)">{{rest.adresse}}</td>
-				        <td id="telephone{{$index}}" class="item ng-class:{ pairActive: isActive(rest.telephone) }" ng-click="CheckPair($event, rest.telephone)">{{rest.telephone}}</td>
-				        <td id="type{{$index}}" class="item ng-class:{ pairActive: isActive(rest.type) }" ng-click="CheckPair($event, rest.type)">{{rest.type}}</td>
+				      <tr ng-repeat="rest in dataRestaurants" ng-class="{'selected': rest.selected}" ng-click="select(rest)">
+				      	<td ng-bind="rest.id"></td>
+				        <td ng-bind="rest.elem1"></td>
+				        <td ng-bind="rest.elem2"></td>
 				      </tr>
 				    </tbody>
-			    </form>
+			    
 		  	</table>
 		</div>
 
@@ -55,5 +53,6 @@
 			  	</div>
 		  	</div>
 		</div>
+		</form>
 	</div>
 </div>

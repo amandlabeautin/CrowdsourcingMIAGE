@@ -38,3 +38,7 @@
 #echelleSlider .slider-selection {
 	background: #BABABA;
 }
+
+tr.selected td {
+      background: #ccc!important;
+    }

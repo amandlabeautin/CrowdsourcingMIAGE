@@ -56,94 +56,33 @@ angular
   };
 
   // Controller de la fenetre modal
-  function modalController($scope, $window){
-    $scope.dataRestaurants = [
-      {name: "Apple Pan",adresse:"The 10801 W. Pico Blvd. West LA",telephone:"310-475-3585",type:"American"},
-      {name: "Arnie Morton's of Chicago",adresse:"435 S. La Cienega Blvd. Los Angeles",telephone:"310-246-1501",type:" Steakhouses"},
-      {name: "Art's Deli",adresse: "12224 Ventura Blvd. Studio City",telephone: "818-762-1221",type :"Delis"},
-      {name:"Asahi Ramen",adresse:"2027 Sawtelle Blvd. West LA",telephone :"310-479-2231",type:"Noodle Shops"},
-      {name:"Baja Fresh",adresse:"3345 Kimber Dr. Westlake Village",telephone:"805-498-4049",type:"Mexican"},
-      {name:"Bel-Air Hotel",adresse:"701 Stone Canyon Rd. Bel Air",telephone:"310-472-1211",type:"Californian"},
-      {name:"Belvedere",adresse:"The 9882 Little Santa Monica Blvd. Beverly Hills",telephone:" 310-788-2306",type:" Pacific New Wave"},
-      {name:"Benita's Frites",adresse:" 1433 Third St. Promenade Santa Monica",telephone:" 310-458-2889",type:" Fast Food"},
-      {name: "Apple Pan",adresse:"The 10801 W. Pico Blvd. West LA",telephone:"310-475/3585",type:"American"},
-      {name: "ArnieMorton'sofChicago",adresse:"435 S. La Cienega Blvd. Los Angeles",telephone:"310-246-1501",type:" Steakhouses"},
-      {name: "Art's Deli",adresse: "12224 Ventura Blvd. Studio City",telephone: "818-762-1221",type :"Italien"},
-      {name:"Asahi Ramen",adresse:"2027 Sawtelle Blvd. West LA",telephone :"310/479/2231",type:"Noodle Shops"},
-      {name:"Baja Fresh",adresse:"3345 Kimber Dr. Westlake Village",telephone:"805-498-4049",type:"Baja"},
-      {name:"Bel-Air Hotel",adresse:"701 Stone Canyon Rd. Bel Air",telephone:"310-472-1211",type:"Californian"},
-      {name:"Belvedere",adresse:"The 9882 Little Santa Monica Blvd. Beverly Hills",telephone:" 310-788-2306",type:"Wave"},
-      {name:"Benita's Frites",adresse:" 1433 Third St. Promenade Santa Monica",telephone:" 310-458-2889",type:"Benitian"}
-    ];
+  function modalController($scope, $window, $http, $filter){
+    $http.get("View/dataEnter.json")
+      .then(function(response) {
+        $scope.dataRestaurants = response.data;
+    });
+
+    $scope.select = function (item) {
+      if ($scope.IsPair) {
+        item.selected ? item.selected = false : item.selected = true;
+      }else {
+        $window.alert("CheckBox is not checked.");
+      }  
+    };
 
     // Fonction qui prepare en JSON en fonction des réponses de l'utilisateur
-    $scope.yes = function ($scope) {
+    $scope.yes = function () {
+      var temp = [];
+      temp = angular.fromJson($scope.dataRestaurants); 
+      temp["Val"] = $scope.sliders.sliderValue;
 
-      var jsonResult = {}; 
-      var jsonData0  = {};
-      var jsonData1  = {};
-      var jsonSame   = {};
-      var trust      = {};
-      var headTds = document.getElementById("table").tHead.getElementsByTagName("td");
-
-      var simili = function(item){
-        for (var i = 0; i < variableSimi.length; i++) {
-          if(item == variableSimi[i]){
-            return "true";
-          }else{
-            return "false";
-          }
+      for (var i in temp) {
+        if (typeof temp[i].selected == 'undefined' && typeof temp[i].elem1 != 'undefined') {
+            temp[i]["selected"] = false; 
         }
       }
-
-      var names = {};
-      names[0] = document.getElementById("name0").textContent;
-      names[1] = document.getElementById("name1").textContent;
-      names[2] = simili(names[0]);
-
-      var adresses = {};
-      adresses[0] = document.getElementById("adresse0").textContent;
-      adresses[1] = document.getElementById("adresse1").textContent;
-      adresses[2] = simili(adresses[0]);
-
-      var telephones = {};
-      telephones[0] = document.getElementById("telephone0").textContent;
-      telephones[1] = document.getElementById("telephone1").textContent;
-      telephones[2] = simili(telephones[0]);
-
-      var types = {};
-      types[0] = document.getElementById("type0").textContent;
-      types[1] = document.getElementById("type1").textContent;
-      types[2] = simili(types[0]);
-
-      // Récupérer les noms de colonnes
-      for (var i = 0; i < headTds.length; i++)
-      {
-        switch (i) {
-          case 0:
-            jsonResult[headTds[i].id] = names;
-            break;
-          case 1:
-            jsonResult[headTds[i].id] = adresses;
-            break;
-          case 2:
-            jsonResult[headTds[i].id] = telephones;
-            break;
-          case 3: 
-            jsonResult[headTds[i].id] = types;
-            break;
-        }
-      };
-
-      // JSON SI CLE NUMERIQUE
-      jsonResult["idPair"] = 132
-      jsonResult["Val"] = document.getElementById("exampleInputName2").value;
-
-      console.log(jsonResult);
-
-      return $window.alert('donnée à envoyer : ' + variableSimi);
-      /*return $window.alert(console.log(jsonResult));*/
-
+      
+      console.log(temp);
     };
 
       // Fonction qui ...
@@ -166,20 +105,6 @@ angular
       $log.info('Modal dismissed: ' + reason);
     };
 
-    // fonction qui : Vérifie que le checkbox est activé, colore les champs selectionnés 
-    $scope.CheckPair = function (item, value) {
-      var idItem = item.target.id;
-      var idNameWithoutNumber = idItem.substring(0, idItem.length-1);
-      if ($scope.IsPair) {
-        angular.element(document.getElementById(idNameWithoutNumber+0)).addClass("pairActive");
-        angular.element(document.getElementById(idNameWithoutNumber+1)).addClass("pairActive");
-        variableSimi.push(value);
-      } 
-      else {
-        $window.alert("CheckBox is not checked.");
-      }
-    };
-
     // fonction qui ...
     $scope.isActive = function(item) {
       return $scope.selected === item;
@@ -188,7 +113,7 @@ angular
     // Si le checkbox est désactivé, les champs selectionnés sont initialisés
     $scope.isDontPair = function() {
       if(!$scope.IsPair){
-        angular.element(document.querySelectorAll('#contentTable td')).removeClass("pairActive");
+        angular.element(document.querySelectorAll('#table tr')).removeClass("selected");
       }
     };
 

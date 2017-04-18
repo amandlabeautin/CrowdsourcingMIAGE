@@ -1,0 +1,34 @@
+{
+  "val": 0.45999999999999996,
+  "idAttribut5": {
+    "val": 1,
+    "elem2": "american",
+    "elem1": "american",
+    "id": 710
+  },
+  "idPair": 142,
+  "idAttribut4": {
+    "val": 0.3,
+    "elem2": "310/823-5396",
+    "elem1": "310/246-1501",
+    "id": 709
+  },
+  "idAttribut3": {
+    "val": 1,
+    "elem2": "los angeles",
+    "elem1": "los angeles",
+    "id": 708
+  },
+  "idAttribut2": {
+    "val": 0,
+    "elem2": "60 n. venice blvd.",
+    "elem1": "435 s. la cienega blv.",
+    "id": 707
+  },
+  "idAttribut1": {
+    "val": 0,
+    "elem2": "west beach cafe",
+    "elem1": "arnie morton's of chicago",
+    "id": 706
+  }
+}
