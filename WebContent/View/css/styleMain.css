@@ -1,3 +1,7 @@
+p {
+	color: #e5e5e5;
+}
+
 .pairActive {
   background-color: #E8D76E;
 }
@@ -21,6 +25,11 @@
 
 #formModal .modal-footer {
 	background-color: #d2d2d2;
+	color: black;
+}
+
+.modal-footer p{
+	color: black;
 }
 
 #loginView label {
@@ -40,5 +49,5 @@
 }
 
 tr.selected td {
-      background: #ccc!important;
-    }
+  background: #ccc!important;
+}

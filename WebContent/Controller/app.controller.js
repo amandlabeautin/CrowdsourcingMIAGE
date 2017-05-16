@@ -66,7 +66,7 @@ angular
       if ($scope.IsPair) {
         item.selected ? item.selected = false : item.selected = true;
       }else {
-        $window.alert("CheckBox is not checked.");
+        $window.alert("Merci de cocher la case '1.' ci-dessus. ");
       }  
     };
 

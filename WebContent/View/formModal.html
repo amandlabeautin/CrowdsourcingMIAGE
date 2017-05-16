@@ -3,39 +3,57 @@
 <div ng-controller="modalController">
 	<div id="formModal{{index}}">
 		<div class="modal-header">
-		  <h3 class="modal-title" id="modal-title">Crowsourcing</h3>
+		  	<h3 class="modal-title" id="modal-title">Crowdsourcing</h3>
+		  	<hr>
+		  	<div id="modeEmploi">
+				<h4>Mode d'emploi</h4>
+				<p> 1. Analyser le jeux des paires. Si certains sont semblables, cochez la case ci-dessous.</p>
+				<p> 2. S&eacute;lectionner les numéros de pairs identiques dans le tableau.</p>
+				<p> 3. Donner un indice de confiance de vos choix de similarité entre 0 et 1, sachant que 1 est un indice fort de confiance.</p>
+			</div>
 		</div>
 		<form ng-submit="addText(form)">
 		<div class="modal-body" id="modal-body">
-			<table class="table" id="table">
-			  	
-			  		<thead>
-			  			<tr class="active">
-			  				<th>Num Pair</th>
-			  				<th>1ère pair</th>
-			  				<th>2ème pair</th>
-			  			</tr>
-			  		</thead>
-				    <tbody>
-				      <tr ng-repeat="rest in dataRestaurants" ng-class="{'selected': rest.selected}" ng-click="select(rest)">
-				      	<td ng-bind="rest.id"></td>
-				        <td ng-bind="rest.elem1"></td>
-				        <td ng-bind="rest.elem2"></td>
-				      </tr>
-				    </tbody>
-			    
-		  	</table>
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<label for="labelCheckbox">1. Les deux données ci-dessous font-elles références au même restaurant ?
+					</label>
+			        <label for="chkPassport">
+			            <input id="chkPassport" type="checkbox" ng-model="IsPair"  ng-click="isDontPair()"/>
+					</label>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			<div class="row">
+				<p style="color: black"><strong>2. Les pairs</strong></p>
+				<table class="table" id="table">
+				
+				  		<thead>
+				  			<tr class="active">
+				  				<th>Num Pair</th>
+				  				<th>1ère pair</th>
+				  				<th>2ème pair</th>
+				  			</tr>
+				  		</thead>
+					    <tbody>
+					      <tr ng-repeat="rest in dataRestaurants" ng-class="{'selected': rest.selected}" ng-click="select(rest)">
+					      	<td ng-bind="rest.id"></td>
+					        <td ng-bind="rest.elem1"></td>
+					        <td ng-bind="rest.elem2"></td>
+					      </tr>
+					    </tbody>
+				    
+			  	</table>
+			</div>
 		</div>
 
 		<div class="modal-footer">
 			<div class="form-inline row">
-				<div class="form-group col-md-4">
-				    <label for="labelCheckbox">Y a t'il des jeux similaires ?</label>
-			        <label for="chkPassport">
-			            <input id="chkPassport" type="checkbox" ng-model="IsPair"  ng-click="isDontPair()"/>
-			        </label>
-		        </div>
-		        <div class="form-group col-md-4"></div>
+				<div class="form-group col-md-8">
+					<p>3. Merci de mettre un indice compris entre 0,0 et 1,0.</p>
+					<p>Sachant que 1,0 est un indice fort de confiance. =></p>
+				</div>
 		        <div class="form-group col-md-4" tooltip-placement="{{placement.selected}}" uib-tooltip="Merci de mettre un indice compris entre 0,0 et 1,0 sachant que 1,0 est un indice fort de confiance." tooltip-class="customClass">
 				    <label for="exampleInputName2">Indice de confiance</label>
 				    <slider ng-model="sliders.sliderValue" min="formRange.min" step="formRange.step" max="formRange.max" value="formRange.value" id="exampleInputName2"></slider>
