@@ -83,6 +83,17 @@ angular
       }
       
       console.log(temp);
+	  $scope.jsonResultSend = temp;
+	  $http({
+			method: 'POST',
+			url: 'http://127.0.0.1:8080/ProjetPPD/postPairServlet',
+			headers: {'Content-Type': 'application/json'},
+			data:  $scope.jsonResultSend 
+		}).then(function (success){
+			
+	   },function (error){
+			console.log('error : ' + error.status);
+	   });
     };
 
       // Fonction qui ...
@@ -92,7 +103,16 @@ angular
   
     // fonction qui ...
     $scope.next = function ($scope) {
-      $window.alert('pas d\'autre valeur');
+	  $http({
+			method: 'GET',
+			url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
+		}).then(function (success){
+			console.log(success);
+	   },function (error){
+			console.log('error : ' + error.status)
+			console.log('error : ' + error);
+	   });
+	  
     };
 
     // Log Success message
