@@ -2,6 +2,10 @@ p {
 	color: #e5e5e5;
 }
 
+h3 {
+	color: white;
+}
+
 .pairActive {
   background-color: #E8D76E;
 }
@@ -50,4 +54,35 @@ p {
 
 tr.selected td {
   background: #ccc!important;
+}
+
+#adminCtrl {
+	padding-top: 0%;
+	padding: 5%;
+}
+
+
+#adminCtrl #usersTable{
+	background-color: black;
+	color :white;
+}
+
+div#adminCtrl.follow_container, div#addUser.follow_container{
+	top: -10%;
+}
+
+#Tabs {
+	color: white;
+}
+
+#Tabs a{
+	color: #d2d2d2;
+}
+
+#addUser.follow_container{
+	padding-top: 15%;
+}
+
+#addUser label {
+	color: white;
 }

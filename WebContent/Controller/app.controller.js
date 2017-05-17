@@ -3,7 +3,9 @@ angular
     .controller('homeCtrl', homeCtrl)
     .controller('modalController', modalController)
     .controller('RegisterCtrl', RegisterCtrl)
-    .controller('loginCtrl', loginCtrl);
+    .controller('loginCtrl', loginCtrl)
+    .controller('adminCtrl', adminCtrl)
+    .controller('addUserCtrl', addUserCtrl);
 
   var variableSimi = [];
 
@@ -178,5 +180,12 @@ angular
 
   // Controller de la page de connexion
   function loginCtrl(){
-    
+  };
+
+  function adminCtrl(){
+    angular.element(document.querySelectorAll('#urlAdminHeader')).addClass("navactive");
+    angular.element(document.querySelectorAll('#urlWelcomeHeader')).removeClass("navactive");
+  };
+
+  function addUserCtrl(){
   };
