@@ -3,7 +3,7 @@ angular
     .controller('homeCtrl', homeCtrl)
     .controller('modalController', modalController)
     .controller('RegisterCtrl', RegisterCtrl)
-    .controller('loginCtrl', loginCtrl)
+    .controller('SigninCtrl', SigninCtrl)
     .controller('adminCtrl', adminCtrl)
     .controller('addUserCtrl', addUserCtrl);
 
@@ -159,27 +159,51 @@ angular
 
   // Controller de la page d'inscription
   function RegisterCtrl(UserService, $location, $rootScope, FlashService) {
-      var vm = this;
-
-      vm.register = register;
-
-      function register() {
-          vm.dataLoading = true;
-          UserService.Create(vm.user)
-              .then(function (response) {
-                  if (response.success) {
-                      FlashService.Success('Registration successful', true);
-                      $location.path('/login');
-                  } else {
-                      FlashService.Error(response.message);
-                      vm.dataLoading = false;
-                  }
-              });
+      $scope.createUser = function(user){
+        var userExist = $http.get('http://localhost:8080/user/checkUserExists',{params: {'login': user.login}}).
+            then(function  (response) { 
+              userExist = response.data;
+            });
+            if (userExist = false) {
+              $http.get('http://localhost:8080/users/add',{params: {'name': user.login, 'password' : user.password}}).
+                  then(function  (response) {
+                    if(response.data == 'SAVED') {
+                      $location.path('/');
+                    }})
+            .catch(function(response, status) {
+              console.error('Gists error', response.status, response.data);
+                $scope.loginFailed = true;
+                  UtilService.notifyError('Invalid Login Credentials');
+          });
+            } else {
+              $scope.inscriptionForm.$error.userExist = true;
+            }
       };
   };
 
   // Controller de la page de connexion
-  function loginCtrl(){
+  function SigninCtrl($scope, $http, $location, UserService){
+
+    $scope.connectUser = function(user){
+      $http({
+          method: 'POST',
+          url: 'http://127.0.0.1:8080/ProjetPPD/postSearchUser',
+          data: JSON.stringify(user),
+          headers: {'Content-Type': 'application/json'}
+      })
+      .then(function  (response) { 
+        if (response.data.administrator == false) {
+            UserService.setUser(response.data);
+        } else {
+          console.log(response.data.administrator);
+            UserService.setAdmin(response.data);
+        }
+        $location.path('/home');
+      },function(response) {
+          console.log('Login failed');
+          $scope.loginFailed = true;
+      });
+    };
   };
 
   function adminCtrl(){

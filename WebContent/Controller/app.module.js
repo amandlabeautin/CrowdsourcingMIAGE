@@ -4,5 +4,8 @@ angular
    		'ui.bootstrap',
    		'ui.bootstrap.modal',
    		'ui.bootstrap-slider',
-		'ngRoute'
+		'ngRoute',
+		'ui.router',
+		'ngCookies',
+		'ui-notification'
 	]);
