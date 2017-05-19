@@ -36,7 +36,10 @@ public class DBInitServlet extends  HttpServlet {
 			System.out.println("---------- Database cleaned ----------");
 			System.out.println("----------");
 			
-			CollectData.collectData();
+			String PathFile1 = getServletContext().getRealPath("Files/Dataset1.txt");
+			String PathFile2 = getServletContext().getRealPath("Files/Dataset2.txt");
+					
+			CollectData.collectData(PathFile1, PathFile2);
 			
 			System.out.println("----------");
 			System.out.println("---------- Database generated ----------");
@@ -56,8 +59,8 @@ public class DBInitServlet extends  HttpServlet {
 							Thread.sleep(20000);
 							System.out.println("Check si matching dependencie similaires...");
 	
-							ArrayList<Pair> listPairOne = DBService.SELECT_ALL_MATCHING_DEPENDENCIE_TEMP_ONE();
-							ArrayList<Pair> listPairTwo = DBService.SELECT_ALL_MATCHING_DEPENDENCIE_TEMP_TWO();
+							ArrayList<Pair> listPairOne = DBService.SELECT_ALL_MATCHING_DEPENDENCIE_ONE_ENTITY();
+							ArrayList<Pair> listPairTwo = DBService.SELECT_ALL_MATCHING_DEPENDENCIE_REMASTER();
 							
 							for (Pair pair : listPairOne) {
 								if(listPairTwo.contains(pair)){

@@ -83,9 +83,8 @@ public class postPairServlet extends HttpServlet {
 		pairApriori.setVal(json.get("Val").getAsDouble());		
 		
 		ArrayList<Attribut> newList = new ArrayList<>();
-		for (Attribut a : pairApriori.getListAttribut()) {
-			DBService.INSERT_ATTRIBUT_R_APRIORI(a, pairApriori.getId());
-			newList.add(a);
+		for (Attribut a : pairApriori.getListAttribut()) {			
+			newList.add(DBService.INSERT_ATTRIBUT_R_APRIORI(a, pairApriori.getId()));
 		}
 		pairApriori.getListAttribut().removeAll(pairApriori.getListAttribut());
 		for (Attribut attribut : newList) {
@@ -107,10 +106,10 @@ public class postPairServlet extends HttpServlet {
 		Utils.GenerateSimilarPrimeApriori(pairApriori);
 		
 		if(simPPrime.getMoySimilar() >= 0.8){
-			DBService.INSERT_MATCHING_DEPENDENCIE_TEMP_ONE(pair);
+			DBService.INSERT_MATCHING_DEPENDENCIE_ONE_ENTITY(pair);
 		}
 		else{
-			DBService.DELETE_MATCHING_DEPENDENCIE_TEMP_ONE(pair);
+			DBService.DELETE_MATCHING_DEPENDENCIE_ONE_ENTITY(pair);
 		}
 
 		try {
@@ -233,10 +232,10 @@ public class postPairServlet extends HttpServlet {
 					
 					// Si la moyenne est supérieur ou égal au seuil alors on créer une matching dépendencie temporaire
 					if(moyGeneralPair >= 0.8){
-						DBService.INSERT_MATCHING_DEPENDENCIE_TEMP_TWO(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
+						DBService.INSERT_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
 					}
 					else{
-						DBService.DELETE_MATCHING_DEPENDENCIE_TEMP_TWO(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
+						DBService.DELETE_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
 					}
 				}
 			}

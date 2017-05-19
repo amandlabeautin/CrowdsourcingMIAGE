@@ -18,11 +18,13 @@ public class CollectData {
 	static ArrayList<Pair> tablePreTraitement = new ArrayList<>();
 	static ArrayList<Pair> tableSimilariteRPrime = new ArrayList<>();
 	
-	public static void collectData(){
+	public static void collectData(String path1, String path2) {
 		try {
-			
-			File file1 = new File("E:/Projet Java/ProjetPPD/WebContent/Files/Dataset1.txt");
-			File file2 = new File("E:/Projet Java/ProjetPPD/WebContent/Files/Dataset2.txt");
+
+			File file1 = new File(path1);
+			File file2 = new File(path2);
+			//File file1 = new File("/Files/Dataset1.txt");appHome = 
+			//File file2 = new File("/Files/Dataset2.txt");
 			BufferedReader br1 = new BufferedReader(new FileReader(file1));
 			BufferedReader br2;
 			String line1 = "";
@@ -30,6 +32,7 @@ public class CollectData {
 						
 			double val;
 			int index = 0;
+			int index2 = 0;
 			br2 = new BufferedReader(new FileReader(file2));
 
 			while ((line1 = br1.readLine()) != null) {
@@ -45,6 +48,9 @@ public class CollectData {
 					int length = tab1.length;
 					if (tab2.length < length)
 						length = tab2.length;
+					if(index2 == 142){
+						System.out.println("coucou");
+					}
 					String[] listNom = {"RestaurantName", "RestaurantAdress", "RestaurantVille", "RestaurantPhone", "RestaurantType", };
 					for (int i = 0 ; i < length-1 ; i++){
 						String elem1 = tab1[i].trim();
@@ -55,15 +61,18 @@ public class CollectData {
 						val = Double.parseDouble(new DecimalFormat("#.#").format(val).replace(',', '.'));
 						if(val < 0)
 							val = 0;
-						Jaro jar = new Jaro();
+						/*Jaro jar = new Jaro();
 						double valJaro = jar.similarity(elem1, elem2);
-						val = (val + valJaro) / 2;
+						if(valJaro < val){
+							val = valJaro;
+						}*/
 						Attribut a = new Attribut(p, listNom[i], elem1, elem2, val, 1);
 						p.addAttribut(a);
 					}
 					DBService.INSERT_PAIR(p);
 					DBService.INSERT_PAIR_TABLE_PRE_TRAITEMENT(p);
 					DBService.INSERT_PAIR_TABLE_SIMILARITE(p);
+					index2++;
 				}
 			}
 			br2.close();	

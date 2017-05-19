@@ -20,4 +20,8 @@
 	        <filter-name>CORS</filter-name>
 	        <url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<context-param>
+   	<param-name>ContentPath</param-name>
+    	<param-value>/WebContent/Files</param-value>
+	</context-param>
 </web-app>

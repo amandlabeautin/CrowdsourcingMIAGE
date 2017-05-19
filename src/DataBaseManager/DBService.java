@@ -50,97 +50,97 @@ public class DBService {
 			e.printStackTrace();
 		}
 		
-		String sqlTableSimilarR = "DELETE FROM `tablesimilarr` WHERE 1";
-		PreparedStatement statementTableSimilarR;
+		String sqlsimilarite_r = "DELETE FROM `similarite_r` WHERE 1";
+		PreparedStatement statementsimilarite_r;
 		try {
-			statementTableSimilarR = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarR);
-			statementTableSimilarR.executeUpdate();
+			statementsimilarite_r = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r);
+			statementsimilarite_r.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableSimilarR2 = "ALTER TABLE tablesimilarr AUTO_INCREMENT = 1";
-		PreparedStatement statementTableSimilarR2;
+		String sqlsimilarite_r2 = "ALTER TABLE similarite_r AUTO_INCREMENT = 1";
+		PreparedStatement statementsimilarite_r2;
 		try {
-			statementTableSimilarR2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarR2);
-			statementTableSimilarR2.executeUpdate();
+			statementsimilarite_r2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r2);
+			statementsimilarite_r2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableSimilarRPrime = "DELETE FROM `tablesimilarrprime` WHERE 1";
-		PreparedStatement statementTableSimilarRPrime;
+		String sqlsimilarite_r_prime = "DELETE FROM `similarite_r_prime` WHERE 1";
+		PreparedStatement statementsimilarite_r_prime;
 		try {
-			statementTableSimilarRPrime = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarRPrime);
-			statementTableSimilarRPrime.executeUpdate();
+			statementsimilarite_r_prime = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r_prime);
+			statementsimilarite_r_prime.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableSimilarRPrime2 = "ALTER TABLE tablesimilarrprime AUTO_INCREMENT = 1";
-		PreparedStatement statementTableSimilarRPrime2;
+		String sqlsimilarite_r_prime2 = "ALTER TABLE similarite_r_prime AUTO_INCREMENT = 1";
+		PreparedStatement statementsimilarite_r_prime2;
 		try {
-			statementTableSimilarRPrime2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarRPrime2);
-			statementTableSimilarRPrime2.executeUpdate();
+			statementsimilarite_r_prime2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r_prime2);
+			statementsimilarite_r_prime2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		String sqlTablePreTraitement = "DELETE FROM `tablepretraitement` WHERE 1";
-		PreparedStatement statementTablePreTraitement;
+		String sqlpre_traitement = "DELETE FROM `pre_traitement` WHERE 1";
+		PreparedStatement statementpre_traitement;
 		try {
-			statementTablePreTraitement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablePreTraitement);
-			statementTablePreTraitement.executeUpdate();
+			statementpre_traitement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlpre_traitement);
+			statementpre_traitement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTablePreTraitement2 = "ALTER TABLE tablepretraitement AUTO_INCREMENT = 1";
-		PreparedStatement statementTablePreTraitement2;
+		String sqlpre_traitement2 = "ALTER TABLE pre_traitement AUTO_INCREMENT = 1";
+		PreparedStatement statementpre_traitement2;
 		try {
-			statementTablePreTraitement2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablePreTraitement2);
-			statementTablePreTraitement2.executeUpdate();
+			statementpre_traitement2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlpre_traitement2);
+			statementpre_traitement2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		String sqlTableSimilarRApriori = "DELETE FROM `tablesimilarrapriori` WHERE 1";
-		PreparedStatement statementTableSimilarRApriori;
+		String sqlsimilarite_r_remaster = "DELETE FROM `similarite_r_remaster` WHERE 1";
+		PreparedStatement statementsimilarite_r_remaster;
 		try {
-			statementTableSimilarRApriori = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarRApriori);
-			statementTableSimilarRApriori.executeUpdate();
+			statementsimilarite_r_remaster = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r_remaster);
+			statementsimilarite_r_remaster.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableSimilarRApriori2 = "ALTER TABLE tablesimilarrapriori AUTO_INCREMENT = 1";
-		PreparedStatement statementTableSimilarRApriori2;
+		String sqlsimilarite_r_remaster2 = "ALTER TABLE similarite_r_remaster AUTO_INCREMENT = 1";
+		PreparedStatement statementsimilarite_r_remaster2;
 		try {
-			statementTableSimilarRApriori2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarRApriori2);
-			statementTableSimilarRApriori2.executeUpdate();
+			statementsimilarite_r_remaster2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r_remaster2);
+			statementsimilarite_r_remaster2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		String sqlTableSimilarRPrimeApriori = "DELETE FROM `tablesimilarrprimeapriori` WHERE 1";
-		PreparedStatement statementTableSimilarRPrimeApriori;
+		String sqlsimilarite_r_prime_remaster = "DELETE FROM `similarite_r_prime_remaster` WHERE 1";
+		PreparedStatement statementsimilarite_r_prime_remaster;
 		try {
-			statementTableSimilarRPrimeApriori = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarRPrimeApriori);
-			statementTableSimilarRPrimeApriori.executeUpdate();
+			statementsimilarite_r_prime_remaster = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r_prime_remaster);
+			statementsimilarite_r_prime_remaster.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableSimilarRPrimeApriori2 = "ALTER TABLE tablesimilarrprimeapriori AUTO_INCREMENT = 1";
-		PreparedStatement statementTableSimilarRPrimeApriori2;
+		String sqlsimilarite_r_prime_remaster2 = "ALTER TABLE similarite_r_prime_remaster AUTO_INCREMENT = 1";
+		PreparedStatement statementsimilarite_r_prime_remaster2;
 		try {
-			statementTableSimilarRPrimeApriori2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableSimilarRPrimeApriori2);
-			statementTableSimilarRPrimeApriori2.executeUpdate();
+			statementsimilarite_r_prime_remaster2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlsimilarite_r_prime_remaster2);
+			statementsimilarite_r_prime_remaster2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableAttributApriori = "DELETE FROM `attributrapriori` WHERE 1";
+		String sqlTableAttributApriori = "DELETE FROM `attribut_apriori` WHERE 1";
 		PreparedStatement statementTableAttributApriori;
 		try {
 			statementTableAttributApriori = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableAttributApriori);
@@ -149,7 +149,7 @@ public class DBService {
 			e.printStackTrace();
 		}
 		
-		String sqlTableAttributApriori2 = "ALTER TABLE attributrapriori AUTO_INCREMENT = 1";
+		String sqlTableAttributApriori2 = "ALTER TABLE attribut_apriori AUTO_INCREMENT = 1";
 		PreparedStatement statementTableAttributApriori2;
 		try {
 			statementTableAttributApriori2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableAttributApriori2);
@@ -158,56 +158,56 @@ public class DBService {
 			e.printStackTrace();
 		}
 
-		String sqlTableMatchingDependencieOne = "DELETE FROM `matchingdependencietempone` WHERE 1";
-		PreparedStatement statementTableMatchingDependencieOne;
+		String sqlTablematching_dependencieOne = "DELETE FROM `md_temp_one_entity` WHERE 1";
+		PreparedStatement statementTablematching_dependencieOne;
 		try {
-			statementTableMatchingDependencieOne = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableMatchingDependencieOne);
-			statementTableMatchingDependencieOne.executeUpdate();
+			statementTablematching_dependencieOne = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencieOne);
+			statementTablematching_dependencieOne.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableMatchingDependencieOne2 = "ALTER TABLE matchingdependencietempone AUTO_INCREMENT = 1";
-		PreparedStatement statementTableMatchingDependencieOne2;
+		String sqlTablematching_dependencieOne2 = "ALTER TABLE md_temp_one_entity AUTO_INCREMENT = 1";
+		PreparedStatement statementTablematching_dependencieOne2;
 		try {
-			statementTableMatchingDependencieOne2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableMatchingDependencieOne2);
-			statementTableMatchingDependencieOne2.executeUpdate();
+			statementTablematching_dependencieOne2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencieOne2);
+			statementTablematching_dependencieOne2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		String sqlTableMatchingDependencieTwo = "DELETE FROM `matchingdependencietemptwo` WHERE 1";
-		PreparedStatement statementTableMatchingDependencieTwo;
+		String sqlTablematching_dependencieTwo = "DELETE FROM `md_temp_apriori_remaster` WHERE 1";
+		PreparedStatement statementTablematching_dependencieTwo;
 		try {
-			statementTableMatchingDependencieTwo = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableMatchingDependencieTwo);
-			statementTableMatchingDependencieTwo.executeUpdate();
+			statementTablematching_dependencieTwo = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencieTwo);
+			statementTablematching_dependencieTwo.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableMatchingDependencieTwo2 = "ALTER TABLE matchingdependencietemptwo AUTO_INCREMENT = 1";
-		PreparedStatement statementTableMatchingDependencieTwo2;
+		String sqlTablematching_dependencieTwo2 = "ALTER TABLE md_temp_apriori_remaster AUTO_INCREMENT = 1";
+		PreparedStatement statementTablematching_dependencieTwo2;
 		try {
-			statementTableMatchingDependencieTwo2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableMatchingDependencieTwo2);
-			statementTableMatchingDependencieTwo2.executeUpdate();
+			statementTablematching_dependencieTwo2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencieTwo2);
+			statementTablematching_dependencieTwo2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		String sqlTableMatchingDependencie = "DELETE FROM `matchingdependencie` WHERE 1";
-		PreparedStatement statementTableMatchingDependencie;
+		String sqlTablematching_dependencie = "DELETE FROM `matching_dependencie` WHERE 1";
+		PreparedStatement statementTablematching_dependencie;
 		try {
-			statementTableMatchingDependencie = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableMatchingDependencie);
-			statementTableMatchingDependencie.executeUpdate();
+			statementTablematching_dependencie = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencie);
+			statementTablematching_dependencie.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTableMatchingDependencie2 = "ALTER TABLE matchingdependencie AUTO_INCREMENT = 1";
-		PreparedStatement statementTableMatchingDependencie2;
+		String sqlTablematching_dependencie2 = "ALTER TABLE matching_dependencie AUTO_INCREMENT = 1";
+		PreparedStatement statementTablematching_dependencie2;
 		try {
-			statementTableMatchingDependencie2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableMatchingDependencie2);
-			statementTableMatchingDependencie2.executeUpdate();
+			statementTablematching_dependencie2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencie2);
+			statementTablematching_dependencie2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -246,8 +246,8 @@ public class DBService {
 		}
 	}
 
-	public static void INSERT_MATCHING_DEPENDENCIE_TEMP_ONE(Pair p){
-		String sql = "INSERT INTO matchingdependencietempone (Entry1, Entry2) VALUES (?, ?)";
+	public static void INSERT_MATCHING_DEPENDENCIE_ONE_ENTITY(Pair p){
+		String sql = "INSERT INTO md_temp_one_entity (Entry1, Entry2) VALUES (?, ?)";
 		 
 		PreparedStatement statement;
 		try {
@@ -273,8 +273,8 @@ public class DBService {
 		}		
 	}
 
-	public static void DELETE_MATCHING_DEPENDENCIE_TEMP_ONE(Pair p){	
-		String sqlUpdate = "DELETE FROM matchingdependencietempone WHERE id = ?";
+	public static void DELETE_MATCHING_DEPENDENCIE_ONE_ENTITY(Pair p){	
+		String sqlUpdate = "DELETE FROM md_temp_one_entity WHERE id = ?";
 		PreparedStatement statementUpdate;
 		try {
 			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
@@ -285,11 +285,11 @@ public class DBService {
 		}
 	}
 
-	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_TEMP_ONE(){	
+	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_ONE_ENTITY(){	
 
-		String sqlSelect = "SELECT * FROM matchingdependencietempone";
+		String sqlSelect = "SELECT * FROM md_temp_one_entity";
 		PreparedStatement statementSelect;
-		ArrayList<Pair> listMatchingDependencieTempOne = new ArrayList<>();
+		ArrayList<Pair> listmd_temp_one_entity = new ArrayList<>();
 		try {
 			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
 			ResultSet resSelect = statementSelect.executeQuery();
@@ -299,16 +299,16 @@ public class DBService {
 				pair.setId(resSelect.getInt(1));
 				pair.setObj1(resSelect.getString(2));
 				pair.setObj2(resSelect.getString(3));	
-				listMatchingDependencieTempOne.add(pair);
+				listmd_temp_one_entity.add(pair);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listMatchingDependencieTempOne;
+		return listmd_temp_one_entity;
 	}
 
-	public static void INSERT_MATCHING_DEPENDENCIE_TEMP_TWO(Pair p){
-		String sql = "INSERT INTO matchingdependencietemptwo (Entry1, Entry2) VALUES (?, ?)";
+	public static void INSERT_MATCHING_DEPENDENCIE_REMASTER(Pair p){
+		String sql = "INSERT INTO md_temp_apriori_remaster (Entry1, Entry2) VALUES (?, ?)";
 		 
 		PreparedStatement statement;
 		try {
@@ -334,8 +334,8 @@ public class DBService {
 		}		
 	}
 
-	public static void DELETE_MATCHING_DEPENDENCIE_TEMP_TWO(Pair p){	
-		String sqlUpdate = "DELETE FROM matchingdependencietemptwo WHERE id = ?";
+	public static void DELETE_MATCHING_DEPENDENCIE_REMASTER(Pair p){	
+		String sqlUpdate = "DELETE FROM md_temp_apriori_remaster WHERE id = ?";
 		PreparedStatement statementUpdate;
 		try {
 			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
@@ -347,7 +347,7 @@ public class DBService {
 	}
 
 	public static void INSERT_MATCHING_DEPENDENCIE(Pair p){
-		String sql = "INSERT INTO matchingdependencie (Entry1, Entry2) VALUES (?, ?)";
+		String sql = "INSERT INTO matching_dependencie (Entry1, Entry2) VALUES (?, ?)";
 		 
 		PreparedStatement statement;
 		try {
@@ -375,9 +375,9 @@ public class DBService {
 	
 	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE(){	
 
-		String sqlSelect = "SELECT * FROM matchingdependencie";
+		String sqlSelect = "SELECT * FROM matching_dependencie";
 		PreparedStatement statementSelect;
-		ArrayList<Pair> listMatchingDependencie = new ArrayList<>();
+		ArrayList<Pair> listmatching_dependencie = new ArrayList<>();
 		try {
 			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
 			ResultSet resSelect = statementSelect.executeQuery();
@@ -387,16 +387,16 @@ public class DBService {
 				pair.setId(resSelect.getInt(1));
 				pair.setObj1(resSelect.getString(2));
 				pair.setObj2(resSelect.getString(3));	
-				listMatchingDependencie.add(pair);
+				listmatching_dependencie.add(pair);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listMatchingDependencie;
+		return listmatching_dependencie;
 	}
 
 	public static void DELETE_MATCHING_DEPENDENCIE(Pair p){	
-		String sqlUpdate = "DELETE FROM matchingdependencie WHERE id = ?";
+		String sqlUpdate = "DELETE FROM matching_dependencie WHERE id = ?";
 		PreparedStatement statementUpdate;
 		try {
 			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
@@ -407,11 +407,11 @@ public class DBService {
 		}
 	}
 
-	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_TEMP_TWO(){	
+	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_REMASTER(){	
 
-		String sqlSelect = "SELECT * FROM matchingdependencietemptwo";
+		String sqlSelect = "SELECT * FROM md_temp_apriori_remaster";
 		PreparedStatement statementSelect;
-		ArrayList<Pair> listMatchingDependencieTempTwo = new ArrayList<>();
+		ArrayList<Pair> listmd_temp_apriori_remaster = new ArrayList<>();
 		try {
 			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
 			ResultSet resSelect = statementSelect.executeQuery();
@@ -421,12 +421,12 @@ public class DBService {
 				pair.setId(resSelect.getInt(1));
 				pair.setObj1(resSelect.getString(2));
 				pair.setObj2(resSelect.getString(3));	
-				listMatchingDependencieTempTwo.add(pair);
+				listmd_temp_apriori_remaster.add(pair);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listMatchingDependencieTempTwo;
+		return listmd_temp_apriori_remaster;
 	}
 		
 	public static void INSERT_ATTRIBUT(Attribut a, int idPair){
@@ -491,19 +491,31 @@ public class DBService {
 		}
 	}
 	
-	public static void INSERT_ATTRIBUT_R_APRIORI(Attribut a, int idPair){
+	public static Attribut INSERT_ATTRIBUT_R_APRIORI(Attribut a, int idPair){
 				
-		String sql = "INSERT INTO attributrapriori(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote) VALUES (?,?,?,?,?,?)";
-		
+		String sql = "INSERT INTO attribut_apriori(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote) VALUES (?,?,?,?,?,?)";
 		PreparedStatement statement;
+		Attribut newAttr = null;
 		try {
 			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idPair);
 			statement.setString(2, a.getNomAttribut());
 			statement.setString(3, a.getElem1());
 			statement.setString(4, a.getElem2());
-			statement.setDouble(5, a.getVal());
+			
+			String elem1 = a.getElem1().trim();
+			String elem2 = a.getElem2().trim();
+			double val = Utils.minDistance(elem1, elem2);
+			double mult = 0.1;
+			val = (1 - (val * mult));
+			val = Double.parseDouble(new DecimalFormat("#.#").format(val).replace(',', '.'));
+			if(val < 0)
+				val = 0;
+			
+			statement.setDouble(5, val);
 			statement.setDouble(6, a.getNbrVote());
+			
+			newAttr = new Attribut(a.getP(), a.getElem1(), a.getElem2(), val, a.getNbrVote());
 			
 			int affectedRows = statement.executeUpdate();
 	        if (affectedRows == 0) {
@@ -512,7 +524,7 @@ public class DBService {
 
 	        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
 	            if (generatedKeys.next()) {
-	                a.setId(generatedKeys.getInt(1));
+	            	newAttr.setId(generatedKeys.getInt(1));
 	            }
 	            else {
 	                throw new SQLException("Creating user failed, no ID obtained.");
@@ -521,10 +533,11 @@ public class DBService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return newAttr;
 	}
 		
 	public static void INSERT_PAIR_TABLE_PRE_TRAITEMENT(Pair p){
-		String sql = "INSERT INTO tablepretraitement (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar) VALUES (?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO pre_traitement (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar) VALUES (?,?,?,?,?,?,?)";
 				
 		PreparedStatement statement;
 		try {
@@ -551,7 +564,7 @@ public class DBService {
 	}
 	
 	public static double INSERT_PAIR_TABLE_SIMILARITE(Pair p){
-		String sqlSelect = "SELECT * FROM tablesimilarr WHERE idPair = ?";
+		String sqlSelect = "SELECT * FROM similarite_r WHERE idPair = ?";
 		PreparedStatement statementSelect;
 		int nbrVote = 1;
 		double moySim = 0;
@@ -564,7 +577,7 @@ public class DBService {
 				exist = true;
 				nbrVote = resSelect.getInt(9);
 				nbrVote++;
-				String sqlUpdate = "UPDATE tablesimilarr SET moySimilar = ?, nbrVote = ? WHERE idPair = ?";
+				String sqlUpdate = "UPDATE similarite_r SET moySimilar = ?, nbrVote = ? WHERE idPair = ?";
 				PreparedStatement statementUpdate;
 				try {
 					statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
@@ -589,7 +602,7 @@ public class DBService {
 		}
 		
 		if(!exist){
-			String sql = "INSERT INTO tablesimilarr (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar, nbrVote) VALUES (?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO similarite_r (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar, nbrVote) VALUES (?,?,?,?,?,?,?,?)";
 					
 			PreparedStatement statement;
 			try {
@@ -619,7 +632,7 @@ public class DBService {
 	}
 	
 	public static SimilarPair SELECT_PAIR_TABLE_SIMILARITE_BY_ID(int idPair){
-		String sqlSelect = "SELECT * FROM tablesimilarr WHERE idPair = ?";
+		String sqlSelect = "SELECT * FROM similarite_r WHERE idPair = ?";
 		PreparedStatement statementSelect;
 		SimilarPair simP = new SimilarPair();
 		try {
@@ -648,7 +661,7 @@ public class DBService {
 	
 	public static void INSERT_PAIR_TABLE_SIMILARITE_APRIORI(Pair p){
 		double moySim = 0;		
-		String sql = "INSERT INTO tablesimilarrapriori (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar, nbrVote) VALUES (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO similarite_r_remaster (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar, nbrVote) VALUES (?,?,?,?,?,?,?,?)";
 				
 		PreparedStatement statement;
 		try {
@@ -704,7 +717,7 @@ public class DBService {
 	}
 	
 	public static Attribut SELECT_ATTRIBUT_APRIORI(int idAttribut){
-		String sql = "SELECT * FROM attributrapriori where id = ?";
+		String sql = "SELECT * FROM attribut_apriori where id = ?";
 
 		Attribut attr = new Attribut();
 		PreparedStatement statement;
@@ -758,7 +771,7 @@ public class DBService {
 	}
 	
 	public static ArrayList<SimilarPair> SELECT_TABLE_SIMILAR_R(){
-		String sql = "SELECT * FROM tablesimilarr";
+		String sql = "SELECT * FROM similarite_r";
 		ArrayList<SimilarPair> listPairSimilaire = new ArrayList<>();		
 		SimilarPair simP = new SimilarPair();
 		PreparedStatement statement;
@@ -786,7 +799,7 @@ public class DBService {
 	}
 	
 	public static ArrayList<ArrayList<SimilarPair>> SELECT_TABLE_SIMILAR_R_PRIME_APRIORI(){
-		String sql = "SELECT * FROM tablesimilarrprimeapriori ORDER BY idPair";
+		String sql = "SELECT * FROM similarite_r_prime_remaster ORDER BY idPair";
 		ArrayList<ArrayList<SimilarPair>> listPairSimilaire = new ArrayList<>();		
 		ArrayList<SimilarPair> listPairSimilaireForId = new ArrayList<>();		
 		SimilarPair simP = new SimilarPair();
@@ -829,7 +842,7 @@ public class DBService {
 	}
 	
 	public static void INSERT_PAIR_TABLE_SIMILARITE_PRIME(SimilarPair p){
-		String sqlSelect = "SELECT * FROM tablesimilarrprime WHERE idPair = ?";
+		String sqlSelect = "SELECT * FROM similarite_r_prime WHERE idPair = ?";
 		PreparedStatement statementSelect;
 		boolean exist = false;
 		try {
@@ -838,7 +851,7 @@ public class DBService {
 			ResultSet resSelect = statementSelect.executeQuery();
 			while(resSelect.next()) {
 				exist = true;
-				String sqlUpdate = "UPDATE tablesimilarrprime SET idAttribut1 = ?, idAttribut2 = ?, idAttribut3 = ?, idAttribut4 = ?, idAttribut5 = ?, moySimilar = ? WHERE idPair = ?";
+				String sqlUpdate = "UPDATE similarite_r_prime SET idAttribut1 = ?, idAttribut2 = ?, idAttribut3 = ?, idAttribut4 = ?, idAttribut5 = ?, moySimilar = ? WHERE idPair = ?";
 				PreparedStatement statementUpdate;
 				try {
 					statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
@@ -855,7 +868,7 @@ public class DBService {
 				}
 				
 				if(p.getMoySimilar() <= 0.5){
-					String sqlDelete = "DELETE FROM tablesimilarrprime WHERE idPair = ?";
+					String sqlDelete = "DELETE FROM similarite_r_prime WHERE idPair = ?";
 					PreparedStatement statementDelete;
 					try {
 						statementDelete = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlDelete);
@@ -872,7 +885,7 @@ public class DBService {
 		}
 		
 		if(!exist){
-			String sql = "INSERT INTO tablesimilarrprime (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar) VALUES (?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO similarite_r_prime (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar) VALUES (?,?,?,?,?,?,?)";
 			
 			PreparedStatement statement;
 			try {
@@ -893,7 +906,7 @@ public class DBService {
 	}
 	
 	public static void INSERT_PAIR_TABLE_SIMILARITE_PRIME_APRIORI(SimilarPair p){
-		String sqlApriori = "INSERT INTO tablesimilarrprimeapriori (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar) VALUES (?,?,?,?,?,?,?)";
+		String sqlApriori = "INSERT INTO similarite_r_prime_remaster (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar) VALUES (?,?,?,?,?,?,?)";
 		
 		PreparedStatement statement;
 		try {
@@ -914,7 +927,7 @@ public class DBService {
 	}
 
 	public static ArrayList<SimilarPair> SELECT_SIMILAR_PRIME_ONE(){
-		String sql = "SELECT * FROM tablesimilarrprime";
+		String sql = "SELECT * FROM similarite_r_prime";
 		ArrayList<SimilarPair> listPairSimilaire = new ArrayList<>();		
 		SimilarPair simP = new SimilarPair();
 		PreparedStatement statement;
@@ -942,7 +955,7 @@ public class DBService {
 	}
 
 	public static ArrayList<SimilarPair> SELECT_SIMILAR_PRIME_TWO(){
-		String sql2 = "SELECT * FROM tablesimilarrprime";
+		String sql2 = "SELECT * FROM similarite_r_prime";
 		ArrayList<SimilarPair> listPairSimilaireApriori = new ArrayList<>();		
 		SimilarPair simPApriori = new SimilarPair();
 		PreparedStatement statement2;
