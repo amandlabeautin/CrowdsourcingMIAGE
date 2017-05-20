@@ -10,8 +10,6 @@ public class User {
 	 * 
 	 */
 	public User() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param id
@@ -73,5 +71,10 @@ public class User {
 	public void setAdministrator(boolean isAdministrator) {
 		this.isAdministrator = isAdministrator;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	 }
 	
 }

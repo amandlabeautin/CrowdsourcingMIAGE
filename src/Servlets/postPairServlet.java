@@ -1,25 +1,13 @@
 package Servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.filters.CorsFilter;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import DataBaseManager.DBService;
-import DataBean.Attribut;
-import DataBean.Pair;
-import DataBean.SimilarPair;
 import Utils.Algorithme_One_Entity;
-import Utils.Apriori;
-import Utils.Utils;
 
 /**
  * Servlet implementation class getRandomPairServlet

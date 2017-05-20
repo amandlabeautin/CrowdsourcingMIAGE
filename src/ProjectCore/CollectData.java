@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import DataBaseManager.DBService;
 import DataBean.Attribut;
 import DataBean.Pair;
-import DataBean.SimilarPair;
 import Utils.Jaro;
 import Utils.Utils;
 

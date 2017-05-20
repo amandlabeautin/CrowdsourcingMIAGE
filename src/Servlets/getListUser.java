@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import DataBaseManager.DBService;
@@ -32,8 +33,13 @@ public class getListUser extends HttpServlet {
 
 			response.setStatus(200);
 		
-			ArrayList<User> users = DBService.SELECT_ALL_USER();
-			JSONObject result = new JSONObject(users);
+			JSONArray result = new JSONArray();
+			 			
+			 ArrayList<User> users = DBService.SELECT_ALL_USER();
+			 for (User user : users) {
+				 JSONObject obj = new JSONObject(user);
+				 result.put(obj);
+			 };
 			
 			response.setContentType("application/json");   
 			PrintWriter out = response.getWriter();

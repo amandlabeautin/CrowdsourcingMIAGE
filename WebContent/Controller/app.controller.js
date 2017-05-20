@@ -211,11 +211,20 @@ angular
       method: 'GET',
       url: 'http://127.0.0.1:8080/ProjetPPD/getListUser',
     }).then(function (response){
-        console.log(response);
+        $scope.users = response.data;
       },function (error){
         console.log('error : ' + error.status)
         console.log('error : ' + error);
     });
+    $scope.detailsPair = false;
+    
+    $scope.showDetailsPair = function(idUser) {
+      $http.get('http://localhost:8080/oeuvres/searchByTitre',{ params: {titre: selected.titre}}).
+          then(function(responseSelected) {
+          $scope.selectedBook = responseSelected.data;
+      });
+      $scope.detailsPair = true;
+    };
   };
 
   function addUserCtrl(){
