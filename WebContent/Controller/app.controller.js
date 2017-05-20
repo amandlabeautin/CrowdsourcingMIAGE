@@ -58,44 +58,61 @@ angular
   };
 
   // Controller de la fenetre modal
-  function modalController($scope, $window, $http, $filter){
+  function modalController($scope, $window, $http, $filter, UserService){
     $http.get("View/dataEnter.json")
       .then(function(response) {
         $scope.dataRestaurants = response.data;
     });
 
+    // $http({
+    //   method: 'GET',
+    //   url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
+    // }).then(function (success){
+    //     console.log(success);
+    // },function (error){
+    //     console.log('error : ' + error.status)
+    //     console.log('error : ' + error);
+    //  });
+
     $scope.select = function (item) {
       if ($scope.IsPair) {
         item.selected ? item.selected = false : item.selected = true;
-      }else {
-        $window.alert("Merci de cocher la case '1.' ci-dessus. ");
-      }  
+      } 
     };
 
     // Fonction qui prepare en JSON en fonction des réponses de l'utilisateur
     $scope.yes = function () {
-      var temp = [];
-      temp = angular.fromJson($scope.dataRestaurants); 
-      temp["Val"] = $scope.sliders.sliderValue;
+      var temp = {};
+      temp["user"] = UserService.getUser().id;
+      
+      if($scope.IsPair){
+          temp["nonSimilaire"] = false;
+          temp = angular.fromJson($scope.dataRestaurants); 
+          temp["Val"] = $scope.sliders.sliderValue;
 
-      for (var i in temp) {
-        if (typeof temp[i].selected == 'undefined' && typeof temp[i].elem1 != 'undefined') {
-            temp[i]["selected"] = false; 
-        }
+          for (var i in temp) {
+            if (typeof temp[i].selected == 'undefined' && typeof temp[i].elem1 != 'undefined') {
+                temp[i]["selected"] = false; 
+            }
+          }
+      }else {
+          temp["nonSimilaire"] = true;
       }
+
+      
       
       console.log(temp);
-	  $scope.jsonResultSend = temp;
+	  /*$scope.jsonResultSend = temp;
 	  $http({
 			method: 'POST',
 			url: 'http://127.0.0.1:8080/ProjetPPD/postPairServlet',
 			headers: {'Content-Type': 'application/json'},
 			data:  $scope.jsonResultSend 
 		}).then(function (success){
-			
+			 console.log(success);
 	   },function (error){
 			console.log('error : ' + error.status);
-	   });
+	   });*/
     };
 
       // Fonction qui ...
@@ -228,4 +245,5 @@ angular
   };
 
   function addUserCtrl(){
+    console.log("hello");
   };
