@@ -22,9 +22,8 @@ angular
 	        })
 	        .state('admin', {
                 url: '/admin',
-                templateUrl: '../View/signin.view.html',
-                controller: 'SigninCtrl',
-                access: 'public'
+                templateUrl: '../View/admin.view.html',
+                controller: 'adminCtrl'
 	        })
 	        .state('addUser', {
                 url: '/addUser',
