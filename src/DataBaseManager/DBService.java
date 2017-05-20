@@ -1194,7 +1194,7 @@ public class DBService {
 
 	
 	public static RandomPair SELECT_RANDOM_PAIR(){
-		String sql = "SELECT * FROM pair WHERE val > 0.4 ORDER BY RAND() LIMIT 1";
+		String sql = "SELECT * FROM pair ORDER BY RAND() LIMIT 1";
 		RandomPair simP = null;
 		PreparedStatement statement;
 		try {
