@@ -15,7 +15,7 @@ angular
       // Ouverture de la fenetre modal 
       var modalPopup = function () {
         return $scope.modalInstance = $uibModal.open({
-          templateUrl: 'View/formModal.html',
+          templateUrl: '../View/formModal.html',
           size:'lg',
           scope: $scope
         });
@@ -59,37 +59,53 @@ angular
 
   // Controller de la fenetre modal
   function modalController($scope, $window, $http, $filter, UserService){
-    $http.get("View/dataEnter.json")
-      .then(function(response) {
-        $scope.dataRestaurants = response.data;
-    });
+    $scope.slider = {
+      value: 0,
+      options: {
+          showSelectionBar: true,
+          getSelectionBarColor: function(value) {
+              if (value <= 0.3)
+                  return 'red';
+              if (value <= 0.5)
+                  return 'orange';
+              if (value <= 0.7)
+                  return 'yellow';
+              return '#2AE02A';
+          },
+          floor: 0,
+          ceil: 1,
+          step: 0.1,
+          precision: 1
+      }
+    };
 
-    // $http({
-    //   method: 'GET',
-    //   url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
-    // }).then(function (success){
-    //     console.log(success);
-    // },function (error){
-    //     console.log('error : ' + error.status)
-    //     console.log('error : ' + error);
-    //  });
+    $http({
+      method: 'GET',
+      url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
+    }).then(function (success){
+        $scope.pairServlets = success.data;
+    },function (error){
+        console.log('error : ' + error.status)
+        console.log('error : ' + error);
+     });
 
     $scope.select = function (item) {
       if ($scope.IsPair) {
         item.selected ? item.selected = false : item.selected = true;
-      } 
+      } else{
+        alert("Merci de cocher la case ci-dessus, si des elements du tableau sont similaires.");
+      }
     };
 
     // Fonction qui prepare en JSON en fonction des réponses de l'utilisateur
     $scope.yes = function () {
       var temp = {};
-      temp["user"] = UserService.getUser().id;
-      
       if($scope.IsPair){
+          temp = angular.fromJson($scope.pairServlets); 
           temp["nonSimilaire"] = false;
-          temp = angular.fromJson($scope.dataRestaurants); 
-          temp["Val"] = $scope.sliders.sliderValue;
-
+          temp["valUser"] = $scope.slider.value;
+          
+          
           for (var i in temp) {
             if (typeof temp[i].selected == 'undefined' && typeof temp[i].elem1 != 'undefined') {
                 temp[i]["selected"] = false; 
@@ -98,21 +114,20 @@ angular
       }else {
           temp["nonSimilaire"] = true;
       }
-
-      
-      
+      temp["user"] = UserService.getUser().id;
       console.log(temp);
-	  /*$scope.jsonResultSend = temp;
-	  $http({
-			method: 'POST',
-			url: 'http://127.0.0.1:8080/ProjetPPD/postPairServlet',
-			headers: {'Content-Type': 'application/json'},
-			data:  $scope.jsonResultSend 
-		}).then(function (success){
-			 console.log(success);
-	   },function (error){
-			console.log('error : ' + error.status);
-	   });*/
+
+  	  $scope.jsonResultSend = temp;
+  	  $http({
+  			method: 'POST',
+  			url: 'http://127.0.0.1:8080/ProjetPPD/postPairServlet',
+  			headers: {'Content-Type': 'application/json'},
+  			data:  $scope.jsonResultSend 
+  		}).then(function (success){
+  			 console.log(success);
+  	   },function (error){
+  			console.log('error : ' + error.status);
+  	   });
     };
 
       // Fonction qui ...
@@ -121,17 +136,18 @@ angular
     };
   
     // fonction qui ...
-    $scope.next = function ($scope) {
-	  $http({
-			method: 'GET',
-			url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
-		}).then(function (success){
-			console.log(success);
-	   },function (error){
-			console.log('error : ' + error.status)
-			console.log('error : ' + error);
-	   });
-	  
+    $scope.next = function () {
+  	  $http({
+  			method: 'GET',
+  			url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
+  		}).then(function (success){
+        $scope.pairServlets = success.data;
+  			console.log(success);
+  	   },function (error){
+  			console.log('error : ' + error.status)
+  			console.log('error : ' + error);
+  	   });
+	   
     };
 
     // Log Success message
@@ -223,7 +239,8 @@ angular
     };
   };
 
-  function adminCtrl($scope, $http){
+  function adminCtrl($scope, $http, $uibModal, $log, $window, UserService){
+    $scope.login = UserService.getUser().login;
     $http({
       method: 'GET',
       url: 'http://127.0.0.1:8080/ProjetPPD/getListUser',
@@ -242,6 +259,24 @@ angular
       });
       $scope.detailsPair = true;
     };
+
+    $scope.deleteUser = function(user) {
+        modalPopupDelete().result
+          .then(function (data) {
+            console.log(user);
+          })
+          .then(null, function (reason) {
+            $scope.handleDismiss(reason);
+          });
+    };
+
+    var modalPopupDelete = function () {
+        return $scope.modalInstance = $uibModal.open({
+          templateUrl: '../View/modalConfirmation.view.html',
+          size:'lg',
+          scope: $scope
+        });
+      };
   };
 
   function addUserCtrl(){

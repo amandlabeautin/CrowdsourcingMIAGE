@@ -48,6 +48,8 @@ angular
 		    			console.log('redirect to login');
 		    			$location.path("/");
 		    		}
+		    	}else{
+		    		$location.path("/home");
 		    	}
 				
 		    	//$rootScope.currentNavLink=toState.name;
