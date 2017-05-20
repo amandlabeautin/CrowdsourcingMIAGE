@@ -9,25 +9,36 @@ public class Attribut {
 	private String elem2;
 	private double val;
 	private int nbrVote;
+	private int tauxVote;
 	
 	public Attribut() {
 	}
 	
-	public Attribut(Pair p, String nomAttribut, String elem1, String elem2, double val, int nbrVote){
+	public Attribut(Pair p, String nomAttribut, String elem1, String elem2, double val, int nbrVote, int tauxVote){
 		this.p = p;
 		this.nomAttribut = nomAttribut;
 		this.elem1 = elem1;
 		this.elem2 = elem2;
 		this.val = val;
 		this.nbrVote = nbrVote;
+		this.tauxVote = tauxVote;
 	}
 	
-	public Attribut(Pair p, String elem1, String elem2, double val, int nbrVote){
+	public Attribut(Pair p, String elem1, String elem2, double val, int nbrVote, int tauxVote){
 		this.p = p;
 		this.elem1 = elem1;
 		this.elem2 = elem2;
 		this.val = val;
 		this.nbrVote = nbrVote;
+		this.tauxVote = tauxVote;
+	}
+	
+	public int getTauxVote() {
+		return tauxVote;
+	}
+	
+	public void setTauxVote(int tauxVote) {
+		this.tauxVote = tauxVote;
 	}
 	
 	public String getNomAttribut() {
