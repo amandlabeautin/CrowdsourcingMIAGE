@@ -15,7 +15,7 @@ angular
       // Ouverture de la fenetre modal 
       var modalPopup = function () {
         return $scope.modalInstance = $uibModal.open({
-          templateUrl: '../View/formModal.html',
+          templateUrl: '../View/authentification/formModal.html',
           size:'lg',
           scope: $scope
         });
@@ -240,7 +240,7 @@ angular
   };
 
   function adminCtrl($scope, $http, $uibModal, $log, $window, UserService){
-    $scope.login = UserService.getUser().login;
+    
     $http({
       method: 'GET',
       url: 'http://127.0.0.1:8080/ProjetPPD/getListUser',
@@ -253,10 +253,6 @@ angular
     $scope.detailsPair = false;
     
     $scope.showDetailsPair = function(idUser) {
-      $http.get('http://localhost:8080/oeuvres/searchByTitre',{ params: {titre: selected.titre}}).
-          then(function(responseSelected) {
-          $scope.selectedBook = responseSelected.data;
-      });
       $scope.detailsPair = true;
     };
 
@@ -272,7 +268,7 @@ angular
 
     var modalPopupDelete = function () {
         return $scope.modalInstance = $uibModal.open({
-          templateUrl: '../View/modalConfirmation.view.html',
+          templateUrl: '../View/admin/modalConfirmation.view.html',
           size:'lg',
           scope: $scope
         });
