@@ -478,7 +478,7 @@ public class DBService {
 		}
 		
 		if(!exist){
-			String sql = "INSERT INTO attribut(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote) VALUES (?,?,?,?,?,?)";
+			String sql = "INSERT INTO attribut_one_entity(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote) VALUES (?,?,?,?,?,?)";
 			
 			PreparedStatement statement;
 			try {
@@ -618,35 +618,91 @@ public class DBService {
 	}
 
 	public static int UPDATE_ATTRIBUT_INCREMENT_TAUX_VOTE(Attribut a, int idPair){
-		String sqlUpdate = "UPDATE attribut SET tauxVote = tauxVote + 1 WHERE PairId = ? and nomAttribut = ?";
-		PreparedStatement statementUpdate;
-		int affectedRows = 0;
+		String sqlSelect = "SELECT * FROM attribut WHERE PairId = ? and nomAttribut = ?";
+		PreparedStatement statementSelect;
+		int taux = 0;
+		int id = 0;
 		try {
-			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate, Statement.RETURN_GENERATED_KEYS);
-			statementUpdate.setInt(1, idPair);
-			statementUpdate.setString(2, a.getNomAttribut());
-			 affectedRows = statementUpdate.executeUpdate();
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setInt(1, idPair);
+			statementSelect.setString(2, a.getNomAttribut());
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()) {
+				id = resSelect.getInt(1);
+				String sqlUpdate = "UPDATE attribut SET tauxVote = tauxVote + 1 WHERE id = ?";
+				PreparedStatement statementUpdate;
+				try {
+					statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+					statementUpdate.setInt(1, id);
+					statementUpdate.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			String sqlSelect2 = "SELECT * FROM attribut WHERE id = ?";
+			PreparedStatement statementSelect2;
+			try {
+				statementSelect2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect2);
+				statementSelect2.setInt(1, id);
+				ResultSet resSelect2 = statementSelect2.executeQuery();
+				while(resSelect2.next()) {
+					taux = resSelect2.getInt(8);
+				}
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return affectedRows;
+		
+		return taux;
 	}
 	
 	public static int UPDATE_ATTRIBUT_DECREMENT_TAUX_VOTE(Attribut a, int idPair){
-		String sqlUpdate = "UPDATE attribut SET tauxVote = tauxVote - 1 WHERE PairId = ? and nomAttribut = ?";
-		PreparedStatement statementUpdate;
-		int affectedRows = 0;
+		String sqlSelect = "SELECT * FROM attribut WHERE PairId = ? and nomAttribut = ?";
+		PreparedStatement statementSelect;
+		int taux = 0;
+		int id = 0;
 		try {
-			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate, Statement.RETURN_GENERATED_KEYS);
-			statementUpdate.setInt(1, idPair);
-			statementUpdate.setString(2, a.getNomAttribut());
-			affectedRows = statementUpdate.executeUpdate();
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setInt(1, idPair);
+			statementSelect.setString(2, a.getNomAttribut());
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()) {
+				id = resSelect.getInt(1);
+				String sqlUpdate = "UPDATE attribut SET tauxVote = tauxVote - 1 WHERE id = ?";
+				PreparedStatement statementUpdate;
+				try {
+					statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+					statementUpdate.setInt(1, id);
+					statementUpdate.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			String sqlSelect2 = "SELECT * FROM attribut WHERE id = ?";
+			PreparedStatement statementSelect2;
+			try {
+				statementSelect2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect2);
+				statementSelect2.setInt(1, id);
+				ResultSet resSelect2 = statementSelect2.executeQuery();
+				while(resSelect2.next()) {
+					taux = resSelect2.getInt(8);
+				}
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return affectedRows;
-	}
 		
+		return taux;
+	}
+	
 	public static void INSERT_PAIR_TABLE_PRE_TRAITEMENT(Pair p){
 		String sql = "INSERT INTO pre_traitement (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar) VALUES (?,?,?,?,?,?,?)";
 				
@@ -887,12 +943,14 @@ public class DBService {
 		ArrayList<Attribut> listAttribut = new ArrayList<>();
 		Attribut attr = new Attribut();
 		PreparedStatement statement;
+		boolean exist = false;
 		try {
 			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
 			statement.setInt(1, idPair);
 			
 			ResultSet res = statement.executeQuery();
 			while (res.next()) {
+				exist = true;
 				String nomAttribut = res.getString(3);
 				String Attr1 = res.getString(4);
 				String Attr2 = res.getString(5);
@@ -906,6 +964,17 @@ public class DBService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		if(!exist){
+			ArrayList<Attribut> listAttr = DBService.SELECT_ALL_ATTRIBUT_FOR_PAIR(idPair);
+			for (Attribut attribut : listAttr) {
+				DBService.INSERT_ATTRIBUT_ONE_ENTITY(attribut, idPair);
+			}
+			
+			listAttribut = DBService.SELECT_ALL_ATTRIBUT_ONE_ENTITY_FOR_PAIR(idPair);
+		}
+		
+		
 		return listAttribut;
 	}
 	
@@ -1134,13 +1203,13 @@ public class DBService {
 			
 			while (res.next()) {
 	            int id = res.getInt(1);
-	            ArrayList<Attribut> listAttr = SELECT_ALL_ATTRIBUT_ONE_ENTITY_FOR_PAIR(id);
-	            Attribut Attribut1 = SELECT_ATTRIBUT_ONE_ENTITY(listAttr.get(0).getId());
-	            Attribut Attribut2 = SELECT_ATTRIBUT_ONE_ENTITY(listAttr.get(1).getId());
-	            Attribut Attribut3 = SELECT_ATTRIBUT_ONE_ENTITY(listAttr.get(2).getId());
-	            Attribut Attribut4 = SELECT_ATTRIBUT_ONE_ENTITY(listAttr.get(3).getId());
-	            Attribut Attribut5 = SELECT_ATTRIBUT_ONE_ENTITY(listAttr.get(4).getId());	            
-	            simP = new RandomPair(id, Attribut1, Attribut2, Attribut3, Attribut4, Attribut5);
+	            ArrayList<Attribut> listAttr = SELECT_ALL_ATTRIBUT_FOR_PAIR(id);
+	            /*Attribut Attribut1 = SELECT_ATTRIBUT(listAttr.get(0).getId());
+	            Attribut Attribut2 = SELECT_ATTRIBUT(listAttr.get(1).getId());
+	            Attribut Attribut3 = SELECT_ATTRIBUT(listAttr.get(2).getId());
+	            Attribut Attribut4 = SELECT_ATTRIBUT(listAttr.get(3).getId());
+	            Attribut Attribut5 = SELECT_ATTRIBUT(listAttr.get(4).getId());*/	            
+	            simP = new RandomPair(id, listAttr.get(0), listAttr.get(1), listAttr.get(2), listAttr.get(3), listAttr.get(4));
 	            for (Attribut attribut : listAttr) {
 					val = val + attribut.getVal();
 				}

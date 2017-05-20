@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -17,13 +19,10 @@ public class Algorithme_Apriori_Remaster {
 
 	private static final Object key = new Object() {};
 	
-	public static void launch(HttpServletRequest request){
+	public static void launch(JsonElement obj){
 		synchronized(key){
 			try {
-				JsonParser parser = new JsonParser();
-				JsonElement obj = parser.parse(request.getReader());
 				JsonObject json = obj.getAsJsonObject();
-			
 				int idPair = json.get("idPair").getAsInt();
 				JsonObject Attribut1 = json.get("idAttribut1").getAsJsonObject();
 				boolean attrSim1 = Attribut1.get("selected").getAsBoolean();

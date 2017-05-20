@@ -17,6 +17,7 @@ import DataBaseManager.DBService;
 import DataBean.Attribut;
 import DataBean.Pair;
 import DataBean.SimilarPair;
+import Utils.Algorithme_Apriori_Remaster;
 import Utils.Algorithme_One_Entity;
 import Utils.Apriori;
 import Utils.Utils;
@@ -49,8 +50,11 @@ public class postPairServlet extends HttpServlet {
 
 	    //response.addHeader("Access-Control-Allow-Origin", "*");
 
-		Algorithme_One_Entity.launch(request);
-		Algorithme_One_Entity.launch(request);
+		JsonParser parser = new JsonParser();
+		JsonElement obj = parser.parse(request.getReader());
+		
+		Algorithme_One_Entity.launch(obj);
+		Algorithme_Apriori_Remaster.launch(obj);
 		
 	}
 

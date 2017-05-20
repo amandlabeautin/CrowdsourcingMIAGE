@@ -61,7 +61,7 @@ public class CollectData {
 						if(valJaro < val){
 							val = valJaro;
 						}
-						Attribut a = new Attribut(p, listNom[i], elem1, elem2, val, 1, 0);
+						Attribut a = new Attribut(p, listNom[i], elem1, elem2, val, 2, 0);
 						p.addAttribut(a);
 					}
 					DBService.INSERT_PAIR(p);

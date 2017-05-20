@@ -5,6 +5,8 @@ import java.util.concurrent.locks.Lock;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,13 +20,11 @@ public class Algorithme_One_Entity {
 	
 	private static final Object key = new Object() {};
 	
-	public static void launch(HttpServletRequest request){
+	public static void launch(JsonElement obj){
 		synchronized(key){
 			try{
-				JsonParser parser = new JsonParser();
-				JsonElement obj = parser.parse(request.getReader());
+
 				JsonObject json = obj.getAsJsonObject();
-			
 				int idPair = json.get("idPair").getAsInt();
 				JsonObject Attribut1 = json.get("idAttribut1").getAsJsonObject();
 				boolean attrSim1 = Attribut1.get("selected").getAsBoolean();
@@ -42,13 +42,14 @@ public class Algorithme_One_Entity {
 				Pair pair = DBService.SELECT_PAIR_BY_ID(idPair);
 				
 				// On récupère les attributs de la pair
-				ArrayList<Attribut> listAttributs = DBService.SELECT_ALL_ATTRIBUT_FOR_PAIR(idPair);
+				ArrayList<Attribut> listAttributs = DBService.SELECT_ALL_ATTRIBUT_ONE_ENTITY_FOR_PAIR(idPair);
 				for (Attribut attribut : listAttributs) {
 					pair.addAttribut(attribut);
 				}
 				
 				// On met à jour la note de chaque attributs
 				int tauxVote = Utils.calculNoteAttribut(pair, attrSim1, attrSim2, attrSim3, attrSim4, attrSim5, val);
+				
 				
 				if(tauxVote>0){
 				
