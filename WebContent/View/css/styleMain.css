@@ -78,20 +78,31 @@ tr.selected td {
 }
 
 /* Page inscription */
+div#signup.follow_container {
+	top: 25%;
+}
+#signup form#inscriptionForm{
+	width: 50%;
+	margin-left: 25%;
+}
+
+/* Page connexion */
 #Signin div.follow_container {
 	top: 25%;
 }
-#Signin form#loginForm {
+#Signin form{
 	width: 50%;
 	margin-left: 25%;
 }
 
 /* Page admin.view */
-#adminCtrl {
+#admin {
+	height: 100%;
+	background-color: black;
 	padding-top: 0%;
 	padding: 5%;
 }
-#adminCtrl #usersTable{
+#admin #usersTable{
 	background-color: black;
 	color :white;
 }

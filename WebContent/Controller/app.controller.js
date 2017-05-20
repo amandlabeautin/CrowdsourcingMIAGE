@@ -158,7 +158,7 @@ angular
   };
 
   // Controller de la page d'inscription
-  function RegisterCtrl(UserService, $location, $rootScope, FlashService) {
+  function RegisterCtrl(UserService, $location, $rootScope, FlashService, $scope) {
       $scope.createUser = function(user){
         var userExist = $http.get('http://localhost:8080/user/checkUserExists',{params: {'login': user.login}}).
             then(function  (response) { 
@@ -206,9 +206,16 @@ angular
     };
   };
 
-  function adminCtrl(){
-    angular.element(document.querySelectorAll('#urlAdminHeader')).addClass("navactive");
-    angular.element(document.querySelectorAll('#urlWelcomeHeader')).removeClass("navactive");
+  function adminCtrl($scope, $http){
+    $http({
+      method: 'GET',
+      url: 'http://127.0.0.1:8080/ProjetPPD/getListUser',
+    }).then(function (response){
+        console.log(response);
+      },function (error){
+        console.log('error : ' + error.status)
+        console.log('error : ' + error);
+    });
   };
 
   function addUserCtrl(){

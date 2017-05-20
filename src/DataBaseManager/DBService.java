@@ -1116,4 +1116,34 @@ public class DBService {
 		}
 		return user;
 	}
+	
+	public static ArrayList<User> SELECT_ALL_USER() {
+		
+		String sql = "SELECT * FROM user";
+		ArrayList <User> listUsers = new ArrayList<>();
+		User user = new User();
+		PreparedStatement statement;
+		boolean admin;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			ResultSet res  = statement.executeQuery();
+			
+			while (res.next()) {
+				int id = res.getInt(1);
+				String login = res.getString(2);
+				String password = res.getString(3);
+				int isAdmin = res.getInt(4);
+				if (isAdmin == 1) {
+					admin = true;
+				} else {
+					admin = false;
+				}
+				user = new User(id, login, password, admin);
+				listUsers.add(user);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listUsers;
+	}
 }
