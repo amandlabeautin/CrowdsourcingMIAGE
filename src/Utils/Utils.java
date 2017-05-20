@@ -1,6 +1,7 @@
 package Utils;
 
 import java.util.ArrayList;
+
 import DataBaseManager.DBService;
 import DataBean.Attribut;
 import DataBean.Pair;

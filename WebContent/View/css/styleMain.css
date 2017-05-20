@@ -6,6 +6,10 @@ h3 {
 	color: white;
 }
 
+div#adminCtrl.follow_container, div#addUser.follow_container{
+	top: -10%;
+}
+
 .pairActive {
   background-color: #E8D76E;
 }
@@ -56,20 +60,7 @@ tr.selected td {
   background: #ccc!important;
 }
 
-#adminCtrl {
-	padding-top: 0%;
-	padding: 5%;
-}
 
-
-#adminCtrl #usersTable{
-	background-color: black;
-	color :white;
-}
-
-div#adminCtrl.follow_container, div#addUser.follow_container{
-	top: -10%;
-}
 
 #Tabs {
 	color: white;
@@ -79,6 +70,44 @@ div#adminCtrl.follow_container, div#addUser.follow_container{
 	color: #d2d2d2;
 }
 
+
+
+/* Page home */
+#home.follow_container{
+	padding-top: 15%;
+}
+
+/* Page inscription */
+div#signup.follow_container {
+	top: 25%;
+}
+#signup form#inscriptionForm{
+	width: 50%;
+	margin-left: 25%;
+}
+
+/* Page connexion */
+#Signin div.follow_container {
+	top: 25%;
+}
+#Signin form{
+	width: 50%;
+	margin-left: 25%;
+}
+
+/* Page admin.view */
+#admin {
+	height: 100%;
+	background-color: black;
+	padding-top: 0%;
+	padding: 5%;
+}
+#admin #usersTable{
+	background-color: black;
+	color :white;
+}
+
+/* Page AddUser.view */
 #addUser.follow_container{
 	padding-top: 15%;
 }

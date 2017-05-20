@@ -9,6 +9,7 @@ import DataBean.Attribut;
 import DataBean.Pair;
 import DataBean.RandomPair;
 import DataBean.SimilarPair;
+import DataBean.User;
 import Utils.Utils;
 
 public class DBService {
@@ -1270,5 +1271,87 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return simP;
+	}
+
+	public static User INSERT_USER(String loginUser, String passwordUser, Boolean isAdmin) {
+		String sql = "INSERT INTO user (Entry1, Entry2, Entry3) VALUES (?, ?, ?)";
+		User u = new User();
+		PreparedStatement statement;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, loginUser);
+			statement.setString(2, passwordUser);
+			statement.setBoolean(3, isAdmin);
+			 
+	        int affectedRows = statement.executeUpdate();
+	        if (affectedRows == 0) {
+	            throw new SQLException("Creating user failed, no rows affected.");
+	        }
+
+	        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	                u.setId(generatedKeys.getInt(1));
+	            }
+	            else {
+	                throw new SQLException("Creating user failed, no ID obtained.");
+	            }
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return u;		
+	}
+
+	public static User SELECT_USER_WITH_LOGIN_AND_PASSWORD(String loginUser, String passwordUser) {
+		String sql = "SELECT * FROM user WHERE login = ? AND password = ?";
+		User user = null;
+		PreparedStatement statement;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			statement.setString(1, loginUser);
+			statement.setString(2, passwordUser);
+			ResultSet res  = statement.executeQuery();
+			
+			while (res.next()) {
+				user = new User();
+				user.setId(res.getInt(1));
+				user.setLogin(res.getString(2));
+				user.setPassword(res.getString(3));	
+				user.setAdministrator(res.getBoolean(4));    
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
+	public static ArrayList<User> SELECT_ALL_USER() {
+		
+		String sql = "SELECT * FROM user";
+		ArrayList <User> listUsers = new ArrayList<>();
+		User user = new User();
+		PreparedStatement statement;
+		boolean admin;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			ResultSet res  = statement.executeQuery();
+			
+			while (res.next()) {
+				int id = res.getInt(1);
+				String login = res.getString(2);
+				String password = res.getString(3);
+				int isAdmin = res.getInt(4);
+				if (isAdmin == 1) {
+					admin = true;
+				} else {
+					admin = false;
+				}
+				user = new User(id, login, password, admin);
+				listUsers.add(user);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listUsers;
 	}
 }

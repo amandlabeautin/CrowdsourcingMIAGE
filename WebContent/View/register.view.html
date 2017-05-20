@@ -1,47 +1,39 @@
 <div class="container">
-    <div ng-include = "'View/header.view.html'"></div>
+    <div ng-include = "'../View/header.view.html'"></div>
 </div>
 <div class="starter_container bg" ng-controller="RegisterCtrl">
-    <div class="follow_container">
+    <div class="follow_container" id="signup">
         <div class="col-md-6 col-md-offset-3">
             <h2 class="white second-title">Inscrivez-vous !</h2>
-            <form name="form-horizontal" id="registerForm" ng-submit="vm.register()" role="form">
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Login</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="Login">
-                    </div>
+            <form name="inscriptionForm">
+
+                <div class="form-group" ng-class="{'has-error' : inscriptionForm.login.$invalid && !inscriptionForm.login.$pristine }">
+                    <label for="exampleInputEmail1">Login</label>
+                    <input type="text" class="form-control" name="login" id="login" placeholder="Entrer votre identifiant" ng-model="user.login" required ng-minlength="4">
+                    <p ng-show="inscriptionForm.login.$error.minlength" class="help-block">Doit contenir au minimum 4 caractères</p>
+                    <p ng-show="inscriptionForm.login.$invalid && !inscriptionForm.login.$pristine" class="help-block">Ce champ est obligatoire.</p>
                 </div>
-                <br><br>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Mot de passe</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="Mot de passe">
-                    </div>
+
+                <div class="form-group" ng-class="{'has-error' : inscriptionForm.password.$invalid && !inscriptionForm.password.$pristine }">
+                    <label for="exampleInputPassword1">Mot de passe</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Minimun 4 caract&egrave;res" ng-model="user.password" required ng-minlength="4">
+                    <p ng-show="inscriptionForm.password.$invalid && !inscriptionForm.password.$pristine" class="help-block">Ce champ est obligatoire</p>
+                    <p ng-show="inscriptionForm.password.$error.minlength" class="help-block">Doit contenir au minimum 4 caractères</p>
                 </div>
-                <br><br>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Vérification</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="Vérification du Mot de passe">
-                    </div>
+
+                <div class="form-group" ng-class="{'has-error' : inscriptionForm.checkPassword.$invalid && !inscriptionForm.checkPassword.$pristine }">
+                    <label for="exampleInputPassword1">V&eacute;rification du mot de passe</label>
+                    <input type="password" name="checkPassword" class="form-control" id="checkPassword" placeholder="Retapez votre mot de passe" ng-model="user.checkPassword" data-equalsTo="inscriptionForm.password" required>
+                    <p ng-show="inscriptionForm.checkPassword.$invalid && !inscriptionForm.checkPassword.$pristine" class="help-block">Ce champ est obligatoire</p>
+                    <p ng-show="!!inscriptionForm.password.$error.noMatch">Passwords don't match.</p>
                 </div>
-                <br><br>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Role</label>
-                    <div class="col-sm-10">
-                        <select class="form-control">
-                            <option>Lecteur</option>
-                            <option>Vérificateur</option>
-                        </select>
-                    </div>
-                </div>
-                <br><br>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Valider</button>
-                    </div>
-                </div>
+
+              <br>
+              <br>
+
+                <button type="submit" ng-click="createUser(user)" class="btn btn-warning" ng-disabled="inscriptionForm.$invalid">Envoyer</button>
+                <p ng-show="inscriptionForm.$error.userExist" class="help-block">Le login est déjà utilisé.</p>
+
             </form>
         </div>
     </div>
