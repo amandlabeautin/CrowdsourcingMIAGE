@@ -15,14 +15,14 @@ import DataBean.User;
 /**
  * Servlet implementation class postUser
  */
-@WebServlet("/postUser")
-public class postUser extends HttpServlet {
+@WebServlet("/postNewUser")
+public class postNewUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public postUser() {
+    public postNewUser() {
     	
     }
 
@@ -49,7 +49,7 @@ public class postUser extends HttpServlet {
 		Boolean isAdmin = json.get("isAdmin").getAsBoolean();
 
 		@SuppressWarnings("unused")
-		User user = DBService.INSERT_USER(loginUser, passwordUser, isAdmin);
+		User user = DBService.INSERT_USER_TABLE_USER(loginUser, passwordUser, isAdmin);
 	}
 
 }

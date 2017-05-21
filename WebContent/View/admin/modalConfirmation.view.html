@@ -1,14 +1,15 @@
 <div ng-controller="adminCtrl">
-      <div class="modal-header">
-        <h4 class="modal-title">Are you sure???</h4>
+    <div class="modal-header">
+      <h4 class="modal-title">Are you sure???</h4>
+    </div>
+    <div class="modal-body">
+      <p style="color:black">Etes-vous sûre de vouloir supprimer {{loginUser}} ?</p>
+      <p style="color:black">Toute suppression est définitive !</p>
+      <div class="row">
+          <div class="col-12-xs text-center">
+              <button class="btn btn-primary btn-md" type="button" ng-click="deleteUser(idUser)">Confirmer</button>
+              <button class="btn btn-danger btn-md" type="button" ng-click="no()">Annuler</button>
+          </div>
       </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete (this)?</p>
-        <div class="row">
-            <div class="col-12-xs text-center">
-                <button class="btn btn-success btn-md">Yes</button>
-                <button class="btn btn-danger btn-md">No</button>
-            </div>
-        </div>
-      </div>
+    </div>
 </div><!-- /.modal -->

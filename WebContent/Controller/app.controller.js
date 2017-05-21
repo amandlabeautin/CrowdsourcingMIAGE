@@ -4,8 +4,7 @@ angular
     .controller('modalController', modalController)
     .controller('RegisterCtrl', RegisterCtrl)
     .controller('SigninCtrl', SigninCtrl)
-    .controller('adminCtrl', adminCtrl)
-    .controller('addUserCtrl', addUserCtrl);
+    .controller('adminCtrl', adminCtrl);
 
   var variableSimi = [];
 
@@ -239,42 +238,133 @@ angular
     };
   };
 
+
+  /* Controller de la page d'Administration*/
   function adminCtrl($scope, $http, $uibModal, $log, $window, UserService){
-    
+    $scope.IsHidden = true;
+
+    /*Affichage des users*/
     $http({
       method: 'GET',
       url: 'http://127.0.0.1:8080/ProjetPPD/getListUser',
     }).then(function (response){
+        for (var i = 0; i < response.data.length; i++) {
+          if(response.data[i].administrator == true){
+            response.data[i].administrator = "OUI";
+          }else{
+            response.data[i].administrator = "non";
+          }
+        }
+        
         $scope.users = response.data;
       },function (error){
         console.log('error : ' + error.status)
         console.log('error : ' + error);
     });
-    $scope.detailsPair = false;
-    
-    $scope.showDetailsPair = function(idUser) {
-      $scope.detailsPair = true;
+    $scope.alerts = [];
+
+    // Affichage des pairs selectionnés par le idUser, et affichage du loginUser
+    $scope.showDetailsPair = function(idUser, loginUser) {
+      $scope.userSelected = loginUser;
+      $scope.IsHidden = false;
     };
 
-    $scope.deleteUser = function(user) {
-        modalPopupDelete().result
+    $scope.deleteUserModal = function(idUser, loginUser) {
+        $scope.idUser = idUser;
+        $scope.loginUser = loginUser;
+        modalPopupDelete($scope).result
           .then(function (data) {
-            console.log(user);
+            $scope.handleSuccess(data);
           })
           .then(null, function (reason) {
             $scope.handleDismiss(reason);
           });
     };
 
-    var modalPopupDelete = function () {
-        return $scope.modalInstance = $uibModal.open({
-          templateUrl: '../View/admin/modalConfirmation.view.html',
-          size:'lg',
+    $scope.openModal = function() {
+      modalAddUser().result
+          .then(function (data) {
+            $scope.handleSuccess(data);
+          })
+          .then(null, function (reason) {
+            $scope.handleDismiss(reason);
+          });
+    };
+
+    // Log Success message
+    $scope.handleSuccess = function (data) {
+      $log.info('Modal closed: ' + data);
+    };
+
+    // Log Dismiss message
+    $scope.handleDismiss = function (reason) {
+      $log.info('Modal dismissed: ' + reason);
+    };
+
+    var modalAddUser = function() {
+      return $scope.modalInstance = $uibModal.open({
+          templateUrl: '../View/admin/addUser.html',
           scope: $scope
         });
-      };
-  };
+    };
 
-  function addUserCtrl(){
-    console.log("hello");
+    var modalPopupDelete = function ($scope) {
+        return $scope.modalInstance = $uibModal.open({
+          templateUrl: '../View/admin/modalConfirmation.view.html',
+          size:'sm',
+          scope: $scope
+        });
+    };
+
+    $scope.no = function () {
+      $scope.modalInstance.dismiss('No Button Clicked')
+    };
+
+    $scope.deleteUser = function(idUser){
+
+      console.log(idUser);
+
+      var deleteTemp = {};
+      deleteTemp["idUser"] = idUser;
+      $scope.jsonResultSend = deleteTemp;
+
+      $http({
+        method: 'POST',
+        url: 'http://127.0.0.1:8080/ProjetPPD/postDeleteUser',
+        headers: {'Content-Type': 'application/json'},
+        data:  $scope.jsonResultSend 
+      }).then(function (success){
+        $scope.modalInstance.dismiss('No Button Clicked')
+        $scope.alerts.push({msg: 'L\'utilisateur a été supprimé !'});
+        $scope.usersTable.reload();
+      },function (error){
+          console.log('error : ' + error.status);
+      });
+    };
+
+    $scope.addUserAdmin = function(form) {
+      var temp = {};
+
+      temp["loginUser"] = form.username;
+      temp["passwordUser"] = form.password;
+      if(form.role == 'Admin'){
+        temp["isAdmin"] = true;
+      }else{
+        temp["isAdmin"] = false;
+      }
+
+      $scope.jsonResultSend = temp;
+      $http({
+        method: 'POST',
+        url: 'http://127.0.0.1:8080/ProjetPPD/postNewUser',
+        headers: {'Content-Type': 'application/json'},
+        data:  $scope.jsonResultSend 
+      }).then(function (success){
+        modalAddUser().dismiss('cancel');
+        $scope.alerts.push({msg: 'L\'utilisateur a été ajouté !'});
+      },function (error){
+        console.log('error : ' + error.status);
+      });
+    };
+
   };

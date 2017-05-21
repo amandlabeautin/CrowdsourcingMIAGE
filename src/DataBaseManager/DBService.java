@@ -910,7 +910,6 @@ public class DBService {
 		return attr;
 	}
 
-	
 	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_FOR_PAIR(int idPair){
 		String sql = "SELECT * FROM attribut where PairId = ?";
 		ArrayList<Attribut> listAttribut = new ArrayList<>();
@@ -1273,8 +1272,8 @@ public class DBService {
 		return simP;
 	}
 
-	public static User INSERT_USER(String loginUser, String passwordUser, Boolean isAdmin) {
-		String sql = "INSERT INTO user (Entry1, Entry2, Entry3) VALUES (?, ?, ?)";
+	public static User INSERT_USER_TABLE_USER(String loginUser, String passwordUser, Boolean isAdmin) {
+		String sql = "INSERT INTO user (login, password, isAdmin) VALUES (?, ?, ?)";
 		User u = new User();
 		PreparedStatement statement;
 		try {
@@ -1353,5 +1352,17 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return listUsers;
+	}
+
+	public static void DELETE_USER_TABLE_USER_WITH_ID(int idUser) {
+		String sqlUpdate = "DELETE FROM user WHERE id = ?";
+		PreparedStatement statementUpdate;
+		try {
+			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+			statementUpdate.setDouble(1, idUser);
+			statementUpdate.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

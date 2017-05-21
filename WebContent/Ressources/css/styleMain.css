@@ -108,6 +108,13 @@ div#signup.follow_container {
 }
 
 /* Page AddUser.view */
+#addUser {
+	height: 100%;
+	background-color: black;
+	padding-top: 0%;
+	padding: 5%;
+}
+
 #addUser.follow_container{
 	padding-top: 15%;
 }

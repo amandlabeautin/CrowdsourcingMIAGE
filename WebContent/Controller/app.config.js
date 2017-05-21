@@ -24,11 +24,6 @@ angular
                 url: '/admin',
                 templateUrl: '../View/admin/admin.view.html',
                 controller: 'adminCtrl'
-	        })
-	        .state('addUser', {
-                url: '/addUser',
-                templateUrl: '../View/admin/addUser.view.html',
-                controller: 'addUserCtrl'
 	        });
 	    $urlRouterProvider.otherwise("/");
 	})
