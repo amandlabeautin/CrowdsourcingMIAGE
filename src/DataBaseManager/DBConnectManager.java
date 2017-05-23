@@ -10,7 +10,7 @@ public class DBConnectManager {
 	public static void InitConnexion(){	
 		try {
         	DBInitConnection.INIT_DB();
-			connDb = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/projetppd?user=root&password=");
+			connDb = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/projetppd?user=root&password=");
 			DBService.INIT_DB();
 		} catch (SQLException ex) {
 		    // handle any errors
