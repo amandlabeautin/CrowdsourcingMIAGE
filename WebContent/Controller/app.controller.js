@@ -14,7 +14,7 @@ angular
       // Ouverture de la fenetre modal 
       var modalPopup = function () {
         return $scope.modalInstance = $uibModal.open({
-          templateUrl: '../View/authentification/formModal.html',
+          templateUrl: '../View/pairs/formModal.html',
           size:'lg',
           scope: $scope
         });
@@ -123,7 +123,8 @@ angular
   			headers: {'Content-Type': 'application/json'},
   			data:  $scope.jsonResultSend 
   		}).then(function (success){
-  			 console.log(success);
+          alert('Les données ont été envoyées');
+  			 $scope.next();
   	   },function (error){
   			console.log('error : ' + error.status);
   	   });
@@ -200,6 +201,7 @@ angular
               $http.get('http://localhost:8080/users/add',{params: {'name': user.login, 'password' : user.password}}).
                   then(function  (response) {
                     if(response.data == 'SAVED') {
+                      alert('Vous etes bien inscrit !');
                       $location.path('/');
                     }})
             .catch(function(response, status) {
@@ -230,6 +232,7 @@ angular
           console.log(response.data.administrator);
             UserService.setAdmin(response.data);
         }
+        alert('Bonjour');
         $location.path('/home');
       },function(response) {
           console.log('Login failed');
@@ -335,7 +338,7 @@ angular
         data:  $scope.jsonResultSend 
       }).then(function (success){
         $scope.modalInstance.dismiss('No Button Clicked')
-        $scope.alerts.push({msg: 'L\'utilisateur a été supprimé !'});
+        alert('L\'utilisateur a été supprimé !');
         $scope.usersTable.reload();
       },function (error){
           console.log('error : ' + error.status);
