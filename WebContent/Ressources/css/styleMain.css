@@ -56,8 +56,8 @@ div#adminCtrl.follow_container, div#addUser.follow_container{
 	background: #BABABA;
 }
 
-tr.selected td {
-  background: #ccc!important;
+td.selected {
+  background: #b7c6cc!important;
 }
 
 

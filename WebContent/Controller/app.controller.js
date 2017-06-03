@@ -1,6 +1,7 @@
 angular
     .module('app')
     .controller('homeCtrl', homeCtrl)
+    .controller('homeConnectCtrl', homeConnectCtrl)
     .controller('modalController', modalController)
     .controller('RegisterCtrl', RegisterCtrl)
     .controller('SigninCtrl', SigninCtrl)
@@ -8,13 +9,17 @@ angular
 
   var variableSimi = [];
 
+  function homeCtrl($scope){
+
+  };
+
   // Controller de la page d'accueil des personnes connectés
-  function homeCtrl($scope, $uibModal, $log,$window){
+  function homeConnectCtrl($scope, $uibModal, $log,$window){
     
       // Ouverture de la fenetre modal 
       var modalPopup = function () {
         return $scope.modalInstance = $uibModal.open({
-          templateUrl: '../View/pairs/formModal.html',
+          templateUrl: './View/pairs/formModal.html',
           size:'lg',
           scope: $scope
         });
@@ -54,10 +59,22 @@ angular
       $scope.go = function ( path ) {
         $location.path( path );
       };
+
+        // Log Success message
+      $scope.handleSuccess = function (data) {
+        $log.info('Modal closed: ' + data);
+      };
+
+      // Log Dismiss message
+      $scope.handleDismiss = function (reason) {
+        $log.info('Modal dismissed: ' + reason);
+      };
   };
 
-  // Controller de la fenetre modal
+  // Controller de la fenetre modal des pairs
   function modalController($scope, $window, $http, $filter, UserService){
+    $scope.radioChoice = true;
+
     $scope.slider = {
       value: 0,
       options: {
@@ -83,28 +100,27 @@ angular
       url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
     }).then(function (success){
         $scope.pairServlets = success.data;
+        console.log(success.data);
     },function (error){
         console.log('error : ' + error.status)
         console.log('error : ' + error);
      });
 
     $scope.select = function (item) {
-      if ($scope.IsPair) {
+      if ($scope.isSimilar) {
+        console.log(item.elem1);
         item.selected ? item.selected = false : item.selected = true;
-      } else{
-        alert("Merci de cocher la case ci-dessus, si des elements du tableau sont similaires.");
       }
     };
 
     // Fonction qui prepare en JSON en fonction des réponses de l'utilisateur
     $scope.yes = function () {
       var temp = {};
-      if($scope.IsPair){
+      if($scope.isSimilar){
           temp = angular.fromJson($scope.pairServlets); 
           temp["nonSimilaire"] = false;
           temp["valUser"] = $scope.slider.value;
-          
-          
+          console.log(temp);
           for (var i in temp) {
             if (typeof temp[i].selected == 'undefined' && typeof temp[i].elem1 != 'undefined') {
                 temp[i]["selected"] = false; 
@@ -113,6 +129,7 @@ angular
       }else {
           temp["nonSimilaire"] = true;
       }
+
       temp["user"] = UserService.getUser().id;
       console.log(temp);
 
@@ -132,7 +149,7 @@ angular
 
       // Fonction qui ...
     $scope.no = function () {
-        $scope.modalInstance.dismiss('No Button Clicked')
+        $scope.modalInstance.dismiss('No Button Clicked');
     };
   
     // fonction qui ...
@@ -147,17 +164,10 @@ angular
   			console.log('error : ' + error.status)
   			console.log('error : ' + error);
   	   });
-	   
     };
 
-    // Log Success message
-    $scope.handleSuccess = function (data) {
-      $log.info('Modal closed: ' + data);
-    };
-
-    // Log Dismiss message
-    $scope.handleDismiss = function (reason) {
-      $log.info('Modal dismissed: ' + reason);
+    $scope.choicePairs = function() {
+        $scope.radioChoice = false;
     };
 
     // fonction qui ...
@@ -191,27 +201,25 @@ angular
   };
 
   // Controller de la page d'inscription
-  function RegisterCtrl(UserService, $location, $rootScope, FlashService, $scope) {
+  function RegisterCtrl(UserService, UtilService, $http, $location, $rootScope, FlashService, $scope) {
       $scope.createUser = function(user){
-        var userExist = $http.get('http://localhost:8080/user/checkUserExists',{params: {'login': user.login}}).
-            then(function  (response) { 
-              userExist = response.data;
-            });
-            if (userExist = false) {
-              $http.get('http://localhost:8080/users/add',{params: {'name': user.login, 'password' : user.password}}).
-                  then(function  (response) {
-                    if(response.data == 'SAVED') {
-                      alert('Vous etes bien inscrit !');
-                      $location.path('/');
-                    }})
-            .catch(function(response, status) {
-              console.error('Gists error', response.status, response.data);
-                $scope.loginFailed = true;
-                  UtilService.notifyError('Invalid Login Credentials');
-          });
-            } else {
-              $scope.inscriptionForm.$error.userExist = true;
-            }
+        var temp = {};
+
+        temp["loginUser"] = user.login;
+        temp["passwordUser"] = user.password;
+        temp["isAdmin"] = false;
+
+        $scope.jsonResultSend = temp;
+        $http({
+          method: 'POST',
+          url: 'http://127.0.0.1:8080/ProjetPPD/postNewUser',
+          headers: {'Content-Type': 'application/json'},
+          data:  $scope.jsonResultSend 
+        }).then(function (success){
+          alert('Vous etes bien inscrit !');
+        },function (error){
+          console.log('error : ' + error.status);
+        });
       };
   };
 
@@ -240,7 +248,6 @@ angular
       });
     };
   };
-
 
   /* Controller de la page d'Administration*/
   function adminCtrl($scope, $http, $uibModal, $log, $window, UserService){
@@ -306,14 +313,14 @@ angular
 
     var modalAddUser = function() {
       return $scope.modalInstance = $uibModal.open({
-          templateUrl: '../View/admin/addUser.html',
+          templateUrl: './View/admin/addUser.html',
           scope: $scope
         });
     };
 
     var modalPopupDelete = function ($scope) {
         return $scope.modalInstance = $uibModal.open({
-          templateUrl: '../View/admin/modalConfirmation.view.html',
+          templateUrl: './View/admin/modalConfirmation.view.html',
           size:'sm',
           scope: $scope
         });
