@@ -3,7 +3,7 @@ angular
    .module('app', [
    		'ui.bootstrap',
    		'ui.bootstrap.modal',
-   		'ui.bootstrap-slider',
+   		'rzModule',
 		'ngRoute',
 		'ui.router',
 		'ngCookies',

@@ -267,27 +267,40 @@ public class DBService {
 	}
 
 	public static void INSERT_MATCHING_DEPENDENCIE_ONE_ENTITY(Pair p){
-		String sql = "INSERT INTO md_temp_one_entity (Entry1, Entry2) VALUES (?, ?)";
-		 
-		PreparedStatement statement;
+		String sqlSelect = "SELECT * FROM md_temp_one_entity WHERE Entry1 = ? and Entry2 = ?";
+		PreparedStatement statementSelect;
+		boolean exist = false;
 		try {
-			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, p.getObj1());
-			statement.setString(2, p.getObj2());
-			 
-	        int affectedRows = statement.executeUpdate();
-	        if (affectedRows == 0) {
-	            throw new SQLException("Creating user failed, no rows affected.");
-	        }
-
-	        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	                p.setId(generatedKeys.getInt(1));
-	            }
-	            else {
-	                throw new SQLException("Creating user failed, no ID obtained.");
-	            }
-	        }
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setString(1, p.getObj1());
+			statementSelect.setString(2, p.getObj2());
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()) {
+				exist = true;
+			}
+		
+			if(!exist){
+				String sql = "INSERT INTO md_temp_one_entity (Entry1, Entry2) VALUES (?, ?)";
+				 
+				PreparedStatement statement;
+				statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				statement.setString(1, p.getObj1());
+				statement.setString(2, p.getObj2());
+				 
+		        int affectedRows = statement.executeUpdate();
+		        if (affectedRows == 0) {
+		            throw new SQLException("Creating user failed, no rows affected.");
+		        }
+	
+		        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+		            if (generatedKeys.next()) {
+		                p.setId(generatedKeys.getInt(1));
+		            }
+		            else {
+		                throw new SQLException("Creating user failed, no ID obtained.");
+		            }
+		        }
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -387,7 +400,6 @@ public class DBService {
 			
 			statement.setString(2, LHS);
 			statement.setString(3, RHS);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -406,27 +418,40 @@ public class DBService {
 	}
 
 	public static void INSERT_MATCHING_DEPENDENCIE(Pair p){
-		String sql = "INSERT INTO matching_dependencie (Entry1, Entry2) VALUES (?, ?)";
-		 
-		PreparedStatement statement;
+		String sqlSelect = "SELECT * FROM matching_dependencie WHERE Entry1 = ? and Entry2 = ?";
+		PreparedStatement statementSelect;
+		boolean exist = false;
 		try {
-			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, p.getObj1());
-			statement.setString(2, p.getObj2());
-			 
-	        int affectedRows = statement.executeUpdate();
-	        if (affectedRows == 0) {
-	            throw new SQLException("Creating user failed, no rows affected.");
-	        }
-
-	        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	                p.setId(generatedKeys.getInt(1));
-	            }
-	            else {
-	                throw new SQLException("Creating user failed, no ID obtained.");
-	            }
-	        }
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setString(1, p.getObj1());
+			statementSelect.setString(2, p.getObj2());
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()) {
+				exist = true;
+			}
+		
+			if(!exist){
+				String sql = "INSERT INTO matching_dependencie (Entry1, Entry2) VALUES (?, ?)";
+				 
+				PreparedStatement statement;
+				statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				statement.setString(1, p.getObj1());
+				statement.setString(2, p.getObj2());
+				 
+		        int affectedRows = statement.executeUpdate();
+		        if (affectedRows == 0) {
+		            throw new SQLException("Creating user failed, no rows affected.");
+		        }
+	
+		        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+		            if (generatedKeys.next()) {
+		                p.setId(generatedKeys.getInt(1));
+		            }
+		            else {
+		                throw new SQLException("Creating user failed, no ID obtained.");
+		            }
+		        }
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -505,7 +530,7 @@ public class DBService {
 				try {
 					statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
 					statementUpdate.setDouble(1, a.getVal());
-					statementUpdate.setDouble(2, resSelect.getInt(6) + 1);
+					statementUpdate.setDouble(2, a.getNbrVote() + 1);
 					statementUpdate.setInt(3, idPair);
 					statementUpdate.setString(4, a.getNomAttribut());
 					statementUpdate.executeUpdate();
@@ -567,7 +592,7 @@ public class DBService {
 				try {
 					statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
 					statementUpdate.setDouble(1, a.getVal());
-					statementUpdate.setDouble(2, resSelect.getInt(6) + 1);
+					statementUpdate.setDouble(2, a.getNbrVote() + 1);
 					statementUpdate.setInt(3, idPair);
 					statementUpdate.setString(4, a.getNomAttribut());
 					statementUpdate.executeUpdate();
@@ -886,7 +911,7 @@ public class DBService {
 			statement.setInt(5, attr4.getId());
 			Attribut attr5 = p.getListAttribut().get(4);
 			statement.setInt(6, attr5.getId());
-			moySim = ((((attr1.getVal() + attr2.getVal() + attr3.getVal()  + attr4.getVal() + attr5.getVal()) / (5)) + p.getVal() ) / 2 );
+			moySim = (((/*(*/attr1.getVal() + attr2.getVal() + attr3.getVal()  + attr4.getVal() + attr5.getVal()) / (5)) /*+ p.getVal() ) / 2*/ );
 			p.setVal(moySim);
 			statement.setDouble(7, moySim);
 			statement.setInt(8, 1);
@@ -950,7 +975,6 @@ public class DBService {
 		return attr;
 	}
 
-	
 	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_FOR_PAIR(int idPair){
 		String sql = "SELECT * FROM attribut where PairId = ?";
 		ArrayList<Attribut> listAttribut = new ArrayList<>();
@@ -1327,8 +1351,8 @@ public class DBService {
 		return simP;
 	}
 
-	public static User INSERT_USER(String loginUser, String passwordUser, Boolean isAdmin) {
-		String sql = "INSERT INTO user (Entry1, Entry2, Entry3) VALUES (?, ?, ?)";
+	public static User INSERT_USER_TABLE_USER(String loginUser, String passwordUser, Boolean isAdmin) {
+		String sql = "INSERT INTO user (login, password, isAdmin) VALUES (?, ?, ?)";
 		User u = new User();
 		PreparedStatement statement;
 		try {
@@ -1407,5 +1431,17 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return listUsers;
+	}
+
+	public static void DELETE_USER_TABLE_USER_WITH_ID(int idUser) {
+		String sqlUpdate = "DELETE FROM user WHERE id = ?";
+		PreparedStatement statementUpdate;
+		try {
+			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+			statementUpdate.setDouble(1, idUser);
+			statementUpdate.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

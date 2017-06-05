@@ -5,30 +5,25 @@ angular
 		$stateProvider
 			.state('signin', {
                 url: '/',
-                templateUrl: '../View/signin.view.html',
+                templateUrl: './View/authentification/signin.view.html',
                 controller: 'SigninCtrl',
                 access: 'public'
 	        })
 	        .state('home', {
                 url: '/home',
-                templateUrl: '../View/home.view.html',
-                controller: 'homeCtrl'
+                templateUrl: './View/pairs/home.view.html',
+                controller: 'homeConnectCtrl'
 	        })
 	        .state('register', {
                 url: '/register',
-                templateUrl: '../View/register.view.html',
+                templateUrl: './View/authentification/register.view.html',
                 controller: 'RegisterCtrl',
                 access: 'public'
 	        })
 	        .state('admin', {
                 url: '/admin',
-                templateUrl: '../View/admin.view.html',
+                templateUrl: './View/admin/admin.view.html',
                 controller: 'adminCtrl'
-	        })
-	        .state('addUser', {
-                url: '/addUser',
-                templateUrl: '../View/addUser.view.html',
-                controller: 'addUserCtrl'
 	        });
 	    $urlRouterProvider.otherwise("/");
 	})
@@ -48,6 +43,8 @@ angular
 		    			console.log('redirect to login');
 		    			$location.path("/");
 		    		}
+		    	}else{
+		    		$location.path("/home");
 		    	}
 				
 		    	//$rootScope.currentNavLink=toState.name;

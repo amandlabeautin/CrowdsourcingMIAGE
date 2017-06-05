@@ -24,17 +24,17 @@ public class Algorithme_Apriori_Remaster {
 			try {
 				JsonObject json = obj.getAsJsonObject();
 				int idPair = json.get("idPair").getAsInt();
-				JsonObject Attribut1 = json.get("idAttribut1").getAsJsonObject();
+				JsonObject Attribut1 = json.get("attribut1").getAsJsonObject();
 				boolean attrSim1 = Attribut1.get("selected").getAsBoolean();
-				JsonObject Attribut2 = json.get("idAttribut2").getAsJsonObject();
+				JsonObject Attribut2 = json.get("attribut2").getAsJsonObject();
 				boolean attrSim2 = Attribut2.get("selected").getAsBoolean();
-				JsonObject Attribut3 = json.get("idAttribut3").getAsJsonObject();
+				JsonObject Attribut3 = json.get("attribut3").getAsJsonObject();
 				boolean attrSim3 = Attribut3.get("selected").getAsBoolean();
-				JsonObject Attribut4 = json.get("idAttribut4").getAsJsonObject();
+				JsonObject Attribut4 = json.get("attribut4").getAsJsonObject();
 				boolean attrSim4 = Attribut4.get("selected").getAsBoolean();
-				JsonObject Attribut5 = json.get("idAttribut5").getAsJsonObject();
+				JsonObject Attribut5 = json.get("attribut5").getAsJsonObject();
 				boolean attrSim5 = Attribut5.get("selected").getAsBoolean();
-				double val = json.get("Val").getAsDouble();
+				double val = json.get("val").getAsDouble();
 	
 				// On récupère la pair à traiter
 				Pair pair = DBService.SELECT_PAIR_BY_ID(idPair);

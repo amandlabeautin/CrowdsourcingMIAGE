@@ -148,6 +148,7 @@ public class Utils {
 	public static int calculNoteAttribut(Pair p, boolean attrSim1, boolean attrSim2, boolean attrSim3, boolean attrSim4, boolean attrSim5, double nouvelleNote){
 		ArrayList<Attribut> listAttributs = p.getListAttribut();
 		int tauxVote = 0;
+		
 		if(attrSim1){
 			Attribut attr1 = listAttributs.get(0);
 			double noteActuelle1 = attr1.getVal();
@@ -163,7 +164,7 @@ public class Utils {
 		if(attrSim2){
 			Attribut attr2 = listAttributs.get(1);
 			double noteActuelle2 = attr2.getVal();
-			double noteFinale2 = ((noteActuelle2 * attr2.getNbrVote() -1) + nouvelleNote) /attr2.getNbrVote();
+			double noteFinale2 = ((noteActuelle2 * (attr2.getNbrVote() -1)) + nouvelleNote) /attr2.getNbrVote();
 			attr2.setVal(noteFinale2);
 			DBService.INSERT_ATTRIBUT_ONE_ENTITY(attr2, p.getId());
 			tauxVote = tauxVote + DBService.UPDATE_ATTRIBUT_INCREMENT_TAUX_VOTE(attr2, p.getId());
@@ -175,7 +176,7 @@ public class Utils {
 		if(attrSim3){
 			Attribut attr3 = listAttributs.get(2);
 			double noteActuelle3 = attr3.getVal();
-			double noteFinale3 = ((noteActuelle3 * attr3.getNbrVote() -1) + nouvelleNote) /attr3.getNbrVote();
+			double noteFinale3 = ((noteActuelle3 * (attr3.getNbrVote() -1)) + nouvelleNote) /attr3.getNbrVote();
 			attr3.setVal(noteFinale3);
 			DBService.INSERT_ATTRIBUT_ONE_ENTITY(attr3, p.getId());;
 			tauxVote = tauxVote + DBService.UPDATE_ATTRIBUT_INCREMENT_TAUX_VOTE(attr3, p.getId());
@@ -187,7 +188,7 @@ public class Utils {
 		if(attrSim4){
 			Attribut attr4 = listAttributs.get(3);
 			double noteActuelle4 = attr4.getVal();
-			double noteFinale4 = ((noteActuelle4 * attr4.getNbrVote() -1) + nouvelleNote) /attr4.getNbrVote();
+			double noteFinale4 = ((noteActuelle4 * (attr4.getNbrVote() -1)) + nouvelleNote) /attr4.getNbrVote();
 			attr4.setVal(noteFinale4);
 			DBService.INSERT_ATTRIBUT_ONE_ENTITY(attr4, p.getId());
 			tauxVote = tauxVote + DBService.UPDATE_ATTRIBUT_INCREMENT_TAUX_VOTE(attr4, p.getId());
@@ -199,7 +200,7 @@ public class Utils {
 		if(attrSim5){
 			Attribut attr5 = listAttributs.get(4);
 			double noteActuelle5 = attr5.getVal();
-			double noteFinale5 = ((noteActuelle5 * attr5.getNbrVote() -1) + nouvelleNote) /attr5.getNbrVote();
+			double noteFinale5 = ((noteActuelle5 * (attr5.getNbrVote() -1)) + nouvelleNote) /attr5.getNbrVote();
 			attr5.setVal(noteFinale5);
 			DBService.INSERT_ATTRIBUT_ONE_ENTITY(attr5, p.getId());
 			tauxVote = tauxVote + DBService.UPDATE_ATTRIBUT_INCREMENT_TAUX_VOTE(attr5, p.getId());

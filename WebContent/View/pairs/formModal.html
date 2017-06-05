@@ -1,0 +1,91 @@
+<!--- formTemplate.html -->
+
+<div ng-controller="modalController">
+	<div id="formModal{{index}}">
+		<div class="modal-header">
+		  	<h3 class="modal-title" id="modal-title">CrowdMD</h3>
+		  	<hr>
+		</div>
+		<form ng-submit="addText(form)">
+			<div class="modal-body" id="modal-body">
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">
+						<h4><center>Ces deux enregistrements représentent-elles le même restaurants ?<center></h4>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+				<div class="row" ng-hide="radioChoice">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">
+						<h5 style=" color: #6ba7ffff; font-size: 12pt;">Quels attributs ont des valeurs conflictuelles ?</h5>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+				<div class="row">
+					<table ng-table="tablePairServlets" class="table" id="table">
+					
+					  		<thead>
+					  			<tr class="active">
+					  				<th>Nom</th>
+					  				<th>Adresse</th>
+					  				<th>Ville</th>
+					  				<th>Téléphone</th>
+					  				<th>Spécialité</th>
+					  			</tr>
+					  		</thead>
+						    <tbody>
+						      <tr>
+						        <td ng-bind="pairServlets.attribut1.elem1" ng-class="{'selected': pairServlets.attribut1.selected}" ng-click="select(pairServlets.attribut1)"></td>
+						        <td ng-bind="pairServlets.attribut2.elem1" ng-class="{'selected': pairServlets.attribut2.selected}" ng-click="select(pairServlets.attribut2)"></td>
+						        <td ng-bind="pairServlets.attribut3.elem1" ng-class="{'selected': pairServlets.attribut3.selected}" ng-click="select(pairServlets.attribut3)"></td>
+						        <td ng-bind="pairServlets.attribut4.elem1" ng-class="{'selected': pairServlets.attribut4.selected}" ng-click="select(pairServlets.attribut4)"></td>
+						        <td ng-bind="pairServlets.attribut5.elem1" ng-class="{'selected': pairServlets.attribut5.selected}" ng-click="select(pairServlets.attribut5)"></td>
+						      </tr>
+						      <tr>
+						        <td ng-bind="pairServlets.attribut1.elem2" ng-class="{'selected': pairServlets.attribut1.selected}" ng-click="select(pairServlets.attribut1)"></td>
+						        <td ng-bind="pairServlets.attribut2.elem2" ng-class="{'selected': pairServlets.attribut2.selected}" ng-click="select(pairServlets.attribut2)"></td>
+						        <td ng-bind="pairServlets.attribut3.elem2" ng-class="{'selected': pairServlets.attribut3.selected}" ng-click="select(pairServlets.attribut3)"></td>
+						        <td ng-bind="pairServlets.attribut4.elem2" ng-class="{'selected': pairServlets.attribut4.selected}" ng-click="select(pairServlets.attribut4)"></td>
+						        <td ng-bind="pairServlets.attribut5.elem2" ng-class="{'selected': pairServlets.attribut5.selected}" ng-click="select(pairServlets.attribut5)"></td>
+						      </tr>
+						    </tbody>
+					    
+				  	</table>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="form-inline row">
+					<div class="col-md-1"></div>
+					<div class="col-md-2">
+						<label class="radio-inline">
+						  <input type="radio" name="inlineRadioOptions" ng-model="isSimilar" id="inlineRadio1" value="option1" ng-click="choicePairs()"> Oui
+						</label> 
+					</div>
+					<div class="col-md-2">
+						<label class="radio-inline">
+						  <input type="radio" name="inlineRadioOptions" ng-model="isNotSimilar" id="inlineRadio2" value="option2"> Non
+						</label>
+					</div>
+					<div class="col-md-5">
+				        <div tooltip-placement="{{placement.selected}}" uib-tooltip="Merci de mettre un indice compris entre 0,0 et 1,0 sachant que 1,0 est un indice fort de confiance." tooltip-class="customClass">
+						    <label for="exampleInputName2">Indice de confiance</label>
+						    <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
+						</div>
+					</div>
+				</div>
+				</br>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-4"></div>
+					<div class="col-md-4">
+						<button class="btn btn-success" type="button" ng-click="next(pairServlets)">Suivant ></button>
+						<input class="btn btn-primary" type="submit" ng-click="yes()" value="Valider" />
+				  		<button class="btn btn-danger" type="button" ng-click="no()">Annuler</button>
+					</div>
+			  	</div>
+			</div>
+		</form>
+	</div>
+</div>

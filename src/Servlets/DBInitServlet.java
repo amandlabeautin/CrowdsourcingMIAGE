@@ -56,20 +56,24 @@ public class DBInitServlet extends  HttpServlet {
 					try {
 						while(true){
 							System.out.println("Je dors...");
-							Thread.sleep(20000);
+							Thread.sleep(1000);
 							System.out.println("Check si matching dependencie similaires...");
 	
 							ArrayList<Pair> listPairOne = DBService.SELECT_ALL_MATCHING_DEPENDENCIE_ONE_ENTITY();
 							ArrayList<Pair> listPairTwo = DBService.SELECT_ALL_MATCHING_DEPENDENCIE_REMASTER();
 							
 							for (Pair pair : listPairOne) {
-								if(listPairTwo.contains(pair)){
-									System.out.println("Matching dependencie similaire trouvée");
-									DBService.INSERT_MATCHING_DEPENDENCIE(pair);
-								}
-								else{
-									System.out.println("Matching dependencie supprimée");
-									DBService.DELETE_MATCHING_DEPENDENCIE(pair);
+								for (Pair pair2 : listPairTwo) {
+									if(pair.getObj1().equals(pair2.getObj1())){
+										if(pair.getObj2().equals(pair2.getObj2())){
+											System.out.println("Matching dependencie similaire trouvée");
+											DBService.INSERT_MATCHING_DEPENDENCIE(pair);
+										}
+									}
+									else{
+										System.out.println("Matching dependencie supprimée");
+										DBService.DELETE_MATCHING_DEPENDENCIE(pair);
+									}
 								}
 							}
 						}
