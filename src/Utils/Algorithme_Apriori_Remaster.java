@@ -57,7 +57,6 @@ public class Algorithme_Apriori_Remaster {
 				for (ArrayList<SimilarPair> listPairForId : listPairPrime) {
 					// On récupère un élément pour avoir l'id de la pair d'origine
 					if(!listPairForId.isEmpty()){
-						SimilarPair simP = DBService.SELECT_PAIR_TABLE_SIMILARITE_BY_ID(listPairForId.get(0).getIdPair());
 						
 						/*
 						int nbrVote = simP.getNbrVote();
@@ -75,6 +74,8 @@ public class Algorithme_Apriori_Remaster {
 						double valMoyAttribut4 = 0;
 						ArrayList<Attribut> listAttr5 = new ArrayList<>();
 						double valMoyAttribut5 = 0;
+						
+						int nbrVotePair = listPairForId.size();
 						
 						// On boucle pour chaque attribut
 						for (int i = 0; i < 5 ; i++) {
@@ -165,14 +166,39 @@ public class Algorithme_Apriori_Remaster {
 						
 						// On calcul la moyenne général de la pair en fonction des moyennes de chaque attribut et du nombre de vote pour chacun
 						double moyGeneralPair = ((valMoyAttribut1 * listAttr1.size()) + (valMoyAttribut2 * listAttr2.size()) + (valMoyAttribut3 * listAttr3.size()) + (valMoyAttribut4 * listAttr4.size()) + (valMoyAttribut5 * listAttr5.size())) / (listAttr1.size() + listAttr2.size() + listAttr3.size() + listAttr4.size() + listAttr5.size());
+
+						boolean attribut1Valid = false;
+						boolean attribut2Valid = false;
+						boolean attribut3Valid = false;
+						boolean attribut4Valid = false;
+						boolean attribut5Valid = false;
+
+						if(listAttr1.size() >= (nbrVotePair / 2)){
+							attribut1Valid = true;
+						}
+						if(listAttr2.size() >= (nbrVotePair / 2)){
+							attribut2Valid = true;
+						}
+						if(listAttr3.size() >= (nbrVotePair / 2)){
+							attribut3Valid = true;
+						}
+						if(listAttr4.size() >= (nbrVotePair / 2)){
+							attribut4Valid = true;
+						}
+						if(listAttr5.size() >= (nbrVotePair / 2)){
+							attribut5Valid = true;
+						}
+
+						DBService.INSERT_MATCHING_DEPENDENCIE_REMASTER(idPair, DBService.SELECT_ALL_ATTRIBUT_FOR_PAIR(listPairForId.get(0).getIdPair()), attribut1Valid, attribut2Valid, attribut3Valid, attribut4Valid, attribut5Valid);
+						
 						
 						// Si la moyenne est supérieur ou égal au seuil alors on créer une matching dépendencie temporaire
-						if(moyGeneralPair >= 0.8){
+						/*if(moyGeneralPair >= 0.8){
 							DBService.INSERT_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
 						}
 						else{
 							DBService.DELETE_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
-						}
+						}*/
 					}
 				}
 			} catch (Exception e) {

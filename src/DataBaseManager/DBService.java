@@ -10,6 +10,7 @@ import DataBean.Pair;
 import DataBean.RandomPair;
 import DataBean.SimilarPair;
 import DataBean.User;
+import Utils.Jaro;
 import Utils.Utils;
 
 public class DBService {
@@ -326,28 +327,67 @@ public class DBService {
 		return listmd_temp_one_entity;
 	}
 
-	public static void INSERT_MATCHING_DEPENDENCIE_REMASTER(Pair p){
-		String sql = "INSERT INTO md_temp_apriori_remaster (Entry1, Entry2) VALUES (?, ?)";
-		 
+	public static void INSERT_MATCHING_DEPENDENCIE_REMASTER(int idPair, ArrayList<Attribut> listA, boolean attr1, boolean attr2, boolean attr3, boolean attr4, boolean attr5){
+		String sql = "INSERT INTO md_temp_apriori_remaster (idPair, LHS, RHS) VALUES (?, ?, ?)";
+		
 		PreparedStatement statement;
 		try {
 			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, p.getObj1());
-			statement.setString(2, p.getObj2());
-			 
-	        int affectedRows = statement.executeUpdate();
-	        if (affectedRows == 0) {
-	            throw new SQLException("Creating user failed, no rows affected.");
-	        }
+			statement.setInt(1, idPair);
+			
+			String LHS = "";
+			String RHS = "";
+			
+			if(attr1 && LHS != "")
+				LHS += "," + listA.get(0);
+			else if(attr1)
+				LHS += listA.get(0);
+			else if(!attr1 && RHS != "")
+				RHS += "," + listA.get(0);
+			else if(!attr1)
+				RHS += listA.get(0);
 
-	        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	                p.setId(generatedKeys.getInt(1));
-	            }
-	            else {
-	                throw new SQLException("Creating user failed, no ID obtained.");
-	            }
-	        }
+			if(attr2 && LHS != "")
+				LHS += "," + listA.get(1);
+			else if(attr2)
+				LHS += listA.get(1);
+			else if(!attr2 && RHS != "")
+				RHS += "," + listA.get(1);
+			else if(!attr2)
+				RHS += listA.get(1);
+
+			if(attr3 && LHS != "")
+				LHS += "," + listA.get(2);
+			else if(attr3)
+				LHS += listA.get(2);
+			else if(!attr3 && RHS != "")
+				RHS += "," + listA.get(2);
+			else if(!attr3)
+				RHS += listA.get(2);
+
+			if(attr4 && LHS != "")
+				LHS += "," + listA.get(3);
+			else if(attr4)
+				LHS += listA.get(3);
+			else if(!attr4 && RHS != "")
+				RHS += "," + listA.get(3);
+			else if(!attr4)
+				RHS += listA.get(3);
+
+			if(attr5 && LHS != "")
+				LHS += "," + listA.get(4);
+			else if(attr5)
+				LHS += listA.get(4);
+			else if(!attr5 && RHS != "")
+				RHS += "," + listA.get(4);
+			else if(!attr5)
+				RHS += listA.get(4);
+			
+			
+			
+			statement.setString(2, LHS);
+			statement.setString(3, RHS);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -1212,6 +1252,20 @@ public class DBService {
 	            Attribut Attribut5 = SELECT_ATTRIBUT(listAttr.get(4).getId());*/	            
 	            simP = new RandomPair(id, listAttr.get(0), listAttr.get(1), listAttr.get(2), listAttr.get(3), listAttr.get(4));
 	            for (Attribut attribut : listAttr) {
+	            	String elem1 = attribut.getElem1();
+					String elem2 = attribut.getElem2();
+					val = Utils.minDistance(elem1, elem2);
+					double mult = 0.1;
+					val = (1 - (val * mult));
+					val = Double.parseDouble(new DecimalFormat("#.#").format(val).replace(',', '.'));
+					if(val < 0)
+						val = 0;
+					Jaro jar = new Jaro();
+					double valJaro = jar.similarity(elem1, elem2);
+					if(valJaro < val){
+						val = valJaro;
+					}
+					attribut.setVal(val);
 					val = val + attribut.getVal();
 				}
 	            val = (val / listAttr.size());

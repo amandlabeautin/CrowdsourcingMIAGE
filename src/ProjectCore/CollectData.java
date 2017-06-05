@@ -49,7 +49,7 @@ public class CollectData {
 					for (int i = 0 ; i < length-1 ; i++){
 						String elem1 = tab1[i].trim();
 						String elem2 = tab2[i].trim();
-						val = Utils.minDistance(elem1, elem2);
+						/*val = Utils.minDistance(elem1, elem2);
 						double mult = 0.1;
 						val = (1 - (val * mult));
 						val = Double.parseDouble(new DecimalFormat("#.#").format(val).replace(',', '.'));
@@ -59,8 +59,8 @@ public class CollectData {
 						double valJaro = jar.similarity(elem1, elem2);
 						if(valJaro < val){
 							val = valJaro;
-						}
-						Attribut a = new Attribut(p, listNom[i], elem1, elem2, val, 2, 0);
+						}*/
+						Attribut a = new Attribut(p, listNom[i], elem1, elem2, 0, 2, 0);
 						p.addAttribut(a);
 					}
 					DBService.INSERT_PAIR(p);
