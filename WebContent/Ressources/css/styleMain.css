@@ -29,17 +29,6 @@ div#adminCtrl.follow_container, div#addUser.follow_container{
 	color: #e7e7e7;
 }
 
-#formModal .modal-header {
-	font-family: 'Pacifico', cursive;
-	color: white;
-	background-color: #1E1E1E;
-}
-
-#formModal .modal-footer {
-	background-color: #d2d2d2;
-	color: black;
-}
-
 .modal-footer p{
 	color: black;
 }
@@ -100,6 +89,18 @@ div#signup.follow_container {
 #Signin form{
 	width: 50%;
 	margin-left: 25%;
+}
+
+/* Page Modal Pair */
+#formModal .modal-header {
+	font-family: 'Pacifico', cursive;
+	color: white;
+	background-color: #1E1E1E;
+}
+
+#formModal .modal-footer {
+	background-color: #d2d2d2;
+	color: black;
 }
 
 /* Page admin.view */

@@ -1,7 +1,7 @@
 <!--- formTemplate.html -->
 
 <div ng-controller="modalController">
-	<div id="formModal{{index}}">
+	<div id="formModal">
 		<div class="modal-header">
 		  	<h3 class="modal-title" id="modal-title">CrowdMD</h3>
 		  	<hr>
@@ -18,7 +18,7 @@
 				<div class="row" ng-hide="radioChoice">
 					<div class="col-md-1"></div>
 					<div class="col-md-10">
-						<h5 style=" color: #6ba7ffff; font-size: 12pt;">Quels attributs ont des valeurs conflictuelles ?</h5>
+						<h5 style=" color: #ff5e54ff; font-size: 12pt;">S&eacute;l&eacute;ctionner les attributs ayant des valeurs conflictuelles ?</h5>
 					</div>
 					<div class="col-md-1"></div>
 				</div>
@@ -68,7 +68,8 @@
 						  <input type="radio" name="inlineRadioOptions" ng-model="isNotSimilar" id="inlineRadio2" value="option2"> Non
 						</label>
 					</div>
-					<div class="col-md-5" ng-hide="radioChoice">
+					<div class="col-md-1"></div>
+					<div class="col-md-6" ng-hide="radioChoice">
 				        <div tooltip-placement="{{placement.selected}}" uib-tooltip="Merci de mettre un indice compris entre 0,0 et 1,0 sachant que 1,0 est un indice fort de confiance." tooltip-class="customClass">
 						    <label for="exampleInputName2">Indice de confiance</label>
 						    <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
