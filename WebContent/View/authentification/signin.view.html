@@ -4,8 +4,8 @@
 <div class="starter_container bg" ng-controller="SigninCtrl" id="Signin">
     <div class="follow_container">
         <div class="col-md-8 col-md-offset-2">
-            <h2 class="top-title"> Restaurant</h2>
-            <h2 class="white second-title">" Best in the city "</h2>
+            <h2 class="top-title"> Crowdsourcing</h2>
+            <h2 class="white second-title">" l'utilisation de la créativité, de l'intelligence et du savoir-faire "</h2>
             <hr>
             <div>
 				<form id="loginForm">
@@ -23,7 +23,7 @@
 					    <p ng-show="loginForm.password.$error.minlength" class="help-block">Doit contenir au minimum 4 caractères</p>
 					</div>
 
-					<button type="submit" ng-click="connectUser(user)" class="btn btn-warning" ng-disabled="loginForm.$invalid">Envoyer</button>
+					<button type="submit" ng-click="connectUser(user)" class="btn btn-primary" ng-disabled="loginForm.$invalid">Envoyer</button>
 					<p ng-show="loginForm.$error.userExist" class="help-block">Le login est déjà utilisé.</span>
 				</form>
 			</div>

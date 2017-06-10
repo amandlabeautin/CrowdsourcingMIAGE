@@ -10,7 +10,7 @@ angular
   var variableSimi = [];
 
   function homeCtrl($scope){
-
+    
   };
 
   // Controller de la page d'accueil des personnes connectés
@@ -154,10 +154,12 @@ angular
   
     // fonction qui ...
     $scope.next = function () {
+      alert(" Une nouvelle pair va vous être présentée. ")
   	  $http({
   			method: 'GET',
   			url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
   		}).then(function (success){
+        angular.element(document.querySelectorAll('input[name="inlineRadioOptions"]')).prop('checked', false);
         $scope.pairServlets = success.data;
   			console.log(success);
   	   },function (error){
@@ -238,7 +240,7 @@ angular
             UserService.setUser(response.data);
         } else {
           console.log(response.data.administrator);
-            UserService.setAdmin(response.data);
+          UserService.setAdmin(response.data);
         }
         alert('Bonjour');
         $location.path('/home');
@@ -376,5 +378,4 @@ angular
         console.log('error : ' + error.status);
       });
     };
-
   };

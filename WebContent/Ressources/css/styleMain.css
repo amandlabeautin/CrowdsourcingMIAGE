@@ -10,6 +10,10 @@ div#adminCtrl.follow_container, div#addUser.follow_container{
 	top: -10%;
 }
 
+.starter_container {
+	background-color: #111037ff;
+};
+
 .pairActive {
   background-color: #E8D76E;
 }
@@ -79,11 +83,14 @@ td.selected {
 
 /* Page inscription */
 div#signup.follow_container {
-	top: 25%;
+	top: 20%;
 }
 #signup form#inscriptionForm{
 	width: 50%;
-	margin-left: 25%;
+	margin-left: 30%;
+}
+#signup label {
+	color: white;
 }
 
 /* Page connexion */
