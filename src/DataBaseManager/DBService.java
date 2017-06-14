@@ -267,25 +267,35 @@ public class DBService {
 	}
 
 	public static void INSERT_MATCHING_DEPENDENCIE_ONE_ENTITY(Pair p){
-		String sqlSelect = "SELECT * FROM md_temp_one_entity WHERE Entry1 = ? and Entry2 = ?";
+		String sqlSelect = "SELECT * FROM md_temp_one_entity WHERE IdPair = ?";
 		PreparedStatement statementSelect;
 		boolean exist = false;
 		try {
 			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
-			statementSelect.setString(1, p.getObj1());
-			statementSelect.setString(2, p.getObj2());
+			statementSelect.setInt(1, p.getId());
 			ResultSet resSelect = statementSelect.executeQuery();
 			while(resSelect.next()) {
 				exist = true;
 			}
 		
 			if(!exist){
-				String sql = "INSERT INTO md_temp_one_entity (Entry1, Entry2) VALUES (?, ?)";
-				 
+				String sql = "INSERT INTO md_temp_one_entity (IdPair, LHS, RHS) VALUES (?, ?, ?)";
+				String LHS = "";
+				String RHS = "";
+				
+				for (Attribut a : p.getListAttribut()) {
+					 if(a.getVal() >= 0.8){
+						 LHS = LHS + a.getNomAttribut() + ", ";
+					 }else{
+						 RHS = RHS + a.getNomAttribut() + ", ";
+					 }
+				}
+				
 				PreparedStatement statement;
 				statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				statement.setString(1, p.getObj1());
-				statement.setString(2, p.getObj2());
+				statement.setInt(1, p.getId());
+				statement.setString(2, LHS);
+				statement.setString(3, RHS);
 				 
 		        int affectedRows = statement.executeUpdate();
 		        if (affectedRows == 0) {
@@ -1265,6 +1275,7 @@ public class DBService {
 			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
 			ResultSet res  = statement.executeQuery();
             double val = 0;
+            double valTemp = 0;
 			
 			while (res.next()) {
 	            int id = res.getInt(1);
@@ -1278,19 +1289,19 @@ public class DBService {
 	            for (Attribut attribut : listAttr) {
 	            	String elem1 = attribut.getElem1();
 					String elem2 = attribut.getElem2();
-					val = Utils.minDistance(elem1, elem2);
+					valTemp = Utils.minDistance(elem1, elem2);
 					double mult = 0.1;
-					val = (1 - (val * mult));
-					val = Double.parseDouble(new DecimalFormat("#.#").format(val).replace(',', '.'));
-					if(val < 0)
-						val = 0;
+					valTemp = (1 - (valTemp));
+					valTemp = Double.parseDouble(new DecimalFormat("#.#").format(valTemp).replace(',', '.'));
+					if(valTemp < 0)
+						valTemp = 0;
 					Jaro jar = new Jaro();
 					double valJaro = jar.similarity(elem1, elem2);
-					if(valJaro < val){
-						val = valJaro;
+					if(valJaro < valTemp){
+						valTemp = valJaro;
 					}
-					attribut.setVal(val);
-					val = val + attribut.getVal();
+					attribut.setVal(valTemp);
+					val = val + valTemp + attribut.getVal();
 				}
 	            val = (val / listAttr.size());
 				simP.setVal(val);

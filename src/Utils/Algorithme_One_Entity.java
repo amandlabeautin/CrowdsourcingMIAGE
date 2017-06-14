@@ -60,6 +60,7 @@ public class Algorithme_One_Entity {
 					SimilarPair simPPrime = Utils.GenerateSimilarPrime(pair);
 					
 					if(simPPrime.getMoySimilar() >= 0.8){
+						DBService.DELETE_MATCHING_DEPENDENCIE_ONE_ENTITY(pair);
 						DBService.INSERT_MATCHING_DEPENDENCIE_ONE_ENTITY(pair);
 					}
 					else{

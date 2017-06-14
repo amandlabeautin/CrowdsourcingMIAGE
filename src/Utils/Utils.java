@@ -54,10 +54,15 @@ public class Utils {
 		RandomPair simP = new RandomPair();
 		try{
 			 simP = DBService.SELECT_RANDOM_PAIR();
+			 DBService.INSERT_ATTRIBUT(simP.getAttribut1(), simP.getIdPair());
+			 DBService.INSERT_ATTRIBUT(simP.getAttribut2(), simP.getIdPair());
+			 DBService.INSERT_ATTRIBUT(simP.getAttribut3(), simP.getIdPair());
+			 DBService.INSERT_ATTRIBUT(simP.getAttribut4(), simP.getIdPair());
+			 DBService.INSERT_ATTRIBUT(simP.getAttribut5(), simP.getIdPair());
 		}catch (Exception e) {
+			System.err.println("Error");
 		}
 		return simP;
-		
 	}
 	
 	public static SimilarPair GenerateSimilarPrime(Pair p){

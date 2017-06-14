@@ -30,10 +30,12 @@ public class CollectData {
 			String line2 = "";
 						
 			double val;
-			br2 = new BufferedReader(new FileReader(file2));
 
-			while ((line1 = br1.readLine()) != null) {
-				while ((line2 = br2.readLine()) != null) {
+			br2 = new BufferedReader(new FileReader(file2));
+			//while ((line1 = br1.readLine()) != null) {
+				line1 = br1.readLine();
+				//while ((line2 = br2.readLine()) != null) {
+					line2 = br2.readLine();
 					Pair p = new Pair(line1, line2);
 					
 					line1 =line1.replaceAll("\"", "");
@@ -65,9 +67,8 @@ public class CollectData {
 					}
 					DBService.INSERT_PAIR(p);
 					DBService.INSERT_PAIR_TABLE_PRE_TRAITEMENT(p);
-					//DBService.INSERT_PAIR_TABLE_SIMILARITE(p);
-				}
-			}
+				//}
+			//}
 			br2.close();
 			br1.close();
 		} catch (FileNotFoundException e) {

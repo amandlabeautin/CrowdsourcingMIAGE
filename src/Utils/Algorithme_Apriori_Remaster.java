@@ -34,7 +34,7 @@ public class Algorithme_Apriori_Remaster {
 				boolean attrSim4 = Attribut4.get("selected").getAsBoolean();
 				JsonObject Attribut5 = json.get("attribut5").getAsJsonObject();
 				boolean attrSim5 = Attribut5.get("selected").getAsBoolean();
-				double val = json.get("val").getAsDouble();
+				double val = json.get("valUser").getAsDouble();
 	
 				// On récupère la pair à traiter
 				Pair pair = DBService.SELECT_PAIR_BY_ID(idPair);
@@ -189,16 +189,17 @@ public class Algorithme_Apriori_Remaster {
 							attribut5Valid = true;
 						}
 
-						DBService.INSERT_MATCHING_DEPENDENCIE_REMASTER(idPair, DBService.SELECT_ALL_ATTRIBUT_FOR_PAIR(listPairForId.get(0).getIdPair()), attribut1Valid, attribut2Valid, attribut3Valid, attribut4Valid, attribut5Valid);
 						
 						
 						// Si la moyenne est supérieur ou égal au seuil alors on créer une matching dépendencie temporaire
-						/*if(moyGeneralPair >= 0.8){
-							DBService.INSERT_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
+						if(moyGeneralPair >= 0.8){
+							DBService.DELETE_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(listPairForId.get(0).getIdPair()));
+							DBService.INSERT_MATCHING_DEPENDENCIE_REMASTER(idPair, DBService.SELECT_ALL_ATTRIBUT_FOR_PAIR(listPairForId.get(0).getIdPair()), attribut1Valid, attribut2Valid, attribut3Valid, attribut4Valid, attribut5Valid);
+
 						}
 						else{
-							DBService.DELETE_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(simP.getIdPair()));
-						}*/
+							DBService.DELETE_MATCHING_DEPENDENCIE_REMASTER(DBService.SELECT_PAIR_BY_ID(listPairForId.get(0).getIdPair()));
+						}
 					}
 				}
 			} catch (Exception e) {
