@@ -1225,9 +1225,9 @@ public class DBService {
 		return simP;
 	}
 	
-	public static void INSERT_PAIR_TABLE_SIMILARITE_APRIORI(Pair p){
+	public static void INSERT_PAIR_TABLE_SIMILARITE_APRIORI(Pair p, int idUser){
 		double moySim = 0;		
-		String sql = "INSERT INTO similarite_r_remaster (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar, nbrVote) VALUES (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO similarite_r_remaster (idPair, idAttribut1, idAttribut2, idAttribut3, idAttribut4, idAttribut5, moySimilar, nbrVote, idUser) VALUES (?,?,?,?,?,?,?,?,?)";
 				
 		PreparedStatement statement;
 		try {
@@ -1248,6 +1248,7 @@ public class DBService {
 			p.setVal(moySim);
 			statement.setDouble(7, moySim);
 			statement.setInt(8, 1);
+			statement.setInt(9, idUser);
 			statement.executeUpdate();
 			
 			

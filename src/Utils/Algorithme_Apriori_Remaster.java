@@ -38,6 +38,7 @@ public class Algorithme_Apriori_Remaster {
 					JsonObject Attribut5 = json.get("attribut5").getAsJsonObject();
 					boolean attrSim5 = Attribut5.get("selected").getAsBoolean();
 					double val = json.get("valUser").getAsDouble();
+					int idUser = json.get("user").getAsInt();
 	
 					
 					
@@ -53,7 +54,7 @@ public class Algorithme_Apriori_Remaster {
 						
 						Utils.calculNoteAttributApriori(pair, attrSim1, attrSim2, attrSim3, attrSim4, attrSim5, val);
 			
-						DBService.INSERT_PAIR_TABLE_SIMILARITE_APRIORI(pair);
+						DBService.INSERT_PAIR_TABLE_SIMILARITE_APRIORI(pair, idUser);
 						Utils.GenerateSimilarPrimeApriori(pair);
 						
 						// On récupère l'ensemble des éléments de R' pour apriori trié par ID (chaque ID dans une arrayList)
