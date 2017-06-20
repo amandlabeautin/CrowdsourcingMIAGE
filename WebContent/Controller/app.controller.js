@@ -161,6 +161,7 @@ angular
   			url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
   		}).then(function (success){
         angular.element(document.querySelectorAll('input[name="inlineRadioOptions"]')).prop('checked', false);
+        $scope.radioChoice = true;
         $scope.pairServlets = success.data;
   			console.log(success);
   	   },function (error){
@@ -204,7 +205,7 @@ angular
   };
 
   // Controller de la page d'inscription
-  function RegisterCtrl(UserService, UtilService, $http, $location, $rootScope, FlashService, $scope) {
+  function RegisterCtrl(UserService, UtilService, $http, $rootScope, FlashService, $scope) {
       $scope.createUser = function(user){
         var temp = {};
 
@@ -227,7 +228,7 @@ angular
   };
 
   // Controller de la page de connexion
-  function SigninCtrl($scope, $http, $location, UserService){
+  function SigninCtrl($scope, $http, $state, UserService){
 
     $scope.connectUser = function(user){
       $http({
@@ -240,13 +241,11 @@ angular
         if (response.data.administrator == false) {
             UserService.setUser(response.data);
         } else {
-          console.log(response.data.administrator);
           UserService.setAdmin(response.data);
         }
         alert('Bonjour');
-        $location.path('/home');
+        state.transitionTo('home');
       },function(response) {
-          console.log('Login failed');
           $scope.loginFailed = true;
       });
     };

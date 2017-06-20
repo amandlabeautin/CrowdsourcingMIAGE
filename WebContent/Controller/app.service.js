@@ -25,7 +25,7 @@ function UtilService($rootScope, $cookieStore, Notification) {
      };
 };
 
-function UserService($http, $state, $cookieStore, $location) {
+function UserService($http, $state, $cookieStore) {
     var self = this;
             
     self.setUser = function(aUser){
@@ -56,6 +56,6 @@ function UserService($http, $state, $cookieStore, $location) {
     self.logoutAdmin = function() {
         $cookieStore.remove('authenticatedUser');
         $cookieStore.remove('authenticatedAdmin');
-        $location.path('/');
+        $state.transitionTo('/');
     };   
 };

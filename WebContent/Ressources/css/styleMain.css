@@ -10,6 +10,10 @@ div#adminCtrl.follow_container, div#addUser.follow_container{
 	top: -10%;
 }
 
+label.radio-inline{
+	font-size: 12pt;
+}
+
 .starter_container {
 	background-color: #111037ff;
 };
@@ -52,17 +56,6 @@ div#adminCtrl.follow_container, div#addUser.follow_container{
 td.selected {
   background: #b7c6cc!important;
 }
-
-
-
-#Tabs {
-	color: white;
-}
-
-#Tabs a{
-	color: #d2d2d2;
-}
-
 
 
 /* Page home */
@@ -115,6 +108,11 @@ div#signup.follow_container {
 	color :white;
 }
 
+#usersTable {
+	width: 90%;
+}
+
+
 /* Page AddUser.view */
 #addUser {
 	height: 100%;
@@ -122,6 +120,15 @@ div#signup.follow_container {
 	padding-top: 0%;
 	padding: 5%;
 }
+
+#Tabs {
+	color: white;
+	width: 45%;
+}
+#Tabs a{
+	color: #d2d2d2;
+}
+
 
 #addUser.follow_container{
 	padding-top: 15%;
