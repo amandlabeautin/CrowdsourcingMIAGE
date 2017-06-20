@@ -127,6 +127,7 @@ angular
             }
           }
       }else {
+          temp = angular.fromJson($scope.pairServlets); 
           temp["nonSimilaire"] = true;
       }
 

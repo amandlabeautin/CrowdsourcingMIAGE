@@ -36,7 +36,7 @@ public class CollectData {
 				line1 = br1.readLine();
 				//while ((line2 = br2.readLine()) != null) {
 					line2 = br2.readLine();
-					Pair p = new Pair(line1, line2);
+					Pair p = new Pair(line1, line2, 0);
 					
 					line1 =line1.replaceAll("\"", "");
 					String[] tab1 = line1.split(",");
@@ -62,7 +62,7 @@ public class CollectData {
 						if(valJaro < val){
 							val = valJaro;
 						}*/
-						Attribut a = new Attribut(p, listNom[i], elem1, elem2, 0, 2, 0);
+						Attribut a = new Attribut(p, listNom[i], elem1, elem2, 0, 1, 0);
 						p.addAttribut(a);
 					}
 					DBService.INSERT_PAIR(p);

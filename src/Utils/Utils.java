@@ -150,7 +150,7 @@ public class Utils {
 		return PairSimilairePrime;
 	}
 	
-	public static int calculNoteAttribut(Pair p, boolean attrSim1, boolean attrSim2, boolean attrSim3, boolean attrSim4, boolean attrSim5, double nouvelleNote){
+	public static void calculNoteAttribut(Pair p, boolean attrSim1, boolean attrSim2, boolean attrSim3, boolean attrSim4, boolean attrSim5, double nouvelleNote){
 		ArrayList<Attribut> listAttributs = p.getListAttribut();
 		int tauxVote = 0;
 		
@@ -213,7 +213,6 @@ public class Utils {
 			Attribut attr5 = listAttributs.get(4);
 			tauxVote = tauxVote + DBService.UPDATE_ATTRIBUT_DECREMENT_TAUX_VOTE(attr5, p.getId());
 		}
-		return tauxVote;
 	}
 
 	public static void calculNoteAttributApriori (Pair p, boolean attrSim1, boolean attrSim2, boolean attrSim3, boolean attrSim4, boolean attrSim5, double nouvelleNote){
@@ -225,6 +224,10 @@ public class Utils {
 			double noteFinale1 = (noteActuelle1 + nouvelleNote) / 2;
 			attr1.setVal(noteFinale1);
 			DBService.INSERT_ATTRIBUT_APRIORI(attr1, p.getId());
+		}else{
+			Attribut attr1 = listAttributs.get(0);
+			attr1.setVal(0);
+			DBService.INSERT_ATTRIBUT_APRIORI(attr1, p.getId());
 		}
 
 		if(attrSim2){
@@ -232,6 +235,10 @@ public class Utils {
 			double noteActuelle2 = attr2.getVal();
 			double noteFinale2 = (noteActuelle2 + nouvelleNote) / 2;
 			attr2.setVal(noteFinale2);
+			DBService.INSERT_ATTRIBUT_APRIORI(attr2, p.getId());
+		}else{
+			Attribut attr2 = listAttributs.get(1);
+			attr2.setVal(0);
 			DBService.INSERT_ATTRIBUT_APRIORI(attr2, p.getId());
 		}
 
@@ -241,6 +248,10 @@ public class Utils {
 			double noteFinale3 = (noteActuelle3 + nouvelleNote) / 2;
 			attr3.setVal(noteFinale3);
 			DBService.INSERT_ATTRIBUT_APRIORI(attr3, p.getId());;
+		}else{
+			Attribut attr3 = listAttributs.get(2);
+			attr3.setVal(0);
+			DBService.INSERT_ATTRIBUT_APRIORI(attr3, p.getId());
 		}
 
 		if(attrSim4){
@@ -249,6 +260,10 @@ public class Utils {
 			double noteFinale4 = (noteActuelle4 + nouvelleNote) / 2;
 			attr4.setVal(noteFinale4);
 			DBService.INSERT_ATTRIBUT_APRIORI(attr4, p.getId());
+		}else{
+			Attribut attr4 = listAttributs.get(3);
+			attr4.setVal(0);
+			DBService.INSERT_ATTRIBUT_APRIORI(attr4, p.getId());
 		}
 		
 		if(attrSim5){
@@ -256,6 +271,10 @@ public class Utils {
 			double noteActuelle5 = attr5.getVal();
 			double noteFinale5 = (noteActuelle5 + nouvelleNote) / 2;
 			attr5.setVal(noteFinale5);
+			DBService.INSERT_ATTRIBUT_APRIORI(attr5, p.getId());
+		}else{
+			Attribut attr5 = listAttributs.get(4);
+			attr5.setVal(0);
 			DBService.INSERT_ATTRIBUT_APRIORI(attr5, p.getId());
 		}
 	}

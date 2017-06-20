@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import DataBaseManager.DBService;
 import Utils.Algorithme_Apriori_Remaster;
 import Utils.Algorithme_One_Entity;
 

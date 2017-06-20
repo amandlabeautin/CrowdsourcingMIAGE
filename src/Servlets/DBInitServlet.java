@@ -53,7 +53,7 @@ public class DBInitServlet extends  HttpServlet {
 				
 				@Override
 				public void run() {
-					try {
+					/*try {
 						while(true){
 							System.out.println("Je dors...");
 							Thread.sleep(1000);
@@ -80,7 +80,7 @@ public class DBInitServlet extends  HttpServlet {
 						
 					} catch (InterruptedException e) {
 						e.printStackTrace();
-					}
+					}*/
 				}
 			});
 			

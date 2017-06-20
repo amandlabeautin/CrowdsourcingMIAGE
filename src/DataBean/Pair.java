@@ -8,13 +8,23 @@ public class Pair {
 	private String obj2;
 	private ArrayList<Attribut> listAttribut = new ArrayList<>();
 	private double val;
+	private int nbrVote;
 
 	public Pair() {
 	}
 	
-	public Pair(String obj1, String obj2){
+	public Pair(String obj1, String obj2, int nbrVote){
 		this.obj1 = obj1;
 		this.obj2 = obj2;
+		this.nbrVote = nbrVote;
+	}
+	
+	public int getNbrVote() {
+		return nbrVote;
+	}
+	
+	public void setNbrVote(int nbrVote) {
+		this.nbrVote = nbrVote;
 	}
 	
 	public void setVal(double val) {

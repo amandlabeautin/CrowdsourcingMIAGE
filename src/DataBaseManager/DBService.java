@@ -196,24 +196,42 @@ public class DBService {
 			e.printStackTrace();
 		}
 
-		String sqlTablematching_dependencieTwo = "DELETE FROM `md_temp_apriori_remaster` WHERE 1";
-		PreparedStatement statementTablematching_dependencieTwo;
+		String sqlTableLhsRhs = "DELETE FROM `lhs_rhs` WHERE 1";
+		PreparedStatement statementTableLhsRhs;
 		try {
-			statementTablematching_dependencieTwo = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencieTwo);
-			statementTablematching_dependencieTwo.executeUpdate();
+			statementTableLhsRhs = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableLhsRhs);
+			statementTableLhsRhs.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		String sqlTablematching_dependencieTwo2 = "ALTER TABLE md_temp_apriori_remaster AUTO_INCREMENT = 1";
-		PreparedStatement statementTablematching_dependencieTwo2;
+		String sqlTableLhsRhs2 = "ALTER TABLE lhs_rhs AUTO_INCREMENT = 1";
+		PreparedStatement statementTableLhsRhs2;
 		try {
-			statementTablematching_dependencieTwo2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTablematching_dependencieTwo2);
-			statementTablematching_dependencieTwo2.executeUpdate();
+			statementTableLhsRhs2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableLhsRhs2);
+			statementTableLhsRhs2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+		String sqlTableLhsRhsTemp = "DELETE FROM `lhs_rhs_temp` WHERE 1";
+		PreparedStatement statementTableLhsRhsTemp;
+		try {
+			statementTableLhsRhsTemp = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableLhsRhsTemp);
+			statementTableLhsRhsTemp.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		String sqlTableLhsRhsTemp2 = "ALTER TABLE lhs_rhs_temp AUTO_INCREMENT = 1";
+		PreparedStatement statementTableLhsRhsTemp2;
+		try {
+			statementTableLhsRhsTemp2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableLhsRhsTemp2);
+			statementTableLhsRhsTemp2.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		String sqlTablematching_dependencie = "DELETE FROM `matching_dependencie` WHERE 1";
 		PreparedStatement statementTablematching_dependencie;
 		try {
@@ -236,13 +254,14 @@ public class DBService {
 	}
 
 	public static void INSERT_PAIR(Pair p){
-		String sql = "INSERT INTO pair (Entry1, Entry2) VALUES (?, ?)";
+		String sql = "INSERT INTO pair (Entry1, Entry2, nbrVote) VALUES (?, ?, ?)";
 		 
 		PreparedStatement statement;
 		try {
 			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, p.getObj1());
 			statement.setString(2, p.getObj2());
+			statement.setInt(3, 0);
 			 
 	        int affectedRows = statement.executeUpdate();
 	        if (affectedRows == 0) {
@@ -328,7 +347,7 @@ public class DBService {
 		}
 	}
 
-	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_ONE_ENTITY(){	
+	/*public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_ONE_ENTITY(){	
 
 		String sqlSelect = "SELECT * FROM md_temp_one_entity";
 		PreparedStatement statementSelect;
@@ -348,75 +367,311 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return listmd_temp_one_entity;
-	}
-
-	public static void INSERT_MATCHING_DEPENDENCIE_REMASTER(int idPair, ArrayList<Attribut> listA, boolean attr1, boolean attr2, boolean attr3, boolean attr4, boolean attr5){
-		String sql = "INSERT INTO md_temp_apriori_remaster (idPair, LHS, RHS) VALUES (?, ?, ?)";
-		
-		PreparedStatement statement;
+	}*/
+	
+	public static void INSERT_LHS_AND_RHS_TEMP(int idPair, ArrayList<Attribut> listA, boolean attr1, boolean attr2, boolean attr3, boolean attr4, boolean attr5){
+		String sqlSelect = "SELECT * FROM lhs_rhs_temp WHERE idPair = ?";
+		PreparedStatement statementSelect;
+		boolean exist = false;
 		try {
-			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setInt(1, idPair);
-			
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setInt(1, idPair);
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()) {
+				exist = true;
+			}
 			String LHS = "";
 			String RHS = "";
 			
 			if(attr1 && LHS != "")
-				LHS += "," + listA.get(0);
+				LHS += "," + listA.get(0).getNomAttribut();
 			else if(attr1)
-				LHS += listA.get(0);
+				LHS += listA.get(0).getNomAttribut();
 			else if(!attr1 && RHS != "")
-				RHS += "," + listA.get(0);
+				RHS += "," + listA.get(0).getNomAttribut();
 			else if(!attr1)
-				RHS += listA.get(0);
+				RHS += listA.get(0).getNomAttribut();
 
 			if(attr2 && LHS != "")
-				LHS += "," + listA.get(1);
+				LHS += "," + listA.get(1).getNomAttribut();
 			else if(attr2)
-				LHS += listA.get(1);
+				LHS += listA.get(1).getNomAttribut();
 			else if(!attr2 && RHS != "")
-				RHS += "," + listA.get(1);
+				RHS += "," + listA.get(1).getNomAttribut();
 			else if(!attr2)
-				RHS += listA.get(1);
+				RHS += listA.get(1).getNomAttribut();
 
 			if(attr3 && LHS != "")
-				LHS += "," + listA.get(2);
+				LHS += "," + listA.get(2).getNomAttribut();
 			else if(attr3)
-				LHS += listA.get(2);
+				LHS += listA.get(2).getNomAttribut();
 			else if(!attr3 && RHS != "")
-				RHS += "," + listA.get(2);
+				RHS += "," + listA.get(2).getNomAttribut();
 			else if(!attr3)
-				RHS += listA.get(2);
+				RHS += listA.get(2).getNomAttribut();
 
 			if(attr4 && LHS != "")
-				LHS += "," + listA.get(3);
+				LHS += "," + listA.get(3).getNomAttribut();
 			else if(attr4)
-				LHS += listA.get(3);
+				LHS += listA.get(3).getNomAttribut();
 			else if(!attr4 && RHS != "")
-				RHS += "," + listA.get(3);
+				RHS += "," + listA.get(3).getNomAttribut();
 			else if(!attr4)
-				RHS += listA.get(3);
+				RHS += listA.get(3).getNomAttribut();
 
 			if(attr5 && LHS != "")
-				LHS += "," + listA.get(4);
+				LHS += "," + listA.get(4).getNomAttribut();
 			else if(attr5)
-				LHS += listA.get(4);
+				LHS += listA.get(4).getNomAttribut();
 			else if(!attr5 && RHS != "")
-				RHS += "," + listA.get(4);
+				RHS += "," + listA.get(4).getNomAttribut();
 			else if(!attr5)
-				RHS += listA.get(4);
+				RHS += listA.get(4).getNomAttribut();
 			
-			
-			
-			statement.setString(2, LHS);
-			statement.setString(3, RHS);
+			if(!exist){
+				String sql = "INSERT INTO lhs_rhs_temp (idPair, LHS, RHS) VALUES (?, ?, ?)";
+				
+				PreparedStatement statement;
+				try {
+					statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+					statement.setInt(1, idPair);
+															
+					statement.setString(2, LHS);
+					statement.setString(3, RHS);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
+			}else{
+				String sql = "UPDATE lhs_rhs_temp SET LHS = ?, RHS = ? WHERE idPair = ?";
+				
+				PreparedStatement statement;
+				try {
+					statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+					statement.setString(1, LHS);					
+					statement.setString(2, RHS);
+					statement.setInt(3, idPair);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
+		
 	}
 
-	public static void DELETE_MATCHING_DEPENDENCIE_REMASTER(Pair p){	
-		String sqlUpdate = "DELETE FROM md_temp_apriori_remaster WHERE id = ?";
+	public static void INSERT_LHS_AND_RHS_TEMP_APRIORI(int idPair, ArrayList<Attribut> listA, boolean attr1, boolean attr2, boolean attr3, boolean attr4, boolean attr5){
+		String sqlSelect = "SELECT * FROM lhs_rhs_temp_apriori WHERE idPair = ?";
+		PreparedStatement statementSelect;
+		boolean exist = false;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setInt(1, idPair);
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()) {
+				exist = true;
+			}
+			String LHS = "";
+			String RHS = "";
+			
+			if(attr1 && LHS != "")
+				LHS += "," + listA.get(0).getNomAttribut();
+			else if(attr1)
+				LHS += listA.get(0).getNomAttribut();
+			else if(!attr1 && RHS != "")
+				RHS += "," + listA.get(0).getNomAttribut();
+			else if(!attr1)
+				RHS += listA.get(0).getNomAttribut();
+
+			if(attr2 && LHS != "")
+				LHS += "," + listA.get(1).getNomAttribut();
+			else if(attr2)
+				LHS += listA.get(1).getNomAttribut();
+			else if(!attr2 && RHS != "")
+				RHS += "," + listA.get(1).getNomAttribut();
+			else if(!attr2)
+				RHS += listA.get(1).getNomAttribut();
+
+			if(attr3 && LHS != "")
+				LHS += "," + listA.get(2).getNomAttribut();
+			else if(attr3)
+				LHS += listA.get(2).getNomAttribut();
+			else if(!attr3 && RHS != "")
+				RHS += "," + listA.get(2).getNomAttribut();
+			else if(!attr3)
+				RHS += listA.get(2).getNomAttribut();
+
+			if(attr4 && LHS != "")
+				LHS += "," + listA.get(3).getNomAttribut();
+			else if(attr4)
+				LHS += listA.get(3).getNomAttribut();
+			else if(!attr4 && RHS != "")
+				RHS += "," + listA.get(3).getNomAttribut();
+			else if(!attr4)
+				RHS += listA.get(3).getNomAttribut();
+
+			if(attr5 && LHS != "")
+				LHS += "," + listA.get(4).getNomAttribut();
+			else if(attr5)
+				LHS += listA.get(4).getNomAttribut();
+			else if(!attr5 && RHS != "")
+				RHS += "," + listA.get(4).getNomAttribut();
+			else if(!attr5)
+				RHS += listA.get(4).getNomAttribut();
+			
+			if(!exist){
+				String sql = "INSERT INTO lhs_rhs_temp_apriori (idPair, LHS, RHS) VALUES (?, ?, ?)";
+				
+				PreparedStatement statement;
+				try {
+					statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+					statement.setInt(1, idPair);
+															
+					statement.setString(2, LHS);
+					statement.setString(3, RHS);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
+			}else{
+				String sql = "UPDATE FROM lhs_rhs_temp_apriori SET LHS = ?, RHS = ? WHERE idPair = ?";
+				
+				PreparedStatement statement;
+				try {
+					statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+					statement.setString(1, LHS);					
+					statement.setString(2, RHS);
+					statement.setInt(3, idPair);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+	}
+	
+	public static void INSERT_LHS_AND_RHS(int idPair, ArrayList<Attribut> listA, boolean attr1, boolean attr2, boolean attr3, boolean attr4, boolean attr5){
+		String sqlSelect = "SELECT * FROM lhs_rhs WHERE idPair = ?";
+		PreparedStatement statementSelect;
+		boolean exist = false;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setInt(1, idPair);
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()) {
+				exist = true;
+			}
+			String LHS = "";
+			String RHS = "";
+			
+			if(attr1 && LHS != "")
+				LHS += "," + listA.get(0).getNomAttribut();
+			else if(attr1)
+				LHS += listA.get(0).getNomAttribut();
+			else if(!attr1 && RHS != "")
+				RHS += "," + listA.get(0).getNomAttribut();
+			else if(!attr1)
+				RHS += listA.get(0).getNomAttribut();
+
+			if(attr2 && LHS != "")
+				LHS += "," + listA.get(1).getNomAttribut();
+			else if(attr2)
+				LHS += listA.get(1).getNomAttribut();
+			else if(!attr2 && RHS != "")
+				RHS += "," + listA.get(1).getNomAttribut();
+			else if(!attr2)
+				RHS += listA.get(1).getNomAttribut();
+
+			if(attr3 && LHS != "")
+				LHS += "," + listA.get(2).getNomAttribut();
+			else if(attr3)
+				LHS += listA.get(2).getNomAttribut();
+			else if(!attr3 && RHS != "")
+				RHS += "," + listA.get(2).getNomAttribut();
+			else if(!attr3)
+				RHS += listA.get(2).getNomAttribut();
+
+			if(attr4 && LHS != "")
+				LHS += "," + listA.get(3).getNomAttribut();
+			else if(attr4)
+				LHS += listA.get(3).getNomAttribut();
+			else if(!attr4 && RHS != "")
+				RHS += "," + listA.get(3).getNomAttribut();
+			else if(!attr4)
+				RHS += listA.get(3).getNomAttribut();
+
+			if(attr5 && LHS != "")
+				LHS += "," + listA.get(4).getNomAttribut();
+			else if(attr5)
+				LHS += listA.get(4).getNomAttribut();
+			else if(!attr5 && RHS != "")
+				RHS += "," + listA.get(4).getNomAttribut();
+			else if(!attr5)
+				RHS += listA.get(4).getNomAttribut();
+			
+			if(!exist){
+				String sql = "INSERT INTO lhs_rhs (idPair, LHS, RHS) VALUES (?, ?, ?)";
+				
+				PreparedStatement statement;
+				try {
+					statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+					statement.setInt(1, idPair);
+															
+					statement.setString(2, LHS);
+					statement.setString(3, RHS);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
+			}else{
+				String sql = "UPDATE lhs_rhs SET LHS = ?, RHS = ? WHERE idPair = ?";
+				
+				PreparedStatement statement;
+				try {
+					statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+					statement.setString(1, LHS);					
+					statement.setString(2, RHS);
+					statement.setInt(3, idPair);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+	}
+
+	public static void DELETE_LHS_RHS(Pair p){	
+		String sqlUpdate = "DELETE FROM lhs_rhs WHERE id = ?";
+		PreparedStatement statementUpdate;
+		try {
+			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+			statementUpdate.setDouble(1, p.getId());
+			statementUpdate.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void DELETE_LHS_RHS_TEMP_APRIORI(Pair p){	
+		String sqlUpdate = "DELETE FROM lhs_rhs_temp_apriori WHERE id = ?";
+		PreparedStatement statementUpdate;
+		try {
+			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+			statementUpdate.setDouble(1, p.getId());
+			statementUpdate.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void DELETE_LHS_RHS_TEMP(Pair p){	
+		String sqlUpdate = "DELETE FROM lhs_rhs_temp WHERE id = ?";
 		PreparedStatement statementUpdate;
 		try {
 			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
@@ -467,7 +722,7 @@ public class DBService {
 		}		
 	}
 	
-	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE(){	
+	/*public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE(){	
 
 		String sqlSelect = "SELECT * FROM matching_dependencie";
 		PreparedStatement statementSelect;
@@ -487,7 +742,7 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return listmatching_dependencie;
-	}
+	}*/
 
 	public static void DELETE_MATCHING_DEPENDENCIE(Pair p){	
 		String sqlUpdate = "DELETE FROM matching_dependencie WHERE id = ?";
@@ -501,11 +756,11 @@ public class DBService {
 		}
 	}
 
-	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_REMASTER(){	
+	/*public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE_REMASTER(){	
 
-		String sqlSelect = "SELECT * FROM md_temp_apriori_remaster";
+		String sqlSelect = "SELECT * FROM lhs_rhs";
 		PreparedStatement statementSelect;
-		ArrayList<Pair> listmd_temp_apriori_remaster = new ArrayList<>();
+		ArrayList<Pair> listlhs_rhs = new ArrayList<>();
 		try {
 			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
 			ResultSet resSelect = statementSelect.executeQuery();
@@ -515,13 +770,13 @@ public class DBService {
 				pair.setId(resSelect.getInt(1));
 				pair.setObj1(resSelect.getString(2));
 				pair.setObj2(resSelect.getString(3));	
-				listmd_temp_apriori_remaster.add(pair);
+				listlhs_rhs.add(pair);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listmd_temp_apriori_remaster;
-	}
+		return listlhs_rhs;
+	}*/
 		
 	public static void INSERT_ATTRIBUT_ONE_ENTITY(Attribut a, int idPair){
 				
@@ -805,6 +1060,74 @@ public class DBService {
 			e.printStackTrace();
 		}
 	}
+
+	public static void UPDATE_INCREMENT_PAIR_NBRVOTE(Pair p){
+		String sqlUpdate = "UPDATE pair SET nbrvote = nbrvote + 1 WHERE id = ?";
+		PreparedStatement statementUpdate;
+		try {
+			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+			
+			statementUpdate.setInt(1, p.getId());
+			statementUpdate.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void UPDATE_DECREMENT_PAIR_NBRVOTE(Pair p){
+		String sqlUpdate = "UPDATE pair SET nbrvote = nbrvote - 1 WHERE id = ?";
+		PreparedStatement statementUpdate;
+		try {
+			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+			
+			statementUpdate.setInt(1, p.getId());
+			statementUpdate.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void UPDATE_SIMILARITE_PRE_TRAITEMENT(Pair p){
+		String sqlUpdate = "UPDATE pre_traitement SET moySimilar = ? WHERE idPair = ?";
+		PreparedStatement statementUpdate;
+		try {
+			ArrayList<Attribut> attrList = new ArrayList<>();
+			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
+			Attribut attr1 = p.getListAttribut().get(0);
+			attrList.add(attr1);
+			Attribut attr2 = p.getListAttribut().get(1);
+			attrList.add(attr2);
+			Attribut attr3 = p.getListAttribut().get(2);
+			attrList.add(attr3);
+			Attribut attr4 = p.getListAttribut().get(3);
+			attrList.add(attr4);
+			Attribut attr5 = p.getListAttribut().get(4);
+			attrList.add(attr5);
+
+			double val = 0;
+			double valTemp = 0;
+			for (Attribut attribut : attrList) {
+				valTemp = Utils.minDistance(attribut.getElem1(), attribut.getElem2());
+				double mult = 0.1;
+				valTemp = (1 - (valTemp * mult));
+				valTemp = Double.parseDouble(new DecimalFormat("#.#").format(valTemp).replace(',', '.'));
+				if(valTemp < 0)
+					valTemp = 0;
+				Jaro jar = new Jaro();
+				double valJaro = jar.similarity(attribut.getElem1(), attribut.getElem2());
+				if(valJaro < valTemp){
+					valTemp = valJaro;
+				}
+				val = val + valTemp;
+			}
+											
+			statementUpdate.setDouble(1, val/5);
+			statementUpdate.setInt(2, p.getId());
+			statementUpdate.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static double INSERT_PAIR_TABLE_SIMILARITE(Pair p){
 		String sqlSelect = "SELECT * FROM similarite_r WHERE idPair = ?";
@@ -910,18 +1233,18 @@ public class DBService {
 		try {
 			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
 			statement.setInt(1, p.getId());
+			int i = 2;
+			for (int j = 0; j<5; j++) {
+				if(p.getListAttribut().get(j) != null){
+					moySim = moySim + p.getListAttribut().get(j).getVal();
+					statement.setInt(i, p.getListAttribut().get(j).getId());
+				}else{
+					statement.setInt(i, -1);
+				}
+				i++;
+			}
+			moySim = moySim / 5;
 			
-			Attribut attr1 = p.getListAttribut().get(0);
-			statement.setInt(2, attr1.getId());
-			Attribut attr2 = p.getListAttribut().get(1);
-			statement.setInt(3, attr2.getId());
-			Attribut attr3 = p.getListAttribut().get(2);
-			statement.setInt(4, attr3.getId());
-			Attribut attr4 = p.getListAttribut().get(3);
-			statement.setInt(5, attr4.getId());
-			Attribut attr5 = p.getListAttribut().get(4);
-			statement.setInt(6, attr5.getId());
-			moySim = (((/*(*/attr1.getVal() + attr2.getVal() + attr3.getVal()  + attr4.getVal() + attr5.getVal()) / (5)) /*+ p.getVal() ) / 2*/ );
 			p.setVal(moySim);
 			statement.setDouble(7, moySim);
 			statement.setInt(8, 1);
@@ -1279,19 +1602,14 @@ public class DBService {
 			
 			while (res.next()) {
 	            int id = res.getInt(1);
-	            ArrayList<Attribut> listAttr = SELECT_ALL_ATTRIBUT_FOR_PAIR(id);
-	            /*Attribut Attribut1 = SELECT_ATTRIBUT(listAttr.get(0).getId());
-	            Attribut Attribut2 = SELECT_ATTRIBUT(listAttr.get(1).getId());
-	            Attribut Attribut3 = SELECT_ATTRIBUT(listAttr.get(2).getId());
-	            Attribut Attribut4 = SELECT_ATTRIBUT(listAttr.get(3).getId());
-	            Attribut Attribut5 = SELECT_ATTRIBUT(listAttr.get(4).getId());*/	            
+	            ArrayList<Attribut> listAttr = SELECT_ALL_ATTRIBUT_FOR_PAIR(id);           
 	            simP = new RandomPair(id, listAttr.get(0), listAttr.get(1), listAttr.get(2), listAttr.get(3), listAttr.get(4));
 	            for (Attribut attribut : listAttr) {
 	            	String elem1 = attribut.getElem1();
 					String elem2 = attribut.getElem2();
 					valTemp = Utils.minDistance(elem1, elem2);
 					double mult = 0.1;
-					valTemp = (1 - (valTemp));
+					valTemp = (1 - (valTemp * mult));
 					valTemp = Double.parseDouble(new DecimalFormat("#.#").format(valTemp).replace(',', '.'));
 					if(valTemp < 0)
 						valTemp = 0;
@@ -1327,7 +1645,8 @@ public class DBService {
 				pair = new Pair();
 				pair.setId(res.getInt(1));
 				pair.setObj1(res.getString(2));
-				pair.setObj2(res.getString(3));	            
+				pair.setObj2(res.getString(3));	  
+				pair.setNbrVote(res.getInt(4));	            
 	        }
 		} catch (SQLException e) {
 			e.printStackTrace();
