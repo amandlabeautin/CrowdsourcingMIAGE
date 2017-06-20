@@ -46,15 +46,17 @@
 						  	<thead>
 							  	<tr>
 							  		<th>NumPair</th>
+							  		<th>Nom Attribut</th>
 							  		<th>1ère pair</th>
 							  		<th>2ème pair</th>
 							  	</tr>
 							</thead>
 							<tbody>
-						  		<tr>
-						  			<td>1</td>
-						  			<td>Restau</td>
-						  			<td>Resto</td>
+						  		<tr ng-repeat="attribut in attributs">
+						  			<td>{{attribut.id}}</td>
+						  			<td>{{attribut.nomAttribut}}</td>
+						  			<td>{{attribut.elem1}}</td>
+						  			<td>{{attribut.elem2}}</td>
 						  		</tr>
 						  	</tbody>
 						</table>

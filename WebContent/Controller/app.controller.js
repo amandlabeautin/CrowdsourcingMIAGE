@@ -10,7 +10,6 @@ angular
   var variableSimi = [];
 
   function homeCtrl($scope){
-    
   };
 
   // Controller de la page d'accueil des personnes connectés
@@ -244,7 +243,7 @@ angular
           UserService.setAdmin(response.data);
         }
         alert('Bonjour');
-        state.transitionTo('home');
+        $state.transitionTo('home');
       },function(response) {
           $scope.loginFailed = true;
       });
@@ -254,6 +253,7 @@ angular
   /* Controller de la page d'Administration*/
   function adminCtrl($scope, $http, $uibModal, $log, $window, UserService){
     $scope.IsHidden = true;
+    $scope.alerts = [];
 
     /*Affichage des users*/
     $http({
@@ -267,18 +267,32 @@ angular
             response.data[i].administrator = "non";
           }
         }
-        
         $scope.users = response.data;
       },function (error){
         console.log('error : ' + error.status)
         console.log('error : ' + error);
     });
-    $scope.alerts = [];
+   
 
     // Affichage des pairs selectionnés par le idUser, et affichage du loginUser
     $scope.showDetailsPair = function(idUser, loginUser) {
-      $scope.userSelected = loginUser;
-      $scope.IsHidden = false;
+      var showDetailTemp = {};
+      showDetailTemp["idUser"] = idUser;
+      $scope.jsonResultSend = showDetailTemp;
+
+      $http({
+        method: 'POST',
+        url: 'http://127.0.0.1:8080/ProjetPPD/postSearchPairByUser',
+        data: $scope.jsonResultSend,
+        headers: {'Content-Type': 'application/json'}
+      }).then(function (response){
+          $scope.attributs = response.data;
+          $scope.IsHidden = false;
+        },function (error){
+          console.log('error : ' + error.status)
+          console.log('error : ' + error);
+      });
+      
     };
 
     $scope.deleteUserModal = function(idUser, loginUser) {
@@ -333,8 +347,6 @@ angular
     };
 
     $scope.deleteUser = function(idUser){
-
-      console.log(idUser);
 
       var deleteTemp = {};
       deleteTemp["idUser"] = idUser;

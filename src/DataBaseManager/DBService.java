@@ -536,7 +536,7 @@ public class DBService {
 					e.printStackTrace();
 				}		
 			}else{
-				String sql = "UPDATE FROM lhs_rhs_temp_apriori SET LHS = ?, RHS = ? WHERE idPair = ?";
+				String sql = "UPDATE lhs_rhs_temp_apriori SET LHS = ?, RHS = ? WHERE idPair = ?";
 				
 				PreparedStatement statement;
 				try {
@@ -1308,6 +1308,32 @@ public class DBService {
 		}
 		return attr;
 	}
+	
+	public static Attribut SELECT_ATTRIBUT_APRIORI_BY_IDPAIR(int idPair){
+		String sql = "SELECT * FROM attribut_apriori where PairId = ?";
+
+		Attribut attr = new Attribut();
+		PreparedStatement statement;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			statement.setInt(1, idPair);
+			
+			ResultSet res = statement.executeQuery();
+			while (res.next()) {
+				String nomAttribut = res.getString(3);
+				String Attr1 = res.getString(4);
+				String Attr2 = res.getString(5);
+				Double Val = res.getDouble(6);
+				int nbrVote = res.getInt(7);
+				attr = new Attribut(null, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
+				attr.setId(res.getInt(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return attr;
+	}
 
 	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_FOR_PAIR(int idPair){
 		String sql = "SELECT * FROM attribut where PairId = ?";
@@ -1774,5 +1800,26 @@ public class DBService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static ArrayList<Attribut> SELECT_PAIR_BY_USER(int idUser) {
+		String sql = "SELECT idPair FROM similarite_r_remaster WHERE idUser = ?";
+		ArrayList <Attribut> listAttribut = new ArrayList<>();
+		PreparedStatement statement;
+		
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			statement.setInt(1, idUser);
+			ResultSet res  = statement.executeQuery();
+			while (res.next()) {
+				int idPair = res.getInt(1);
+				Attribut attribut =  SELECT_ATTRIBUT_APRIORI_BY_IDPAIR(idPair);
+				listAttribut.add(attribut);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		};
+		
+		return listAttribut;
 	}
 }
