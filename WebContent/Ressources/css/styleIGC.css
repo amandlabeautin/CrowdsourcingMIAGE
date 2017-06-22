@@ -1,0 +1,19 @@
+@CHARSET "ISO-8859-1";
+
+.table th {
+    text-align: center;
+    background: #333;
+    color:white;
+}
+
+.table td {
+	font-size: 16px;
+}
+
+.center-content {
+    border-radius: 5px;
+    width: 50%;	
+	margin: 0 auto !important;
+	float: none !important;
+}
+

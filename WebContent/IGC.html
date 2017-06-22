@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Interface Graphique de Crowdsourcing</title>
     <link rel="stylesheet" href="./Ressources/css/styleTemplate.css">
-    <link rel="stylesheet" href="./Ressources/css/styleMain.css">
+    <link rel="stylesheet" href="./Ressources/css/styleIGC.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="./Ressources/css/style-portfolio.css">
     <link rel="stylesheet" href="./Ressources/css/picto-foundry-food.css" />
@@ -13,27 +13,409 @@
     <link rel="stylesheet" href="./Ressources/css/angular-ui-notification.min.css">
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.1.2/rzslider.min.js"></script>
-    <script src="./Controller/app.module.js"></script>
-    <script src="./Controller/app.factory.js"></script>
-    <script src="./Controller/app.config.js"></script>
-    <script src="./Controller/app.controller.js"></script>
-    <script src="./Controller/app.directive.js"></script>
-    <script src="./Controller/app.service.js"></script>
-    <script src="./Controller/vendor/angular-route.js"></script>
-    <script src="./Controller/vendor/angular-ui-router.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
-    <script src="https://code.angularjs.org/1.6.3/angular-animate.js"></script>
-    <script src="https://code.angularjs.org/1.6.3/angular-touch.js"></script>
     <script src="./Controller/vendor/ui-bootstrap-tpls-2.5.0.js"></script>
-    <script src="./Controller/vendor/angular-ui-notification.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.min.js"></script>
   </head>
 
   <body>
     <div ui-view style="height:100%">
+    <div style="text-align: center">
+    	<h1 style="width:50%; text-align: center;"> Interface Graphique de CrowdSourcing</h1></div>
+    	<hr>
+    	
+	    <div class="center-content row" style="width:100%">
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table des Paires</h3>
+		   		</div>
+		   		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>Donnée 1</th>
+				        <th>Donnée 2</th>
+				        <th>Nombre de vote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>test</td>
+				        <td>test</td>
+				        <td>0.66</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	 		</div>
+	   		
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table des Attributs</h3>
+		   		</div>
+		 		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>NomAttribut</th>
+				        <th>Attribut 1</th>
+				        <th>Attribut 2</th>
+				        <th>Taux de similarite</th>
+				        <th>Nombre de vote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>NomRestaurant</td>
+				        <td>test</td>
+				        <td>test</td>
+				        <td>0.66</td>
+				        <td>1</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	   		</div>
+	 	</div>
+	 	
+		<br>
+		<br>
+    	<hr>
+		    	<div style="text-align: center">
+			<button type="button" class="btn btn-primary">Générer la table de pre Traitement</button>    	
+			</div>
+		<hr>
+		<br>
+		<br>
+	 	
+	 	<div class="center-content row" style="width:100%">
+	   		<div class="col-sm-12">
+		    	<div style="text-align: center">
+		    		<h3> Table de Pre-Traitement</h3>
+		   		</div>
+	 			<div class="center-content" style="width:80%">
+			   		<table class="table table-bordered">
+					    <thead>
+					      <tr>
+					        <th>IdPair</th>
+					        <th>Attribut 1</th>
+					        <th>Attribut 2</th>
+					        <th>Attribut 3</th>
+					        <th>Attribut 4</th>
+					        <th>Attribut 5</th>
+					        <th>Taux de similarite</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td>1</td>
+					        <td>John</td>
+					        <td>John</td>
+					        <td>John</td>
+					        <td>Doe</td>
+					        <td>john@example.com</td>
+					        <td>0.66</td>
+					      </tr>
+			   			</tbody>
+			 		</table>
+		 		</div>
+	 		</div>
+	   		
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table des Attributs pour Apriori</h3>
+		   		</div>
+		 		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>NomAttribut</th>
+				        <th>Attribut 1</th>
+				        <th>Attribut 2</th>
+				        <th>Taux de similarite</th>
+				        <th>Nombre de vote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>NomRestaurant</td>
+				        <td>test</td>
+				        <td>test</td>
+				        <td>0.66</td>
+				        <td>1</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	   		</div>
+	   		
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table des Attributs pour One Entity</h3>
+		   		</div>
+		 		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>NomAttribut</th>
+				        <th>Attribut 1</th>
+				        <th>Attribut 2</th>
+				        <th>Taux de similarite</th>
+				        <th>Nombre de vote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>NomRestaurant</td>
+				        <td>test</td>
+				        <td>test</td>
+				        <td>0.66</td>
+				        <td>1</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	   		</div>
+	 	</div>
+	 	
+		<br>
+		<br>
+    	<hr>
+		    	<div style="text-align: center">
+			<button type="button" class="btn btn-primary">Générer la table R</button>    	
+			</div>
+		<hr>
+		<br>
+		<br>
+		
+	    <div class="center-content row" style="width:100%">
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table de similarite R pour Apriori</h3>
+		   		</div>
+		   		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>IdAttribut 1</th>
+				        <th>IdAttribut 2</th>
+				        <th>IdAttribut 3</th>
+				        <th>IdAttribut 4</th>
+				        <th>IdAttribut 5</th>
+				        <th>Taux de similarite</th>
+				        <th>NbrVote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>1</td>
+				        <td>2</td>
+				        <td>3</td>
+				        <td>4</td>
+				        <td>5</td>
+				        <td>0.66</td>
+				        <td>1</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	 		</div>
+	   		
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table de similarite R pour One Entity</h3>
+		   		</div>
+		 		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>IdAttribut 1</th>
+				        <th>IdAttribut 2</th>
+				        <th>IdAttribut 3</th>
+				        <th>IdAttribut 4</th>
+				        <th>IdAttribut 5</th>
+				        <th>Taux de similarite</th>
+				        <th>NbrVote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>1</td>
+				        <td>2</td>
+				        <td>3</td>
+				        <td>4</td>
+				        <td>5</td>
+				        <td>0.66</td>
+				        <td>1</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	   		</div>
+	 	</div>
+	 	
+		<br>
+		<br>
+    	<hr>
+		    	<div style="text-align: center">
+			<button type="button" class="btn btn-primary">Générer la table R'</button>    	
+			</div>
+		<hr>
+		<br>
+		<br>
+		
+	    <div class="center-content row" style="width:100%">
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table de similarite R' pour Apriori</h3>
+		   		</div>
+		   		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>IdAttribut 1</th>
+				        <th>IdAttribut 2</th>
+				        <th>IdAttribut 3</th>
+				        <th>IdAttribut 4</th>
+				        <th>IdAttribut 5</th>
+				        <th>Taux de similarite</th>
+				        <th>NbrVote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>1</td>
+				        <td>-1</td>
+				        <td>3</td>
+				        <td>-1</td>
+				        <td>5</td>
+				        <td>0.66</td>
+				        <td>1</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	 		</div>
+	   		
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table de similarite R' pour One Entity</h3>
+		   		</div>
+		 		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>IdAttribut 1</th>
+				        <th>IdAttribut 2</th>
+				        <th>IdAttribut 3</th>
+				        <th>IdAttribut 4</th>
+				        <th>IdAttribut 5</th>
+				        <th>Taux de similarite</th>
+				        <th>NbrVote</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>1</td>
+				        <td>-1</td>
+				        <td>-1</td>
+				        <td>4</td>
+				        <td>-1</td>
+				        <td>0.66</td>
+				        <td>1</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	   		</div>
+	 	</div>
+	 	
+	 	
+		<br>
+		<br>
+    	<hr>
+		    	<div style="text-align: center">
+			<button type="button" class="btn btn-primary">Générer les tables LHS_RHS</button>    	
+			</div>
+		<hr>
+		<br>
+		<br>
+		
+	    <div class="center-content row" style="width:100%">
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table LHS_RHS pour Apriori</h3>
+		   		</div>
+		   		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>LHS</th>
+				        <th>RHS</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>Nomresto, etc...</td>
+				        <td>Specialite</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	 		</div>
+	   		
+	   		<div class="col-sm-6">
+		    	<div style="text-align: center">
+		    		<h3> Table LHS_RHS pour One Entity</h3>
+		   		</div>
+		 		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>IdPair</th>
+				        <th>LHS</th>
+				        <th>RHS</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>1</td>
+				        <td>Nomresto, etc...</td>
+				        <td>Specialite</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	   		</div>
+	 	</div>
+	 		 	
+		<br>
+		<br>
+    	<hr>
+		    	<div style="text-align: center">
+			<button type="button" class="btn btn-primary">Générer les Matching Dependencie</button>    	
+			</div>
+		<hr>
+		<br>
+		<br>
+		
+	    <div class="center-content" style="width:100%">
+	    	<div style="text-align: center">
+	    		<h3> Table des Matching Dependencie</h3>
+	   		</div>
+	   		<div class="center-content" style="width:80%">
+		   		<table class="table table-bordered">
+				    <thead>
+				      <tr>
+				        <th>Donnée 1</th>
+				        <th>Donnée 2</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>toto, tata, dada</td>
+				        <td>toto, tata, dada</td>
+				      </tr>
+		   			</tbody>
+		 		</table>
+	 		</div>
+	 	</div>
     </div>
   </body>
-
 </html>
