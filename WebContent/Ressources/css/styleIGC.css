@@ -1,5 +1,29 @@
 @CHARSET "ISO-8859-1";
 
+#body{
+	background: #9e9cae;
+}
+
+.titre_table{
+	color:#333;	
+}
+
+cr{
+	color : #337ab7;
+}
+
+#titre{
+	color:#333;
+}
+
+.table.table-bordered{
+	border: 1px solid #333;
+}
+
+.table.table-bordered > * > * > *{
+	border: 1px solid #333;
+}
+
 .table th {
     text-align: center;
     background: #333;
@@ -8,6 +32,8 @@
 
 .table td {
 	font-size: 16px;
+	color: white;
+	background-color: #525252;
 }
 
 .center-content {

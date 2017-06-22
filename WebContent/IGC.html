@@ -16,16 +16,17 @@
     <script src="./Controller/vendor/ui-bootstrap-tpls-2.5.0.js"></script>
   </head>
 
-  <body>
+  <body id="body">
     <div ui-view style="height:100%">
     <div style="text-align: center">
-    	<h1 style="width:50%; text-align: center;"> Interface Graphique de CrowdSourcing</h1></div>
-    	<hr>
+    	<h1 id="titre" style="width:50%; text-align: center;"> Interface Graphique de CrowdSourcing</h1></div>
+    	<br>
+    	<br>
     	
 	    <div class="center-content row" style="width:100%">
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table des Paires</h3>
+		    		<h3 class="titre_table"> Table des <cr>Paires</cr></h3>
 		   		</div>
 		   		<table class="table table-bordered">
 				    <thead>
@@ -39,8 +40,8 @@
 				    <tbody>
 				      <tr>
 				        <td>1</td>
-				        <td>test</td>
-				        <td>test</td>
+				        <td>arnie morton's of chicago, "435 s. la cienega blv.", "los angeles", "310/246-1501", "american", '0'</td>
+				        <td>arnie morton's of chicago, "435 s. la cienega blvd.", "los angeles", "310-246-1501", "steakhouses", '0'</td>
 				        <td>0.66</td>
 				      </tr>
 		   			</tbody>
@@ -49,11 +50,12 @@
 	   		
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table des Attributs</h3>
+		    		<h3 class="titre_table"> Table des <cr>Attributs</cr></h3>
 		   		</div>
 		 		<table class="table table-bordered">
 				    <thead>
 				      <tr>
+				        <th>Id</th>
 				        <th>IdPair</th>
 				        <th>NomAttribut</th>
 				        <th>Attribut 1</th>
@@ -65,11 +67,48 @@
 				    <tbody>
 				      <tr>
 				        <td>1</td>
-				        <td>NomRestaurant</td>
-				        <td>test</td>
-				        <td>test</td>
-				        <td>0.66</td>
 				        <td>1</td>
+				        <td>RestaurantName</td>
+				        <td>arnie morton's of chicago</td>
+				        <td>arnie morton's of chicago</td>
+				        <td>1</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>2</td>
+				        <td>1</td>
+				        <td>RestaurantAdress</td>
+				        <td>435 s. la cienega blv.</td>
+				        <td>435 s. la cienega blvd.</td>
+				        <td>0.9</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>3</td>
+				        <td>1</td>
+				        <td>RestaurantVille</td>
+				        <td>los angeles</td>
+				        <td>los angeles</td>
+				        <td>1</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>4</td>
+				        <td>1</td>
+				        <td>RestaurantPhone</td>
+				        <td>310/246-1501</td>
+				        <td>310-246-1501</td>
+				        <td>0.9</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>5</td>
+				        <td>1</td>
+				        <td>RestaurantType</td>
+				        <td>american</td>
+				        <td>steakhouses</td>
+				        <td>0</td>
+				        <td>2</td>
 				      </tr>
 		   			</tbody>
 		 		</table>
@@ -78,18 +117,16 @@
 	 	
 		<br>
 		<br>
-    	<hr>
 		    	<div style="text-align: center">
 			<button type="button" class="btn btn-primary">Générer la table de pre Traitement</button>    	
 			</div>
-		<hr>
 		<br>
 		<br>
 	 	
 	 	<div class="center-content row" style="width:100%">
 	   		<div class="col-sm-12">
 		    	<div style="text-align: center">
-		    		<h3> Table de Pre-Traitement</h3>
+		    		<h3 class="titre_table"> Table de <cr>Pre-Traitement</cr></h3>
 		   		</div>
 	 			<div class="center-content" style="width:80%">
 			   		<table class="table table-bordered">
@@ -107,12 +144,12 @@
 					    <tbody>
 					      <tr>
 					        <td>1</td>
-					        <td>John</td>
-					        <td>John</td>
-					        <td>John</td>
-					        <td>Doe</td>
-					        <td>john@example.com</td>
-					        <td>0.66</td>
+					        <td>1</td>
+					        <td>2</td>
+					        <td>3</td>
+					        <td>4</td>
+					        <td>5</td>
+					        <td>0.76</td>
 					      </tr>
 			   			</tbody>
 			 		</table>
@@ -121,11 +158,12 @@
 	   		
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table des Attributs pour Apriori</h3>
+		    		<h3 class="titre_table"> Table des <cr>Attributs</cr> pour <cr>Apriori</cr></h3>
 		   		</div>
 		 		<table class="table table-bordered">
 				    <thead>
 				      <tr>
+				        <th>Id</th>
 				        <th>IdPair</th>
 				        <th>NomAttribut</th>
 				        <th>Attribut 1</th>
@@ -137,11 +175,48 @@
 				    <tbody>
 				      <tr>
 				        <td>1</td>
-				        <td>NomRestaurant</td>
-				        <td>test</td>
-				        <td>test</td>
-				        <td>0.66</td>
 				        <td>1</td>
+				        <td>RestaurantName</td>
+				        <td>arnie morton's of chicago</td>
+				        <td>arnie morton's of chicago</td>
+				        <td>1</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>2</td>
+				        <td>1</td>
+				        <td>RestaurantAdress</td>
+				        <td>435 s. la cienega blv.</td>
+				        <td>435 s. la cienega blvd.</td>
+				        <td>0.9</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>3</td>
+				        <td>1</td>
+				        <td>RestaurantVille</td>
+				        <td>los angeles</td>
+				        <td>los angeles</td>
+				        <td>1</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>4</td>
+				        <td>1</td>
+				        <td>RestaurantPhone</td>
+				        <td>310/246-1501</td>
+				        <td>310-246-1501</td>
+				        <td>0.9</td>
+				        <td>2</td>
+				      </tr>
+				      <tr>
+				        <td>5</td>
+				        <td>1</td>
+				        <td>RestaurantType</td>
+				        <td>american</td>
+				        <td>steakhouses</td>
+				        <td>0</td>
+				        <td>2</td>
 				      </tr>
 		   			</tbody>
 		 		</table>
@@ -149,11 +224,12 @@
 	   		
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table des Attributs pour One Entity</h3>
+		    		<h3 class="titre_table"> Table des <cr>Attributs</cr> pour <cr>One Entity</cr></h3>
 		   		</div>
 		 		<table class="table table-bordered">
 				    <thead>
 				      <tr>
+				        <th>Id</th>
 				        <th>IdPair</th>
 				        <th>NomAttribut</th>
 				        <th>Attribut 1</th>
@@ -165,11 +241,48 @@
 				    <tbody>
 				      <tr>
 				        <td>1</td>
-				        <td>NomRestaurant</td>
-				        <td>test</td>
-				        <td>test</td>
-				        <td>0.66</td>
 				        <td>1</td>
+				        <td>RestaurantName</td>
+				        <td>arnie morton's of chicago</td>
+				        <td>arnie morton's of chicago</td>
+				        <td>1</td>
+				        <td>3</td>
+				      </tr>
+				      <tr>
+				        <td>2</td>
+				        <td>1</td>
+				        <td>RestaurantAdress</td>
+				        <td>435 s. la cienega blv.</td>
+				        <td>435 s. la cienega blvd.</td>
+				        <td>0.95</td>
+				        <td>3</td>
+				      </tr>
+				      <tr>
+				        <td>3</td>
+				        <td>1</td>
+				        <td>RestaurantVille</td>
+				        <td>los angeles</td>
+				        <td>los angeles</td>
+				        <td>1</td>
+				        <td>3</td>
+				      </tr>
+				      <tr>
+				        <td>4</td>
+				        <td>1</td>
+				        <td>RestaurantPhone</td>
+				        <td>310/246-1501</td>
+				        <td>310-246-1501</td>
+				        <td>0.95</td>
+				        <td>3</td>
+				      </tr>
+				      <tr>
+				        <td>5</td>
+				        <td>1</td>
+				        <td>RestaurantType</td>
+				        <td>american</td>
+				        <td>steakhouses</td>
+				        <td>0</td>
+				        <td>3</td>
 				      </tr>
 		   			</tbody>
 		 		</table>
@@ -178,18 +291,16 @@
 	 	
 		<br>
 		<br>
-    	<hr>
 		    	<div style="text-align: center">
 			<button type="button" class="btn btn-primary">Générer la table R</button>    	
 			</div>
-		<hr>
 		<br>
 		<br>
 		
 	    <div class="center-content row" style="width:100%">
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table de similarite R pour Apriori</h3>
+		    		<h3 class="titre_table"> Table de <cr>similarite R</cr> pour <cr>Apriori</cr></h3>
 		   		</div>
 		   		<table class="table table-bordered">
 				    <thead>
@@ -212,7 +323,7 @@
 				        <td>3</td>
 				        <td>4</td>
 				        <td>5</td>
-				        <td>0.66</td>
+				        <td>0.78</td>
 				        <td>1</td>
 				      </tr>
 		   			</tbody>
@@ -221,7 +332,7 @@
 	   		
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table de similarite R pour One Entity</h3>
+		    		<h3 class="titre_table"> Table de <cr>similarite R</cr> pour <cr>One Entity</cr></h3>
 		   		</div>
 		 		<table class="table table-bordered">
 				    <thead>
@@ -244,7 +355,7 @@
 				        <td>3</td>
 				        <td>4</td>
 				        <td>5</td>
-				        <td>0.66</td>
+				        <td>0.78</td>
 				        <td>1</td>
 				      </tr>
 		   			</tbody>
@@ -254,18 +365,16 @@
 	 	
 		<br>
 		<br>
-    	<hr>
 		    	<div style="text-align: center">
-			<button type="button" class="btn btn-primary">Générer la table R'</button>    	
+			<button type="button" class="btn btn-primary">Générer la table R'</button> <label class="label" style="color:#337ab7; font-size:16px;" > Seuil : </label> <input type="number"> 	 
 			</div>
-		<hr>
 		<br>
 		<br>
 		
 	    <div class="center-content row" style="width:100%">
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table de similarite R' pour Apriori</h3>
+		    		<h3 class="titre_table"> Table de <cr>similarite R'</cr> pour <cr>Apriori</cr></h3>
 		   		</div>
 		   		<table class="table table-bordered">
 				    <thead>
@@ -277,19 +386,17 @@
 				        <th>IdAttribut 4</th>
 				        <th>IdAttribut 5</th>
 				        <th>Taux de similarite</th>
-				        <th>NbrVote</th>
 				      </tr>
 				    </thead>
 				    <tbody>
 				      <tr>
 				        <td>1</td>
 				        <td>1</td>
-				        <td>-1</td>
+				        <td>2</td>
 				        <td>3</td>
+				        <td>4</td>
 				        <td>-1</td>
-				        <td>5</td>
-				        <td>0.66</td>
-				        <td>1</td>
+				        <td>0.78</td>
 				      </tr>
 		   			</tbody>
 		 		</table>
@@ -297,7 +404,7 @@
 	   		
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table de similarite R' pour One Entity</h3>
+		    		<h3 class="titre_table"> Table de <cr>similarite R'</cr> pour <cr>One Entity</cr></h3>
 		   		</div>
 		 		<table class="table table-bordered">
 				    <thead>
@@ -309,19 +416,17 @@
 				        <th>IdAttribut 4</th>
 				        <th>IdAttribut 5</th>
 				        <th>Taux de similarite</th>
-				        <th>NbrVote</th>
 				      </tr>
 				    </thead>
 				    <tbody>
 				      <tr>
 				        <td>1</td>
 				        <td>1</td>
-				        <td>-1</td>
-				        <td>-1</td>
+				        <td>2</td>
+				        <td>3</td>
 				        <td>4</td>
 				        <td>-1</td>
-				        <td>0.66</td>
-				        <td>1</td>
+				        <td>0.78</td>
 				      </tr>
 		   			</tbody>
 		 		</table>
@@ -331,18 +436,16 @@
 	 	
 		<br>
 		<br>
-    	<hr>
 		    	<div style="text-align: center">
 			<button type="button" class="btn btn-primary">Générer les tables LHS_RHS</button>    	
 			</div>
-		<hr>
 		<br>
 		<br>
 		
 	    <div class="center-content row" style="width:100%">
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table LHS_RHS pour Apriori</h3>
+		    		<h3 class="titre_table"> Table <cr>LHS_RHS</cr> pour <cr>Apriori</cr></h3>
 		   		</div>
 		   		<table class="table table-bordered">
 				    <thead>
@@ -355,8 +458,8 @@
 				    <tbody>
 				      <tr>
 				        <td>1</td>
-				        <td>Nomresto, etc...</td>
-				        <td>Specialite</td>
+				        <td>RestaurantName,RestaurantAdress,RestaurantVille,RestaurantPhone</td>
+				        <td>RestaurantType</td>
 				      </tr>
 		   			</tbody>
 		 		</table>
@@ -364,7 +467,7 @@
 	   		
 	   		<div class="col-sm-6">
 		    	<div style="text-align: center">
-		    		<h3> Table LHS_RHS pour One Entity</h3>
+		    		<h3 class="titre_table"> Table <cr>LHS_RHS</cr> pour <cr>One Entity</cr></h3>
 		   		</div>
 		 		<table class="table table-bordered">
 				    <thead>
@@ -377,8 +480,8 @@
 				    <tbody>
 				      <tr>
 				        <td>1</td>
-				        <td>Nomresto, etc...</td>
-				        <td>Specialite</td>
+				        <td>RestaurantName,RestaurantAdress,RestaurantVille,RestaurantPhone</td>
+				        <td>RestaurantType</td>
 				      </tr>
 		   			</tbody>
 		 		</table>
@@ -387,30 +490,30 @@
 	 		 	
 		<br>
 		<br>
-    	<hr>
 		    	<div style="text-align: center">
 			<button type="button" class="btn btn-primary">Générer les Matching Dependencie</button>    	
 			</div>
-		<hr>
 		<br>
 		<br>
 		
 	    <div class="center-content" style="width:100%">
 	    	<div style="text-align: center">
-	    		<h3> Table des Matching Dependencie</h3>
+	    		<h3 class="titre_table"> Table des <cr>Matching Dependencie</cr></h3>
 	   		</div>
 	   		<div class="center-content" style="width:80%">
 		   		<table class="table table-bordered">
 				    <thead>
 				      <tr>
+				        <th>IdPair</th>
 				        <th>Donnée 1</th>
 				        <th>Donnée 2</th>
 				      </tr>
 				    </thead>
 				    <tbody>
 				      <tr>
-				        <td>toto, tata, dada</td>
-				        <td>toto, tata, dada</td>
+				        <td>1</td>
+				        <td>arnie morton's of chicago, "435 s. la cienega blv.", "los angeles", "310/246-1501"</td>
+				        <td>arnie morton's of chicago, "435 s. la cienega blvd.", "los angeles", "310-246-1501"</td>
 				      </tr>
 		   			</tbody>
 		 		</table>

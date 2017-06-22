@@ -38,8 +38,8 @@ public class Algorithme_Apriori_Remaster {
 					JsonObject Attribut5 = json.get("attribut5").getAsJsonObject();
 					boolean attrSim5 = Attribut5.get("selected").getAsBoolean();
 					double val = json.get("valUser").getAsDouble();
-					int idUser = json.get("user").getAsInt();
-	
+					//int idUser = json.get("user").getAsInt();
+					int idUser = 1;
 					
 					
 					// On récupère la pair à traiter
