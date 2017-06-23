@@ -10,11 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import DataBaseManager.DBService;
 import DataBean.User;
 
@@ -44,12 +39,9 @@ public class postSearchUser extends HttpServlet {
 
 	    //response.addHeader("Access-Control-Allow-Origin", "*");
 
-		JsonParser parser = new JsonParser();
-		JsonElement obj = parser.parse(request.getReader());
-		JsonObject json = obj.getAsJsonObject();
 		
-		String loginUser = json.get("login").getAsString();
-		String passwordUser = json.get("password").getAsString();
+		String loginUser = request.getParameter("login");
+		String passwordUser = request.getParameter("password");
 		try {
 			User user = DBService.SELECT_USER_WITH_LOGIN_AND_PASSWORD(loginUser, passwordUser);
 			

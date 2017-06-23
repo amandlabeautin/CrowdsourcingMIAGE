@@ -1402,6 +1402,46 @@ public class DBService {
 		
 		return listAttribut;
 	}
+
+	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_APRIORI_FOR_PAIR(int idPair){
+		String sql = "SELECT * FROM attribut_apriori where PairId = ?";
+		ArrayList<Attribut> listAttribut = new ArrayList<>();
+		Attribut attr = new Attribut();
+		PreparedStatement statement;
+		boolean exist = false;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			statement.setInt(1, idPair);
+			
+			ResultSet res = statement.executeQuery();
+			while (res.next()) {
+				exist = true;
+				String nomAttribut = res.getString(3);
+				String Attr1 = res.getString(4);
+				String Attr2 = res.getString(5);
+				Double Val = res.getDouble(6);
+				int nbrVote = res.getInt(7);
+				attr = new Attribut(null, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
+				attr.setId(res.getInt(1));
+				listAttribut.add(attr);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if(!exist){
+			ArrayList<Attribut> listAttr = DBService.SELECT_ALL_ATTRIBUT_FOR_PAIR(idPair);
+			for (Attribut attribut : listAttr) {
+				DBService.INSERT_ATTRIBUT_APRIORI(attribut, idPair);
+			}
+			
+			listAttribut = DBService.SELECT_ALL_ATTRIBUT_APRIORI_FOR_PAIR(idPair);
+		}
+		
+		
+		return listAttribut;
+	}
 	
 	public static ArrayList<SimilarPair> SELECT_TABLE_SIMILAR_R(){
 		String sql = "SELECT * FROM similarite_r";
@@ -1788,6 +1828,53 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return listUsers;
+	}
+
+	public static ArrayList<Pair> SELECT_ALL_PAIR() {
+		String sqlSelect = "SELECT * FROM pair";
+		ArrayList <Pair> listPairs = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			Pair pair = new Pair();
+			while(resSelect.next()){
+				pair = new Pair();
+				pair.setId(resSelect.getInt(1));
+				pair.setObj1(resSelect.getString(2));
+				pair.setObj2(resSelect.getString(3));	
+				listPairs.add(pair);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listPairs;
+	}
+
+	public static ArrayList<SimilarPair> SELECT_ALL_PRETRAITEMENT() {
+		String sqlSelect = "SELECT * FROM pre_traitement";
+		ArrayList <SimilarPair> listPairs = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			SimilarPair pair = new SimilarPair();
+			while(resSelect.next()){
+				pair = new SimilarPair();
+				pair.setId(resSelect.getInt(1));
+				pair.setIdPair(resSelect.getInt(2));
+				pair.setIdAttribut1(resSelect.getInt(3));	
+				pair.setIdAttribut2(resSelect.getInt(4));	
+				pair.setIdAttribut3(resSelect.getInt(5));	
+				pair.setIdAttribut4(resSelect.getInt(6));	
+				pair.setIdAttribut5(resSelect.getInt(7));	
+				pair.setMoySimilar(resSelect.getDouble(8));	
+				listPairs.add(pair);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listPairs;
 	}
 
 	public static void DELETE_USER_TABLE_USER_WITH_ID(int idUser) {
