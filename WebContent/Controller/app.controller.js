@@ -99,7 +99,6 @@ angular
       url: 'http://127.0.0.1:8080/ProjetPPD/getRandomPairServlet',
     }).then(function (success){
         $scope.pairServlets = success.data;
-        console.log(success.data);
     },function (error){
         console.log('error : ' + error.status)
         console.log('error : ' + error);
@@ -107,7 +106,6 @@ angular
 
     $scope.select = function (item) {
       if ($scope.isSimilar) {
-        console.log(item.elem1);
         item.selected ? item.selected = false : item.selected = true;
       }
     };
@@ -130,8 +128,8 @@ angular
           temp["nonSimilaire"] = true;
       }
 
-      temp["user"] = UserService.getUser().id;
-      console.log(temp);
+      temp["user"] = UserService.get('id');
+      console.log(UserService.get('id'));
 
   	  $scope.jsonResultSend = temp;
   	  $http({
@@ -162,7 +160,6 @@ angular
         angular.element(document.querySelectorAll('input[name="inlineRadioOptions"]')).prop('checked', false);
         $scope.radioChoice = true;
         $scope.pairServlets = success.data;
-  			console.log(success);
   	   },function (error){
   			console.log('error : ' + error.status)
   			console.log('error : ' + error);
@@ -204,8 +201,10 @@ angular
   };
 
   // Controller de la page d'inscription
-  function RegisterCtrl(UserService, UtilService, $http, $rootScope, FlashService, $scope) {
+  function RegisterCtrl(UserService, UtilService, $http, $rootScope, FlashService, $scope, md5) {
       $scope.createUser = function(user){
+
+        user.password = md5.createHash(user.password || '');
         var temp = {};
 
         temp["loginUser"] = user.login;
@@ -220,6 +219,7 @@ angular
           data:  $scope.jsonResultSend 
         }).then(function (success){
           alert('Vous etes bien inscrit !');
+          $state.transitionTo('signin');
         },function (error){
           console.log('error : ' + error.status);
         });
@@ -227,25 +227,41 @@ angular
   };
 
   // Controller de la page de connexion
-  function SigninCtrl($scope, $http, $state, UserService){
+  function SigninCtrl($scope, $http, $state, UserService, md5){
 
     $scope.connectUser = function(user){
+      var temp = {};
+      temp["login"] = user.login;
+      temp["password"] = md5.createHash(user.password || '');
+      $scope.jsonResultSend = temp;
+
       $http({
           method: 'POST',
           url: 'http://127.0.0.1:8080/ProjetPPD/postSearchUser',
-          data: JSON.stringify(user),
+          data: $scope.jsonResultSend,
           headers: {'Content-Type': 'application/json'}
       })
       .then(function  (response) { 
-        if (response.data.administrator == false) {
-            UserService.setUser(response.data);
-        } else {
-          UserService.setAdmin(response.data);
-        }
-        alert('Bonjour');
-        $state.transitionTo('home');
-      },function(response) {
+        console.log(response);
+        if(response.data) {
+            if (response.data.administrator == false) {
+              UserService.set('role', 'user');
+              UserService.set('id', response.data.id);
+              UserService.set('username', response.data.login);
+          } else {
+              UserService.set('role', 'admin');
+              UserService.set('id', response.data.id);
+              UserService.set('username', response.data.login);
+          }
+          alert('Bonjour ' + UserService.get('username'));
+          $state.go('home',{},{reload: true});
+        }else{
           $scope.loginFailed = true;
+          alert('Le login ou le mot de passe sont incorrectes');
+        }
+        
+      },function(response) {
+          
       });
     };
   };
@@ -278,6 +294,7 @@ angular
     $scope.showDetailsPair = function(idUser, loginUser) {
       var showDetailTemp = {};
       showDetailTemp["idUser"] = idUser;
+      console.log(idUser);
       $scope.jsonResultSend = showDetailTemp;
 
       $http({
@@ -286,6 +303,7 @@ angular
         data: $scope.jsonResultSend,
         headers: {'Content-Type': 'application/json'}
       }).then(function (response){
+        console.log(response);
           $scope.attributs = response.data;
           $scope.IsHidden = false;
         },function (error){

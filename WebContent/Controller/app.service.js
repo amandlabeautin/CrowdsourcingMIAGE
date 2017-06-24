@@ -25,37 +25,40 @@ function UtilService($rootScope, $cookieStore, Notification) {
      };
 };
 
-function UserService($http, $state, $cookieStore) {
+function UserService($http, $state, $cookies) {
     var self = this;
             
-    self.setUser = function(aUser){
-        $cookieStore.put('authenticatedUser', aUser);
+    self.set = function(type, aUser){
+        $cookies.put(type, aUser)
     };
         
-    self.getUser = function(){
-        return $cookieStore.get('authenticatedUser');
-    };
-    
-    self.isUserLoggedIn = function() {
-        return $cookieStore.get('authenticatedUser') != null;
+    self.get = function(type){
+        return $cookies.get(type);
     };
 
-    self.setAdmin = function(aUser){
-    	$cookieStore.put('authenticatedUser', aUser);
-        $cookieStore.put('authenticatedAdmin', aUser);
+    self.getAll = function(){
+        return $cookies.getAll();
     };
-        
-    self.getAdmin = function(){
-        return $cookieStore.get('authenticatedAdmin');
+    
+    self.isLoggedIn = function() {
+        if(($cookies.get('role') == 'user') || ($cookies.get('role') == 'admin')) {
+            return true;
+        };
+        return false;
     };
+
+    self.isUserLoggedIn = function() {
+        return $cookies.get('role') == 'user';
+    }; 
     
     self.isAdminLoggedIn = function() {
-        return $cookieStore.get('authenticatedAdmin') != null;
+        return $cookies.get('role') == 'admin';
     };
     
-    self.logoutAdmin = function() {
-        $cookieStore.remove('authenticatedUser');
-        $cookieStore.remove('authenticatedAdmin');
-        $state.transitionTo('/');
+    self.logout = function() {
+        $cookies.remove('role');
+        $cookies.remove('id');
+        $cookies.remove('username');
+        $state.go('sigin',{},{reload: true});
     };   
 };

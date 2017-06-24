@@ -9,12 +9,12 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="#">Restaurant</a>
+                  <a class="navbar-brand" href="#">CrowdSourcing</a>
               </div>
 
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <div ng-if="!isUserLoggedIn()">
+                  <div ng-if="!isLoggedIn()">
                     <ul class="nav navbar-nav main-nav  clear navbar-right ">
                         <li><a class="navactive color_animation" id="urlWelcomeHeader" href="#">WELCOME</a></li>
                         <li><a class="color_animation" href="#/register">INSCRIPTION</a></li>
@@ -25,7 +25,7 @@
                         <li><a class="color_animation" id="urlAdminHeader" href="#/admin">ADMINISTRATION</a></li>
                     </ul>
                   </div>
-                  <div ng-if="isUserLoggedIn()">
+                  <div ng-if="isLoggedIn()">
                     <ul class="nav navbar-nav main-nav  clear navbar-right ">
                         <li><a class="color_animation" href="#/home">Choix Pair</a></li>
                         <li><a href="" ng-click="logout()">D&eacute;connection</a></li>

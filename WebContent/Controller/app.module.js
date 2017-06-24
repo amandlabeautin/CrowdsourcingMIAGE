@@ -7,7 +7,8 @@ angular
 		'ngRoute',
 		'ui.router',
 		'ngCookies',
-		'ui-notification'
+		'ui-notification',
+		'angular-md5'
 	])
     .run(['$rootScope', '$state', '$timeout','UserService','UtilService','$transitions', '$trace',
 		function ($rootScope, $state, $timeout, UserService, UtilService, $transitions, $trace) {
@@ -16,21 +17,24 @@ angular
 				var nameR = $transition$.$to().name;
 			    var access = $transition$.$to().access;
 
-				if (access == 'admin' && UserService.isAdminLoggedIn()) {
-					$state.transitionTo('admin');
+			    if ((nameR == 'register' || nameR == 'signin') & UserService.isLoggedIn()){
+					$state.transitionTo('home');
 				}
-				else if (access == 'user' && UserService.isUserLoggedIn() ){
-
+				else if (access == 'admin' && UserService.isAdminLoggedIn()) {
+					
 				}
-				else if (access == 'public'){
+				else if (access == 'user' && UserService.isLoggedIn()) {
+					
+				}
+				else if(access == 'public'){
 
 				}
 				else {
-		    		$state.transitionTo('register');
-		    	}
+					$state.transitionTo('signin');
+				}
 				
 		    	//$rootScope.currentNavLink=toState.name;
-			})
+			});
 			$transitions.onError({}, function(transition) {
 	            console.log('error', transition.error().message, transition);
 	        });
@@ -49,6 +53,10 @@ angular
 			  	  }, 3000);
 			 });
 		
+			$rootScope.isLoggedIn = function(){
+				return UserService.isLoggedIn();
+			}
+			
 			$rootScope.isUserLoggedIn = function(){
 		        return UserService.isUserLoggedIn();
 			}
@@ -60,7 +68,7 @@ angular
 			$rootScope.logout = function()
 			{
 				console.log('Logging out..');
-				UserService.logoutAdmin();
+				UserService.logout();
 				$state.transitionTo('register');
 			}    
 		}
