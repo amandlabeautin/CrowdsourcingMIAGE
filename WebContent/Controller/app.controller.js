@@ -108,6 +108,9 @@ angular
       if ($scope.isSimilar) {
         item.selected ? item.selected = false : item.selected = true;
       }
+      else{
+        alert('Merci de cocher \'oui\' ci-dessous pour pouvoir sélectionner les valeurs conflictuelles.')
+      }
     };
 
     // Fonction qui prepare en JSON en fonction des réponses de l'utilisateur
