@@ -69,7 +69,7 @@ angular
 			{
 				console.log('Logging out..');
 				UserService.logout();
-				$state.transitionTo('register');
+				$state.transitionTo('signin');
 			}    
 		}
 	]

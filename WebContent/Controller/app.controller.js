@@ -204,7 +204,7 @@ angular
   };
 
   // Controller de la page d'inscription
-  function RegisterCtrl(UserService, UtilService, $http, $rootScope, FlashService, $scope, md5) {
+  function RegisterCtrl(UserService, UtilService, $http, $rootScope, FlashService, $scope, md5, $state) {
       $scope.createUser = function(user){
 
         user.password = md5.createHash(user.password || '');

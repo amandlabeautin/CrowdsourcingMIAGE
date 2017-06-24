@@ -314,8 +314,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `login`, `password`, `isAdmin`) VALUES
-(1, 'Jordan', 'JsuisTropFort', 1),
-(2, 'amandala', 'nule', 0);
+(1, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 0),
+(2, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
