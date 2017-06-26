@@ -53,7 +53,14 @@ public class Algorithme_Apriori_Remaster {
 						}
 						
 						Utils.calculNoteAttributApriori(pair, attrSim1, attrSim2, attrSim3, attrSim4, attrSim5, val);
+						
+						pair.getListAttribut().removeAll(pair.getListAttribut());
 			
+						ArrayList<Attribut> listAttr = DBService.SELECT_ALL_ATTRIBUT_APRIORI_FOR_PAIR_ND(pair.getId());
+						for (Attribut attribut : listAttr) {
+							pair.addAttribut(attribut);
+						}
+						
 						DBService.INSERT_PAIR_TABLE_SIMILARITE_APRIORI(pair, idUser);
 						Utils.GenerateSimilarPrimeApriori(pair);
 						

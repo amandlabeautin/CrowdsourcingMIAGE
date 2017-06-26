@@ -4,6 +4,7 @@ public class Attribut {
 
 	private int id;
 	private Pair p;
+	private int pairId;
 	private String nomAttribut;
 	private String elem1;
 	private String elem2;
@@ -16,6 +17,17 @@ public class Attribut {
 	
 	public Attribut(Pair p, String nomAttribut, String elem1, String elem2, double val, int nbrVote, int tauxVote){
 		this.p = p;
+		this.nomAttribut = nomAttribut;
+		this.elem1 = elem1;
+		this.elem2 = elem2;
+		this.val = val;
+		this.nbrVote = nbrVote;
+		this.tauxVote = tauxVote;
+	}
+
+	
+	public Attribut(int pairId, String nomAttribut, String elem1, String elem2, double val, int nbrVote, int tauxVote){
+		this.pairId = pairId;
 		this.nomAttribut = nomAttribut;
 		this.elem1 = elem1;
 		this.elem2 = elem2;

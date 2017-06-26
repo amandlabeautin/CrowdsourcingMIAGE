@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import DataBean.Attribut;
+import DataBean.LHS_RHS;
 import DataBean.Pair;
 import DataBean.RandomPair;
 import DataBean.SimilarPair;
@@ -196,7 +197,7 @@ public class DBService {
 			e.printStackTrace();
 		}
 
-		String sqlTableLhsRhs = "DELETE FROM `lhs_rhs` WHERE 1";
+		String sqlTableLhsRhs = "DELETE FROM `lhs_rhs_temp_apriori` WHERE 1";
 		PreparedStatement statementTableLhsRhs;
 		try {
 			statementTableLhsRhs = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableLhsRhs);
@@ -205,7 +206,7 @@ public class DBService {
 			e.printStackTrace();
 		}
 		
-		String sqlTableLhsRhs2 = "ALTER TABLE lhs_rhs AUTO_INCREMENT = 1";
+		String sqlTableLhsRhs2 = "ALTER TABLE lhs_rhs_temp_apriori AUTO_INCREMENT = 1";
 		PreparedStatement statementTableLhsRhs2;
 		try {
 			statementTableLhsRhs2 = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlTableLhsRhs2);
@@ -722,7 +723,7 @@ public class DBService {
 		}		
 	}
 	
-	/*public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE(){	
+	public static ArrayList<Pair> SELECT_ALL_MATCHING_DEPENDENCIE(){	
 
 		String sqlSelect = "SELECT * FROM matching_dependencie";
 		PreparedStatement statementSelect;
@@ -742,14 +743,14 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return listmatching_dependencie;
-	}*/
+	}
 
-	public static void DELETE_MATCHING_DEPENDENCIE(Pair p){	
+	public static void DELETE_MATCHING_DEPENDENCIE(int idPair){	
 		String sqlUpdate = "DELETE FROM matching_dependencie WHERE id = ?";
 		PreparedStatement statementUpdate;
 		try {
 			statementUpdate = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlUpdate);
-			statementUpdate.setDouble(1, p.getId());
+			statementUpdate.setDouble(1, idPair);
 			statementUpdate.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -920,7 +921,7 @@ public class DBService {
 			double val = Utils.minDistance(elem1, elem2);
 			double mult = 0.1;
 			val = (1 - (val * mult));
-			val = Double.parseDouble(new DecimalFormat("#.#").format(val).replace(',', '.'));
+			val = Double.parseDouble(new DecimalFormat("#.###").format(val).replace(',', '.'));
 			if(val < 0)
 				val = 0;
 			
@@ -1110,7 +1111,7 @@ public class DBService {
 				valTemp = Utils.minDistance(attribut.getElem1(), attribut.getElem2());
 				double mult = 0.1;
 				valTemp = (1 - (valTemp * mult));
-				valTemp = Double.parseDouble(new DecimalFormat("#.#").format(valTemp).replace(',', '.'));
+				valTemp = Double.parseDouble(new DecimalFormat("#.###").format(valTemp).replace(',', '.'));
 				if(valTemp < 0)
 					valTemp = 0;
 				Jaro jar = new Jaro();
@@ -1153,7 +1154,8 @@ public class DBService {
 					Attribut attr4 = p.getListAttribut().get(3);
 					Attribut attr5 = p.getListAttribut().get(4);
 					moySim = ((attr1.getVal() * attr1.getNbrVote()) + (attr2.getVal() * attr2.getNbrVote()) + (attr3.getVal() * attr3.getNbrVote()) + (attr4.getVal() * attr4.getNbrVote()) + (attr5.getVal() * attr5.getNbrVote())) / (attr1.getNbrVote() + attr2.getNbrVote() + attr3.getNbrVote() + attr4.getNbrVote() + attr5.getNbrVote());
-										
+					moySim = Double.parseDouble(new DecimalFormat("#.###").format(moySim).replace(',', '.'));
+				
 					statementUpdate.setDouble(1, moySim);
 					statementUpdate.setDouble(2, nbrVote);
 					statementUpdate.setInt(3, p.getId());
@@ -1186,7 +1188,8 @@ public class DBService {
 				Attribut attr5 = p.getListAttribut().get(4);
 				statement.setInt(6, attr5.getId());
 				moySim = ((attr1.getVal() * attr1.getNbrVote()) + (attr2.getVal() * attr2.getNbrVote()) + (attr3.getVal() * attr3.getNbrVote()) + (attr4.getVal() * attr4.getNbrVote()) + (attr5.getVal() * attr5.getNbrVote())) / (attr1.getNbrVote() + attr2.getNbrVote() + attr3.getNbrVote() + attr4.getNbrVote() + attr5.getNbrVote());
-				
+				moySim = Double.parseDouble(new DecimalFormat("#.###").format(moySim).replace(',', '.'));
+
 				statement.setDouble(7, moySim);
 				statement.setInt(8, nbrVote);
 				statement.executeUpdate();
@@ -1346,13 +1349,14 @@ public class DBService {
 			
 			ResultSet res = statement.executeQuery();
 			while (res.next()) {
+				int PairId = res.getInt(2);
 				String nomAttribut = res.getString(3);
 				String Attr1 = res.getString(4);
 				String Attr2 = res.getString(5);
 				Double Val = res.getDouble(6);
 				int nbrVote = res.getInt(7);
 				int tauxVote = res.getInt(8);
-				attr = new Attribut(null, nomAttribut, Attr1, Attr2, Val, nbrVote, tauxVote);
+				attr = new Attribut(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote, tauxVote);
 				attr.setId(res.getInt(1));
 				listAttribut.add(attr);
 			}
@@ -1361,6 +1365,35 @@ public class DBService {
 			e.printStackTrace();
 		}
 		return listAttribut;
+	}
+	
+
+	public static Attribut SELECT_ATTRIBUT_FOR_PAIR_BY_NAME(int idPair, String name){
+		String sql = "SELECT * FROM attribut where PairId = ? and nomAttribut = ?";
+		Attribut attr = new Attribut();
+		PreparedStatement statement;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			statement.setInt(1, idPair);
+			statement.setString(2, name);
+			
+			ResultSet res = statement.executeQuery();
+			while (res.next()) {
+				int PairId = res.getInt(2);
+				String nomAttribut = res.getString(3);
+				String Attr1 = res.getString(4);
+				String Attr2 = res.getString(5);
+				Double Val = res.getDouble(6);
+				int nbrVote = res.getInt(7);
+				int tauxVote = res.getInt(8);
+				attr = new Attribut(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote, tauxVote);
+				attr.setId(res.getInt(1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return attr;
 	}
 	
 	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_ONE_ENTITY_FOR_PAIR(int idPair){
@@ -1376,12 +1409,13 @@ public class DBService {
 			ResultSet res = statement.executeQuery();
 			while (res.next()) {
 				exist = true;
+				int PairId = res.getInt(2);
 				String nomAttribut = res.getString(3);
 				String Attr1 = res.getString(4);
 				String Attr2 = res.getString(5);
 				Double Val = res.getDouble(6);
 				int nbrVote = res.getInt(7);
-				attr = new Attribut(null, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
+				attr = new Attribut(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
 				attr.setId(res.getInt(1));
 				listAttribut.add(attr);
 			}
@@ -1403,6 +1437,34 @@ public class DBService {
 		return listAttribut;
 	}
 
+	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_ONE_ENTITY_FOR_PAIR_ND(int idPair){
+		String sql = "SELECT * FROM attribut_one_entity where PairId = ?";
+		ArrayList<Attribut> listAttribut = new ArrayList<>();
+		Attribut attr = new Attribut();
+		PreparedStatement statement;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			statement.setInt(1, idPair);
+			
+			ResultSet res = statement.executeQuery();
+			while (res.next()) {
+				int PairId = res.getInt(2);
+				String nomAttribut = res.getString(3);
+				String Attr1 = res.getString(4);
+				String Attr2 = res.getString(5);
+				Double Val = res.getDouble(6);
+				int nbrVote = res.getInt(7);
+				attr = new Attribut(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
+				attr.setId(res.getInt(1));
+				listAttribut.add(attr);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return listAttribut;
+	}
+	
 	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_APRIORI_FOR_PAIR(int idPair){
 		String sql = "SELECT * FROM attribut_apriori where PairId = ?";
 		ArrayList<Attribut> listAttribut = new ArrayList<>();
@@ -1416,12 +1478,13 @@ public class DBService {
 			ResultSet res = statement.executeQuery();
 			while (res.next()) {
 				exist = true;
+				int PairId = res.getInt(2);
 				String nomAttribut = res.getString(3);
 				String Attr1 = res.getString(4);
 				String Attr2 = res.getString(5);
 				Double Val = res.getDouble(6);
 				int nbrVote = res.getInt(7);
-				attr = new Attribut(null, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
+				attr = new Attribut(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
 				attr.setId(res.getInt(1));
 				listAttribut.add(attr);
 			}
@@ -1440,6 +1503,35 @@ public class DBService {
 		}
 		
 		
+		return listAttribut;
+	}
+	
+
+	public static ArrayList<Attribut> SELECT_ALL_ATTRIBUT_APRIORI_FOR_PAIR_ND(int idPair){
+		String sql = "SELECT * FROM attribut_apriori where PairId = ?";
+		ArrayList<Attribut> listAttribut = new ArrayList<>();
+		Attribut attr = new Attribut();
+		PreparedStatement statement;
+		try {
+			statement = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sql);
+			statement.setInt(1, idPair);
+			
+			ResultSet res = statement.executeQuery();
+			while (res.next()) {
+				int PairId = res.getInt(2);
+				String nomAttribut = res.getString(3);
+				String Attr1 = res.getString(4);
+				String Attr2 = res.getString(5);
+				Double Val = res.getDouble(6);
+				int nbrVote = res.getInt(7);
+				attr = new Attribut(PairId, nomAttribut, Attr1, Attr2, Val, nbrVote, 0);
+				attr.setId(res.getInt(1));
+				listAttribut.add(attr);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return listAttribut;
 	}
 	
@@ -1677,7 +1769,7 @@ public class DBService {
 					valTemp = Utils.minDistance(elem1, elem2);
 					double mult = 0.1;
 					valTemp = (1 - (valTemp * mult));
-					valTemp = Double.parseDouble(new DecimalFormat("#.#").format(valTemp).replace(',', '.'));
+					valTemp = Double.parseDouble(new DecimalFormat("#.###").format(valTemp).replace(',', '.'));
 					if(valTemp < 0)
 						valTemp = 0;
 					Jaro jar = new Jaro();
@@ -1877,6 +1969,230 @@ public class DBService {
 		return listPairs;
 	}
 
+	public static ArrayList<SimilarPair> SELECT_ALL_SIMILAR_R() {
+		String sqlSelect = "SELECT * FROM similarite_r";
+		ArrayList <SimilarPair> listPairs = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			SimilarPair pair = new SimilarPair();
+			while(resSelect.next()){
+				pair = new SimilarPair();
+				pair.setId(resSelect.getInt(1));
+				pair.setIdPair(resSelect.getInt(2));
+				pair.setIdAttribut1(resSelect.getInt(3));	
+				pair.setIdAttribut2(resSelect.getInt(4));	
+				pair.setIdAttribut3(resSelect.getInt(5));	
+				pair.setIdAttribut4(resSelect.getInt(6));	
+				pair.setIdAttribut5(resSelect.getInt(7));	
+				pair.setMoySimilar(resSelect.getDouble(8));	
+				pair.setNbrVote(resSelect.getInt(9));
+				listPairs.add(pair);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listPairs;
+	}
+
+	public static ArrayList<SimilarPair> SELECT_ALL_SIMILAR_R_REMASTER() {
+		String sqlSelect = "SELECT * FROM similarite_r_remaster";
+		ArrayList <SimilarPair> listPairs = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			SimilarPair pair = new SimilarPair();
+			while(resSelect.next()){
+				pair = new SimilarPair();
+				pair.setId(resSelect.getInt(1));
+				pair.setIdPair(resSelect.getInt(2));
+				pair.setIdAttribut1(resSelect.getInt(3));	
+				pair.setIdAttribut2(resSelect.getInt(4));	
+				pair.setIdAttribut3(resSelect.getInt(5));	
+				pair.setIdAttribut4(resSelect.getInt(6));	
+				pair.setIdAttribut5(resSelect.getInt(7));	
+				pair.setMoySimilar(resSelect.getDouble(8));	
+				listPairs.add(pair);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listPairs;
+	}
+
+	public static ArrayList<SimilarPair> SELECT_ALL_SIMILAR_R_PRIME_REMASTER() {
+		String sqlSelect = "SELECT * FROM similarite_r_prime_remaster";
+		ArrayList <SimilarPair> listPairs = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			SimilarPair pair = new SimilarPair();
+			while(resSelect.next()){
+				pair = new SimilarPair();
+				pair.setId(resSelect.getInt(1));
+				pair.setIdPair(resSelect.getInt(2));
+				pair.setIdAttribut1(resSelect.getInt(3));	
+				pair.setIdAttribut2(resSelect.getInt(4));	
+				pair.setIdAttribut3(resSelect.getInt(5));	
+				pair.setIdAttribut4(resSelect.getInt(6));	
+				pair.setIdAttribut5(resSelect.getInt(7));	
+				pair.setMoySimilar(resSelect.getDouble(8));	
+				listPairs.add(pair);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listPairs;
+	}
+
+	public static ArrayList<SimilarPair> SELECT_ALL_SIMILAR_R_PRIME() {
+		String sqlSelect = "SELECT * FROM similarite_r_prime";
+		ArrayList <SimilarPair> listPairs = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			SimilarPair pair = new SimilarPair();
+			while(resSelect.next()){
+				pair = new SimilarPair();
+				pair.setId(resSelect.getInt(1));
+				pair.setIdPair(resSelect.getInt(2));
+				pair.setIdAttribut1(resSelect.getInt(3));	
+				pair.setIdAttribut2(resSelect.getInt(4));	
+				pair.setIdAttribut3(resSelect.getInt(5));	
+				pair.setIdAttribut4(resSelect.getInt(6));	
+				pair.setIdAttribut5(resSelect.getInt(7));	
+				pair.setMoySimilar(resSelect.getDouble(8));	
+				listPairs.add(pair);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listPairs;
+	}
+	
+	public static ArrayList<Integer> SELECT_IDPAIR_LHS_RHS_APRIORI() {
+		String sqlSelect = "SELECT idPair FROM lhs_rhs_temp_apriori";
+		ArrayList <Integer> listId = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()){
+				listId.add(resSelect.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listId;
+	}
+
+	public static ArrayList<Integer> SELECT_IDPAIR_LHS_RHS_ONE_ENTITY() {
+		String sqlSelect = "SELECT idPair FROM lhs_rhs_temp";
+		ArrayList <Integer> listId = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			while(resSelect.next()){
+				listId.add(resSelect.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listId;
+	}
+
+	public static ArrayList<LHS_RHS> SELECT_ALL_LHS_RHS_APRIORI() {
+		String sqlSelect = "SELECT * FROM lhs_rhs_temp_apriori";
+		ArrayList <LHS_RHS> listLHS_RHS = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			LHS_RHS lhs_rhs = new LHS_RHS();
+			while(resSelect.next()){
+				lhs_rhs = new LHS_RHS();
+				lhs_rhs.setIdPair(resSelect.getInt(2));
+				lhs_rhs.setLHS(resSelect.getString(3));
+				lhs_rhs.setRHS(resSelect.getString(4));
+				listLHS_RHS.add(lhs_rhs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listLHS_RHS;
+	}
+
+	public static ArrayList<LHS_RHS> SELECT_ALL_LHS_RHS_APRIORI(int idPair) {
+		String sqlSelect = "SELECT * FROM lhs_rhs_temp_apriori where idPair = ?";
+		ArrayList <LHS_RHS> listLHS_RHS = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setInt(1, idPair);
+			ResultSet resSelect = statementSelect.executeQuery();
+			LHS_RHS lhs_rhs = new LHS_RHS();
+			while(resSelect.next()){
+				lhs_rhs = new LHS_RHS();
+				lhs_rhs.setIdPair(resSelect.getInt(2));
+				lhs_rhs.setLHS(resSelect.getString(3));
+				lhs_rhs.setRHS(resSelect.getString(4));
+				listLHS_RHS.add(lhs_rhs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listLHS_RHS;
+	}
+	
+
+	public static ArrayList<LHS_RHS> SELECT_ALL_LHS_RHS_ONE_ENTITY() {
+		String sqlSelect = "SELECT * FROM lhs_rhs_temp";
+		ArrayList <LHS_RHS> listLHS_RHS = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			ResultSet resSelect = statementSelect.executeQuery();
+			LHS_RHS lhs_rhs = new LHS_RHS();
+			while(resSelect.next()){
+				lhs_rhs = new LHS_RHS();
+				lhs_rhs.setIdPair(resSelect.getInt(2));
+				lhs_rhs.setLHS(resSelect.getString(3));
+				lhs_rhs.setRHS(resSelect.getString(4));
+				listLHS_RHS.add(lhs_rhs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listLHS_RHS;
+	}
+
+	public static ArrayList<LHS_RHS> SELECT_ALL_LHS_RHS_ONE_ENTITY(int idPair) {
+		String sqlSelect = "SELECT * FROM lhs_rhs_temp  where idPair = ?";
+		ArrayList <LHS_RHS> listLHS_RHS = new ArrayList<>();
+		PreparedStatement statementSelect;
+		try {
+			statementSelect = (PreparedStatement) DBConnectManager.getConnectionDB().prepareStatement(sqlSelect);
+			statementSelect.setInt(1, idPair);
+			ResultSet resSelect = statementSelect.executeQuery();
+			LHS_RHS lhs_rhs = new LHS_RHS();
+			while(resSelect.next()){
+				lhs_rhs = new LHS_RHS();
+				lhs_rhs.setIdPair(resSelect.getInt(2));
+				lhs_rhs.setLHS(resSelect.getString(3));
+				lhs_rhs.setRHS(resSelect.getString(4));
+				listLHS_RHS.add(lhs_rhs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listLHS_RHS;
+	}
+	
 	public static void DELETE_USER_TABLE_USER_WITH_ID(int idUser) {
 		String sqlUpdate = "DELETE FROM user WHERE id = ?";
 		PreparedStatement statementUpdate;

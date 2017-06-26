@@ -58,7 +58,14 @@ public class Algorithme_One_Entity {
 						
 						// On met à jour la note de chaque attributs
 						Utils.calculNoteAttribut(pair, attrSim1, attrSim2, attrSim3, attrSim4, attrSim5, val);
-												
+
+						pair.getListAttribut().removeAll(pair.getListAttribut());
+			
+						ArrayList<Attribut> listAttr = DBService.SELECT_ALL_ATTRIBUT_ONE_ENTITY_FOR_PAIR_ND(pair.getId());
+						for (Attribut attribut : listAttr) {
+							pair.addAttribut(attribut);
+						}
+						
 						// On calcul la moyenne de la pair en fonctione des nouvelles moyennes d'attributs
 						pair.setVal(DBService.INSERT_PAIR_TABLE_SIMILARITE(pair));
 						

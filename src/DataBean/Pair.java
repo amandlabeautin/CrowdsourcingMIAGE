@@ -19,6 +19,13 @@ public class Pair {
 		this.nbrVote = nbrVote;
 	}
 	
+
+	public Pair(int idPair, String obj1, String obj2){
+		this.id = idPair;
+		this.obj1 = obj1;
+		this.obj2 = obj2;
+	}
+	
 	public int getNbrVote() {
 		return nbrVote;
 	}
